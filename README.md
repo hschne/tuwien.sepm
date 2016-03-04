@@ -1,2 +1,2 @@
-# sepm
-The repository for the SEPM introduction exercise 
+# SEPM
+The repository for the SEPM introduction exercise. 
