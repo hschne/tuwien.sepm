@@ -33,11 +33,15 @@ CREATE TABLE ARTICLE_RECEIPT (
 /* Insert dummy data into article
    Pull data from here: http://www.johnlewis.com/gifts/easter/c600003104?rdr=1 */
 INSERT INTO ARTICLE (ID, NAME, DESCRIPTION, IMAGE_PATH, CATEGORY, PRICE)
-VALUES (1, 'Kuschelente', 'Kuschelente, Dekorationsgegenstand. Weich und flauschig, und außerdem gelb!', '', 'Dekoration', 5);
+VALUES (1, 'Kuschelente', 'Kuschelente, Dekorationsgegenstand. Weich und flauschig, und außerdem gelb!', './img/kuschelente.jpg', 'Dekoration', 18.90);
 INSERT INTO ARTICLE (ID, NAME, DESCRIPTION, IMAGE_PATH, CATEGORY, price)
-VALUES (2, 'Glas-Osterei', 'Solides und wahnsinnig hübsches handgemaltes Osterei. Zum Aufhängen passt das in jede Bude.', '', 'Dekoration', 2);
+VALUES (2, 'Glas-Osterei', 'Solides und wahnsinnig hübsches handgemaltes Osterei. Zum Aufhängen passt das in jede Bude.', './img/glasei.jpg', 'Dekoration', 2);
 INSERT INTO ARTICLE (ID, NAME, DESCRIPTION, IMAGE_PATH, CATEGORY, price)
-VALUES (3, 'Schokoladen Henne', 'Köstliches Schokoladenhuhn. Verpackt in super glänzender Megafolie.', '', 'Süßigkeiten', 7);
+VALUES (3, 'Schokoladen Henne', 'Köstliches Schokoladenhuhn. Verpackt in super glänzender Megafolie.', './img/osterhenne.jpg', 'Süßigkeiten', 7);
+INSERT INTO ARTICLE (ID, NAME, DESCRIPTION, IMAGE_PATH, CATEGORY, price)
+VALUES (4, 'Riesenei', 'Ein gigantisches Schokoei. Falls man sich mal nur von Schokolade ernähren möchte.', './img/riesenei.jpg', 'Süßigkeiten', 22);
+
+
 
 /* Insert dummy data into receipt */
 INSERT INTO RECEIPT (ID, creation_date, receiver, receiver_adress)
