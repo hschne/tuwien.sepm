@@ -24,7 +24,10 @@ CREATE TABLE ARTICLE_RECEIPT (
   article int not null,
   price double not null,
   amount double not null,
+  CONSTRAINT RECEIPT_FK FOREIGN KEY (receipt) REFERENCES RECEIPT (id),
+  CONSTRAINT ARTICLE_FK FOREIGN KEY (article) REFERENCES ARTICLE (id),
   primary key (receipt,article),
+
 );
 
 /* Insert dummy data into article
@@ -49,4 +52,3 @@ INSERT INTO ARTICLE_RECEIPT (receipt, article, price, amount)
 VALUES (1,2,2,1);
 INSERT INTO ARTICLE_RECEIPT (receipt, article, price, amount)
 VALUES (2,1,5,4);
-
