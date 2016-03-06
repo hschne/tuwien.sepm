@@ -3,7 +3,7 @@ DROP TABLE ARTICLE, RECEIPT, ARTICLE_RECEIPT;
 
 /* Create table 'Article' */
 CREATE TABLE ARTICLE (
-  id int not null PRIMARY KEY,
+  id int not null AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(255) not null,
   price double not null,
   description TEXT not null,
@@ -13,7 +13,7 @@ CREATE TABLE ARTICLE (
 
 /* Create table 'Receipt' */
 CREATE TABLE RECEIPT(
-  ID INT NOT NULL PRIMARY KEY ,
+  ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
   creation_date DATETIME not null,
   receiver VARCHAR(255) not null,
   receiver_adress VARCHAR(255) not null,

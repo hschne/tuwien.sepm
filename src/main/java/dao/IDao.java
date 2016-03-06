@@ -1,13 +1,20 @@
 package dao;
 
-public interface IDao {
+import entities.IEntity;
 
-    void Create();
+import java.sql.SQLException;
+import java.util.List;
 
-    void Read();
+public interface IDao<T> {
 
-    void Update();
+    void Create(T entity) throws SQLException;
 
-    void Delete();
+    T Read(int id);
+
+    List<T> ReadAll();
+
+    void Update(T entity);
+
+    void Delete(T entity);
 
 }

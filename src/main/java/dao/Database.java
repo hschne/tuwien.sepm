@@ -1,7 +1,7 @@
 package dao;
 
-import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 
@@ -11,6 +11,10 @@ public class Database {
     private final Logger logger = LogManager.getLogger(Database.class);
 
     private Connection connection;
+
+    public Connection getConnection() {
+        return connection;
+    }
 
     public Database(String path) throws ClassNotFoundException, SQLException {
          this(path, "sa", "sa");
@@ -23,13 +27,13 @@ public class Database {
         connection = DriverManager.getConnection("jdbc:h2:"+path, username, password);
     }
 
-    public void Execute(String sql) throws SQLException {
-        Statement statement = connection.createStatement();
-        ResultSet rs = statement.executeQuery(sql);
-    }
 
-    public void Disconnect() throws SQLException {
+    public void Disconnect(){
         logger.debug("Disconnecting...");
-        connection.close();
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            logger.error(e);
+        }
     }
 }
