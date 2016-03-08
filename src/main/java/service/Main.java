@@ -8,9 +8,6 @@ import org.apache.logging.log4j.Logger;
 
 import java.sql.SQLException;
 
-/**
- * Created by hschroedl on 06.03.16.
- */
 public class Main {
 
     private static final Logger logger = LogManager.getLogger(Main.class);
