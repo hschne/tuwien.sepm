@@ -9,10 +9,6 @@ public class ReceiptDao implements IDao<Receipt> {
 
     }
 
-    public Receipt Read(int id) {
-        return null;
-    }
-
     public List<Receipt> ReadAll() {
         return null;
     }

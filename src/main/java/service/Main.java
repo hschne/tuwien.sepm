@@ -7,6 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.SQLException;
+import java.util.List;
 
 public class Main {
 
@@ -25,12 +26,7 @@ public class Main {
         }
         ArticleDao articleDao = new ArticleDao(database);
         try {
-            String name = "Name";
-            Double price = 1.0;
-            String description = "Description";
-            String image = "Image";
-            String category = "Category";
-            articleDao.Create(new Article(name, description,image,category,price));
+            List<Article> list = articleDao.ReadAll();
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -7,6 +7,11 @@ public class Article implements IEntity {
 
     }
 
+    public Article(int id, String name, double price, String description, String image, String category) {
+        this(name, description, image, category, price);
+        this.id = id;
+
+    }
     public Article(String name, String description, String image, String category, double price) {
         this.name = name;
         this.description = description;
@@ -24,6 +29,8 @@ public class Article implements IEntity {
     private String category;
 
     private double price;
+
+
 
     public String getImage() {
         return image;

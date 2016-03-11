@@ -14,6 +14,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.anyInt;
@@ -80,14 +81,31 @@ public class ArticleDaoTest {
         assertEquals(1, article.getId());
     }
 
-
     @Test
-    public void testRead() throws Exception {
+    public void ReadAll_ReadExistingArticles_QueryCreated() throws Exception {
+        ArticleDao dao = new ArticleDao(mockDatabase);
+        String query = "SELECT * FROM ARTICLE ORDER BY ID DESC;";
+        when(mockConnection.createStatement()).thenReturn(mockStatement);
+        when(mockStatement.executeQuery(anyString())).thenReturn(mockResultSet);
 
+        dao.ReadAll();
+
+        verify(mockStatement).executeQuery(eq(query));
     }
 
     @Test
-    public void testReadAll() throws Exception {
+    public void ReadAll_ReadExistingArticles_ArticlesCreated() throws Exception {
+        ArticleDao dao = new ArticleDao(mockDatabase);
+        String query = "SELECT * FROM ARTICLE ORDER BY ID DESC;";
+        when(mockConnection.createStatement()).thenReturn(mockStatement);
+        when(mockStatement.executeQuery(anyString())).thenReturn(mockResultSet);
+        when(mockResultSet.getString(2)).thenReturn("Name");
+
+        List<Article> articles = dao.ReadAll();
+
+        assertEquals(1, articles.size());
+        Article article = articles.get(0);
+        assertEquals("Name", article.getName());
 
     }
 

@@ -9,9 +9,7 @@ public interface IDao<T> {
 
     void Create(T entity) throws SQLException;
 
-    T Read(int id);
-
-    List<T> ReadAll();
+    List<T> ReadAll() throws SQLException;
 
     void Update(T entity);
 
