@@ -13,6 +13,6 @@ public interface IDao<T> {
 
     void Update(T entity);
 
-    void Delete(T entity);
+    void Delete(T entity) throws SQLException;
 
 }

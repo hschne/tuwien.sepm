@@ -9,6 +9,7 @@ CREATE TABLE ARTICLE (
   description TEXT not null,
   image_path VARCHAR(255) NOT NULL,
   category VARCHAR(255) NOT NULL,
+  visible BOOL NOT NULL DEFAULT TRUE,
   PRIMARY KEY (id)
 );
 

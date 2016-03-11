@@ -26,7 +26,9 @@ public class Main {
         }
         ArticleDao articleDao = new ArticleDao(database);
         try {
-            List<Article> list = articleDao.ReadAll();
+            Article art = new Article();
+            art.setId(4);
+            articleDao.Delete(art);
         } catch (SQLException e) {
             e.printStackTrace();
         }

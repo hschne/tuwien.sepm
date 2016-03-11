@@ -96,7 +96,6 @@ public class ArticleDaoTest {
     @Test
     public void ReadAll_ReadExistingArticles_ArticlesCreated() throws Exception {
         ArticleDao dao = new ArticleDao(mockDatabase);
-        String query = "SELECT * FROM ARTICLE ORDER BY ID DESC;";
         when(mockConnection.createStatement()).thenReturn(mockStatement);
         when(mockStatement.executeQuery(anyString())).thenReturn(mockResultSet);
         when(mockResultSet.getString(2)).thenReturn("Name");

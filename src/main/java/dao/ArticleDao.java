@@ -20,7 +20,6 @@ public class ArticleDao implements IDao<Article>{
     public void Create(Article article) throws SQLException {
         logger.debug("Creating article " +article.toString());
         Connection connection = database.getConnection();
-
         PreparedStatement statement = connection.prepareStatement("insert into article values (default, ?, ?, ?, ?, ?)");
         statement.setString(1, article.getName());
         statement.setDouble(2, article.getPrice());
@@ -67,7 +66,31 @@ public class ArticleDao implements IDao<Article>{
 
     }
 
-    public void Delete(Article entity) {
+    public void Delete(Article entity) throws SQLException {
+        Connection connection = database.getConnection();
+        String getQuery = "SELECT * FROM ARTICLE_RECEIPT WHERE ARTICLE=?;";
+        PreparedStatement pstmt = connection.prepareStatement(getQuery);
+        pstmt.setInt(1, entity.getId());
+        ResultSet result = pstmt.executeQuery();
+        if (result.next()){
+            AlterArticle(connection,entity);
+        }
+        else{
+            DeleteArticle(connection,entity);
+        }
+    }
 
+    private void AlterArticle(Connection connection, Article article) throws SQLException {
+        String alterQuery = "UPDATE ARTICLE SET VISIBLE=FALSE WHERE ID=?;";
+        PreparedStatement pstmt = connection.prepareStatement(alterQuery);
+        pstmt.setInt(1, article.getId());
+        pstmt.executeUpdate();
+    }
+
+    private void DeleteArticle(Connection connection, Article article) throws SQLException{
+        String deleteQuery = "DELETE FROM ARTICLE WHERE ID =?;";
+        PreparedStatement pstmt = connection.prepareStatement(deleteQuery);
+        pstmt.setInt(1, article.getId());
+        pstmt.executeUpdate();
     }
 }
