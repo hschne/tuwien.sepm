@@ -23,7 +23,9 @@ public class ArticleDao implements IDao<Article>{
         statement.setString(5, article.getCategory());
         statement.executeUpdate();
         ResultSet result = statement.getGeneratedKeys();
-        article.setId(result.getInt("Id"));
+        if (result.next()) {
+            article.setId(result.getInt(1));
+        }
 
     }
 

@@ -3,13 +3,11 @@ package dao.tests;
 import dao.ArticleDao;
 import dao.Database;
 import entities.Article;
-import junit.framework.Assert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.internal.util.reflection.Fields;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.sql.Connection;
@@ -43,7 +41,8 @@ public class ArticleDaoTest {
         when(mockDatabase.getConnection()).thenReturn(mockConnection);
         when(mockConnection.prepareStatement(anyString())).thenReturn(mockStatement);
         when(mockStatement.getGeneratedKeys()).thenReturn(mockResultSet);
-        when(mockResultSet.getInt(anyString())).thenReturn(1);
+        when(mockResultSet.next()).thenReturn(Boolean.TRUE, Boolean.FALSE);
+        when(mockResultSet.getInt(anyInt())).thenReturn(1);
 
     }
 
@@ -80,6 +79,7 @@ public class ArticleDaoTest {
 
         assertEquals(1, article.getId());
     }
+
 
     @Test
     public void testRead() throws Exception {

@@ -25,9 +25,17 @@ public class Main {
         }
         ArticleDao articleDao = new ArticleDao(database);
         try {
-            articleDao.Create(new Article());
+            String name = "Name";
+            Double price = 1.0;
+            String description = "Description";
+            String image = "Image";
+            String category = "Category";
+            articleDao.Create(new Article(name, description,image,category,price));
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+        finally {
+            database.Disconnect();
         }
     }
 
