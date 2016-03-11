@@ -1,24 +1,35 @@
 package entities;
 
-import java.awt.*;
 
 public class Article implements IEntity {
+
+    public Article(){
+
+    }
+
+    public Article(String name, String description, String image, String category, double price) {
+        this.name = name;
+        this.description = description;
+        this.image = image;
+        this.category = category;
+        this.price = price;
+    }
 
     private String name;
 
     private String description;
 
-    private Image image;
+    private String image;
 
     private String category;
 
     private double price;
 
-    public Image getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(Image image) {
+    public void setImage(String image) {
         this.image = image;
     }
 

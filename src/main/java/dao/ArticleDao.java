@@ -2,17 +2,12 @@ package dao;
 
 import entities.Article;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.List;
 
 public class ArticleDao implements IDao<Article>{
 
     private Database database;
-
-    private final String tableName= "Article";
 
     public ArticleDao(Database database){
         this.database = database;
@@ -21,12 +16,15 @@ public class ArticleDao implements IDao<Article>{
     public void Create(Article article) throws SQLException {
         Connection connection = database.getConnection();
         PreparedStatement statement = connection.prepareStatement("insert into article values (default, ?, ?, ?, ?, ?)");
-        statement.setString(1,"name");
-        statement.setDouble(2, 20.2);
-        statement.setString(3, "desc");
-        statement.setString(4, "image");
-        statement.setString(5, "category");
+        statement.setString(1,article.getName());
+        statement.setDouble(2, article.getPrice());
+        statement.setString(3, article.getDescription());
+        statement.setString(4, article.getImage());
+        statement.setString(5, article.getCategory());
         statement.executeUpdate();
+        ResultSet result = statement.getGeneratedKeys();
+        article.setId(result.getInt("Id"));
+
     }
 
     public Article Read(int id) {
