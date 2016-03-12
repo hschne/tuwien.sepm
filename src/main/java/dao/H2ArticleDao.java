@@ -44,6 +44,9 @@ public class H2ArticleDao implements ArticleDao {
         if (result.next()) {
             article.setId(result.getInt(1));
         }
+        else{
+            throw new SQLException("No id created for " +article.toString());
+        }
     }
 
     public void delete(Article article) throws SQLException {

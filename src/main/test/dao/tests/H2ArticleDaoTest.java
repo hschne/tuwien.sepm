@@ -63,6 +63,8 @@ public class H2ArticleDaoTest {
         String description = "Description";
         String image = "Image";
         String category = "Category";
+        when(mockResultSet.next()).thenReturn(true);
+
         dao.create(new Article(name, description,image,category,price));
 
         verify(mockStatement).setString(anyInt(), eq(name));
@@ -70,6 +72,14 @@ public class H2ArticleDaoTest {
         verify(mockStatement).setString(anyInt(), eq(image));
         verify(mockStatement).setString(anyInt(), eq(category));
         verify(mockStatement).setDouble(anyInt(), eq(price));
+    }
+
+    @Test(expected = SQLException.class)
+    public void createArticle_NewArticle_CreationFailed() throws Exception {
+        H2ArticleDao dao = new H2ArticleDao(mockDatabase);
+        when(mockResultSet.next()).thenReturn(false);
+
+        dao.create(new Article());
     }
 
     @Test
