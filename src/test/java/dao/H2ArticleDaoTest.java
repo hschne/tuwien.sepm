@@ -2,9 +2,7 @@ package dao;
 
 import entities.Article;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -12,15 +10,13 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 
 public class H2ArticleDaoTest extends DaoTest {
 
     @Test
-    public void create_NewArticle_DataTransferredToDb() throws Exception {
+    public void create_NewArticle_ArticleInserted() throws Exception {
         H2ArticleDao dao = new H2ArticleDao(mockDatabase);
         String name = "Name";
         Double price = 1.0;
@@ -66,7 +62,8 @@ public class H2ArticleDaoTest extends DaoTest {
 
         dao.getVisible();
 
-        verify(mockStatement).executeQuery(eq(query));
+        verify(mockConnection).prepareStatement(eq(query));
+        verify(mockStatement).executeQuery();
     }
 
     @Test

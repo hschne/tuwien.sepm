@@ -4,11 +4,14 @@ import entities.Article;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class H2ArticleDao implements ArticleDao {
+public class H2ArticleDao extends AbstractH2Dao implements ArticleDao {
 
     private final Logger logger = LogManager.getLogger(Database.class);
 
@@ -20,16 +23,16 @@ public class H2ArticleDao implements ArticleDao {
 
     public List<Article> getVisible() throws SQLException {
         logger.debug("Getting all articles");
-        Statement statement = connection.createStatement();
         String query = "SELECT * FROM ARTICLE WHERE VISIBLE=TRUE ORDER BY ID DESC;";
-        ResultSet resultSet = statement.executeQuery(query);
+        PreparedStatement statement = connection.prepareStatement(query);
+        ResultSet resultSet = statement.executeQuery();
         return parseArticles(resultSet);
     }
 
     public void update(Article article) throws SQLException {
-        logger.debug("Updating article "+article.toString());
+        logger.debug("Updating article " + article.toString());
         if (isArticleLinked(article)) {
-            makeInvisible( article);
+            makeInvisible(article);
             create(article);
         } else {
             updateArticle(article);
@@ -43,19 +46,26 @@ public class H2ArticleDao implements ArticleDao {
         ResultSet result = statement.getGeneratedKeys();
         if (result.next()) {
             article.setId(result.getInt(1));
-        }
-        else{
-            throw new SQLException("No id created for " +article.toString());
+        } else {
+            throw new SQLException("No id created for " + article.toString());
         }
     }
 
     public void delete(Article article) throws SQLException {
-        logger.debug("Deleting article " +article.toString());
+        logger.debug("Deleting article " + article.toString());
         if (isArticleLinked(article)) {
             makeInvisible(article);
         } else {
             deleteArticle(article);
         }
+    }
+
+    private List<Article> parseArticles(ResultSet resultSet) throws SQLException {
+        List<Article> articles = new ArrayList<Article>();
+        while (resultSet.next()) {
+            articles.add(parseArticle(resultSet));
+        }
+        return articles;
     }
 
     private void updateArticle(Article article) throws SQLException {
@@ -79,32 +89,13 @@ public class H2ArticleDao implements ArticleDao {
     }
 
     private PreparedStatement getCreateStatement(Article article) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("insert into article values (default, ?, ?, ?, ?, ?,default)");
+        PreparedStatement statement = connection.prepareStatement("INSERT INTO article VALUES (default, ?, ?, ?, ?, ?,default)");
         statement.setString(1, article.getName());
         statement.setDouble(2, article.getPrice());
         statement.setString(3, article.getDescription());
         statement.setString(4, article.getImage());
         statement.setString(5, article.getCategory());
         return statement;
-    }
-
-    private List<Article> parseArticles(ResultSet resultSet) throws SQLException {
-        List<Article> articles = new ArrayList<Article>();
-        while (resultSet.next()) {
-            parseArticle(resultSet, articles);
-        }
-        return articles;
-    }
-
-    private void parseArticle(ResultSet resultSet, List<Article> articles) throws SQLException {
-        int id = resultSet.getInt(1);
-        String name = resultSet.getString(2);
-        double price = resultSet.getDouble(3);
-        String description = resultSet.getString(4);
-        String image = resultSet.getString(5);
-        String category = resultSet.getString(6);
-        Article article = new Article(id, name, price, description, image, category);
-        articles.add(article);
     }
 
     private void makeInvisible(Article article) throws SQLException {

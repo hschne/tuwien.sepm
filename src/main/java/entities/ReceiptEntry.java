@@ -4,11 +4,11 @@ public class ReceiptEntry {
 
     private Article article;
 
-    private int quantity;
+    private int amount;
 
     public ReceiptEntry(Article article, int quantity) {
         this.article = article;
-        this.quantity = quantity;
+        this.amount = quantity;
     }
 
     public Article getArticle() {
@@ -19,11 +19,11 @@ public class ReceiptEntry {
         this.article = article;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public int getAmount() {
+        return amount;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 }
