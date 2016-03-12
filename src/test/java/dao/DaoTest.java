@@ -19,7 +19,7 @@ import static org.mockito.Mockito.when;
 
 @Ignore
 @RunWith(MockitoJUnitRunner.class)
-public class DaoTest {
+class DaoTest {
 
     @Mock
     protected Database mockDatabase;

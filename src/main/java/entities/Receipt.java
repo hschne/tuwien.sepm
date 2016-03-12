@@ -1,11 +1,9 @@
 package entities;
 
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-
 import java.util.Date;
 import java.util.List;
 
-public class Receipt {
+public class Receipt extends AbstractEntity {
 
     private int id;
 
@@ -29,7 +27,6 @@ public class Receipt {
         this.receiverAddress = receiverAddress;
         this.receiptEntries = receiptEntries;
     }
-
 
 
     public List<ReceiptEntry> getReceiptEntries() {
@@ -72,8 +69,4 @@ public class Receipt {
         this.id = id;
     }
 
-    @Override
-    public String toString() {
-        return ReflectionToStringBuilder.toString(this);
-    }
 }

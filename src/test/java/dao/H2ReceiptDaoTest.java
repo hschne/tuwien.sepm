@@ -67,7 +67,7 @@ public class H2ReceiptDaoTest extends DaoTest {
     @Test(expected = SQLException.class)
     public void create_NewReceipt_ReceiptCreationFailed() throws Exception {
         ReceiptDao dao = new H2ReceiptDao(mockDatabase);
-        dao.create(new Receipt(new Date(),"","", new ArrayList<ReceiptEntry>()));
+        dao.create(new Receipt(new Date(), "", "", new ArrayList<ReceiptEntry>()));
         when(mockResultSet.next()).thenReturn(false);
     }
 
@@ -111,7 +111,7 @@ public class H2ReceiptDaoTest extends DaoTest {
         List<Receipt> receipts = dao.readAll();
 
         List<ReceiptEntry> receiptEntries = receipts.get(0).getReceiptEntries();
-        assertEquals(receiptEntries.size(),1);
+        assertEquals(receiptEntries.size(), 1);
         ReceiptEntry entry = receiptEntries.get(0);
         assertEquals(articleAmount, entry.getAmount());
         Article article = entry.getArticle();

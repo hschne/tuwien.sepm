@@ -2,11 +2,15 @@ package service;
 
 import dao.H2ArticleDao;
 import dao.Database;
+import dao.H2ReceiptDao;
+import dao.ReceiptDao;
 import entities.Article;
+import entities.Receipt;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.SQLException;
+import java.util.List;
 
 public class Main {
 
@@ -23,10 +27,9 @@ public class Main {
             logger.error(e);
             return;
         }
-        H2ArticleDao articleDao = new H2ArticleDao(database);
+        ReceiptDao dao = new H2ReceiptDao(database);
         try {
-            Article art = new Article(4,"name",20.0,"desc","im","dudue");
-            System.out.println(art.toString());
+            List<Receipt> receiptList = dao.readAll();
         } catch (Exception e) {
             logger.error(e);
         }

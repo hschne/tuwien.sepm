@@ -77,7 +77,6 @@ public class H2ArticleDaoTest extends DaoTest {
         assertEquals(1, articles.size());
         Article article = articles.get(0);
         assertEquals("Name", article.getName());
-
     }
 
     @Test

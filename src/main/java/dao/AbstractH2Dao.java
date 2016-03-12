@@ -4,12 +4,11 @@ import entities.Article;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
-public abstract class AbstractH2Dao {
-
-
+/**
+ * Base class for H2 DAOs
+ */
+abstract class AbstractH2Dao {
 
     protected Article parseArticle(ResultSet resultSet) throws SQLException {
         int id = resultSet.getInt(1);

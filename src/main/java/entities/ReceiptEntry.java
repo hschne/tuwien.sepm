@@ -1,6 +1,6 @@
 package entities;
 
-public class ReceiptEntry {
+public class ReceiptEntry extends AbstractEntity {
 
     private Article article;
 

@@ -5,19 +5,12 @@
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
         </Console>
+        <File name="File1" fileName="output.log" bufferedIO="true" advertiseURI="file://path/to/output.log" advertise="true">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </File>
 
     </Appenders>
     <Loggers>
-        <appender name="FILE" class="org.apache.log4j.FileAppender">
-            <param name="file" value="${log}/log.out"/>
-            <param name="immediateFlush" value="true"/>
-            <param name="threshold" value="debug"/>
-            <param name="append" value="false"/>
-
-            <layout class="org.apache.log4j.PatternLayout">
-                <param name="conversionPattern" value="%m%n"/>
-            </layout>
-        </appender>
         <Root level="error">
             <AppenderRef ref="Console"/>
         </Root>
