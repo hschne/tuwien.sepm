@@ -1,5 +1,6 @@
 package dao;
 
+import dao.H2.H2ArticleDao;
 import entities.Article;
 import org.junit.Test;
 import org.mockito.Mockito;

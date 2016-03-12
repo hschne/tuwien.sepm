@@ -3,8 +3,9 @@ The repository for the SEPM introduction exercise.
 
 ## TODO:
 
-- Implement CRUD Ops on daos + tests!!!
-- Clean daos + db up (loggin, exception handling, documentation)
-- Then start models
-
+- Implement filters on article, receipts 
+- Statistische auswertung implementieren
+- Automatische preisanpassung implementieren
+- JavaFX base setup
+- Diagramme... ugh
 - give query builders a try (because manually building sql sucks)

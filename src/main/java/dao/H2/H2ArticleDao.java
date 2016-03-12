@@ -1,5 +1,7 @@
-package dao;
+package dao.H2;
 
+import dao.ArticleDao;
+import dao.Database;
 import entities.Article;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,8 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class H2ArticleDao extends AbstractH2Dao implements ArticleDao {
-
-    private final Logger logger = LogManager.getLogger(Database.class);
 
     private Connection connection;
 

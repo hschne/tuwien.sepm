@@ -1,5 +1,7 @@
-package dao;
+package dao.H2;
 
+import dao.Database;
+import dao.ReceiptDao;
 import entities.Article;
 import entities.Receipt;
 import entities.ReceiptEntry;
@@ -18,11 +20,13 @@ public class H2ReceiptDao extends AbstractH2Dao implements ReceiptDao {
 
 
     public void create(Receipt receipt) throws SQLException {
+        logger.debug("Creating receipt " + receipt);
         insertReceiptData(receipt);
         insertLinkedArticles(receipt);
     }
 
     public List<Receipt> readAll() throws SQLException {
+        logger.debug("Reading all receipts");
         String query = "SELECT * FROM RECEIPT";
         PreparedStatement statement = connection.prepareStatement(query);
         ResultSet resultSet = statement.executeQuery();
@@ -42,17 +46,19 @@ public class H2ReceiptDao extends AbstractH2Dao implements ReceiptDao {
         java.util.Date date = new java.util.Date(resultSet.getDate(2).getTime());
         String receiver = resultSet.getString(3);
         String receiverAdress = resultSet.getString(4);
-        Receipt receipt = new Receipt(id, date, receiver, receiverAdress, readReceiptEntries(id));
-        return receipt;
+        return new Receipt(id, date, receiver, receiverAdress, readReceiptEntries(id));
 
     }
 
+
     private List<ReceiptEntry> readReceiptEntries(int id) throws SQLException {
+        logger.debug("Reading receipt entries for " + id);
         List<ReceiptEntry> receiptEntries = new ArrayList<ReceiptEntry>();
         String query = "SELECT a.ID,a.NAME,a.PRICE,a.DESCRIPTION,a.IMAGE_PATH,a.CATEGORY, rec.AMOUNT " +
                 "FROM ARTICLE a , (SELECT * FROM ARTICLE_RECEIPT WHERE RECEIPT =?) rec WHERE rec.ARTICLE = a.ID;";
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setInt(1, id);
+        //The result is a join of articles and article_receipts, where all data required by ReceiptEntry is given
         ResultSet resultSet = statement.executeQuery();
         while (resultSet.next()) {
             receiptEntries.add(parseReceiptEntry(resultSet));
@@ -63,7 +69,7 @@ public class H2ReceiptDao extends AbstractH2Dao implements ReceiptDao {
     private ReceiptEntry parseReceiptEntry(ResultSet resultSet) throws SQLException {
         int amount = resultSet.getInt(7);
         Article article = parseArticle(resultSet);
-        return new ReceiptEntry(article,amount);
+        return new ReceiptEntry(article, amount);
     }
 
     private void insertReceiptData(Receipt receipt) throws SQLException {
