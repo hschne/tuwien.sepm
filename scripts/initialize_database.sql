@@ -1,7 +1,7 @@
 /* Drop existing tables */
 DROP TABLE ARTICLE, RECEIPT, ARTICLE_RECEIPT;
 
-/* Create table 'Article' */
+/* create table 'Article' */
 CREATE TABLE ARTICLE (
   id int not null AUTO_INCREMENT,
   name VARCHAR(255) not null,
@@ -13,7 +13,7 @@ CREATE TABLE ARTICLE (
   PRIMARY KEY (id)
 );
 
-/* Create table 'Receipt' */
+/* create table 'Receipt' */
 CREATE TABLE RECEIPT(
   ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
   creation_date DATETIME not null,

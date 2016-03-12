@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.sql.Connection;
@@ -41,10 +42,10 @@ public class ArticleDaoTest {
     public void setUp() throws SQLException {
         when(mockDatabase.getConnection()).thenReturn(mockConnection);
         when(mockConnection.prepareStatement(anyString())).thenReturn(mockStatement);
+        when(mockConnection.createStatement()).thenReturn(mockStatement);
         when(mockStatement.getGeneratedKeys()).thenReturn(mockResultSet);
-        when(mockResultSet.next()).thenReturn(Boolean.TRUE, Boolean.FALSE);
-        when(mockResultSet.getInt(anyInt())).thenReturn(1);
-
+        when(mockStatement.executeQuery()).thenReturn(mockResultSet);
+        when(mockStatement.executeQuery(anyString())).thenReturn(mockResultSet);
     }
 
     @After
@@ -55,14 +56,14 @@ public class ArticleDaoTest {
         reset(mockResultSet);
     }
     @Test
-    public void CreateArticle_NewArticle_CreateCalledWithParameters() throws Exception {
+    public void createArticle_NewArticle_CreateCalledWithParameters() throws Exception {
         ArticleDao dao = new ArticleDao(mockDatabase);
         String name = "Name";
         Double price = 1.0;
         String description = "Description";
         String image = "Image";
         String category = "Category";
-        dao.Create(new Article(name, description,image,category,price));
+        dao.create(new Article(name, description,image,category,price));
 
         verify(mockStatement).setString(anyInt(), eq(name));
         verify(mockStatement).setString(anyInt(), eq(description));
@@ -72,35 +73,35 @@ public class ArticleDaoTest {
     }
 
     @Test
-    public void CreateArticle_NewArticle_ArticleIdSet() throws Exception {
+    public void createArticle_NewArticle_ArticleIdSet() throws Exception {
         ArticleDao dao = new ArticleDao(mockDatabase);
         Article article = new Article();
-
-        dao.Create(article);
+        when(mockResultSet.getInt(anyInt())).thenReturn(1);
+        when(mockResultSet.next()).thenReturn(true);
+        dao.create(article);
 
         assertEquals(1, article.getId());
     }
 
     @Test
-    public void ReadAll_ReadExistingArticles_QueryCreated() throws Exception {
+    public void readAll_ReadExistingArticles_QueryCreated() throws Exception {
         ArticleDao dao = new ArticleDao(mockDatabase);
         String query = "SELECT * FROM ARTICLE ORDER BY ID DESC;";
         when(mockConnection.createStatement()).thenReturn(mockStatement);
         when(mockStatement.executeQuery(anyString())).thenReturn(mockResultSet);
 
-        dao.ReadAll();
+        dao.readAll();
 
         verify(mockStatement).executeQuery(eq(query));
     }
 
     @Test
-    public void ReadAll_ReadExistingArticles_ArticlesCreated() throws Exception {
+    public void readAll_ReadExistingArticles_ArticlesCreated() throws Exception {
         ArticleDao dao = new ArticleDao(mockDatabase);
-        when(mockConnection.createStatement()).thenReturn(mockStatement);
-        when(mockStatement.executeQuery(anyString())).thenReturn(mockResultSet);
+        when(mockResultSet.next()).thenReturn(true).thenReturn(false);
         when(mockResultSet.getString(2)).thenReturn("Name");
 
-        List<Article> articles = dao.ReadAll();
+        List<Article> articles = dao.readAll();
 
         assertEquals(1, articles.size());
         Article article = articles.get(0);
@@ -109,13 +110,60 @@ public class ArticleDaoTest {
     }
 
     @Test
-    public void testUpdate() throws Exception {
+    public void updateArticle_ArticleInReceipt_NewArticleCreated() throws Exception {
+        ArticleDao dao = Mockito.spy(new ArticleDao(mockDatabase));
+        Article article = new Article(1, "Name", 20.0, "Description", "Image", "Category");
+        String query = "UPDATE ARTICLE SET VISIBLE=FALSE WHERE ID=?;";
+        when(mockResultSet.next()).thenReturn(true);
+
+        dao.update(article);
+
+        verify(mockConnection).prepareStatement(query);
+        verify(dao).create(article);
+    }
+
+    @Test
+    public void updateArticle_ArticleNotInReceipt_ArticleUpdated() throws Exception {
+        ArticleDao dao = new ArticleDao(mockDatabase);
+        Article article = new Article(1, "Name", 20.0, "Description", "Image", "Category");
+        String query = "UPDATE ARTICLE SET NAME=?, PRICE=?, DESCRIPTION=?, IMAGE=?, CATEGORY=? WHERE ID=?;";
+        when(mockResultSet.next()).thenReturn(false);
+
+        dao.update(article);
+
+        verify(mockConnection).prepareStatement(query);
+        verify(mockStatement).executeUpdate();
 
     }
 
     @Test
-    public void testDelete() throws Exception {
+    public void deleteArticle_ArticleInReceipt_ArticleAltered() throws Exception {
+        ArticleDao dao = new ArticleDao(mockDatabase);
+        Article article = new Article();
+        String query = "UPDATE ARTICLE SET VISIBLE=FALSE WHERE ID=?;";
+        article.setId(1);
+        when(mockConnection.prepareStatement(anyString())).thenReturn(mockStatement);
+        when(mockStatement.executeQuery()).thenReturn(mockResultSet);
+        when(mockResultSet.next()).thenReturn(true);
 
+        dao.delete(article);
+
+        verify(mockConnection).prepareStatement(query);
+    }
+
+    @Test
+    public void deleteArticle_NoLinkedReceipt_ArticleDeleted() throws Exception {
+        ArticleDao dao = new ArticleDao(mockDatabase);
+        Article article = new Article();
+        String query = "DELETE FROM ARTICLE WHERE ID =?;";
+        article.setId(1);
+        when(mockConnection.prepareStatement(anyString())).thenReturn(mockStatement);
+        when(mockStatement.executeQuery()).thenReturn(mockResultSet);
+        when(mockResultSet.next()).thenReturn(false);
+
+        dao.delete(article);
+
+        verify(mockConnection).prepareStatement(query);
     }
 
 }

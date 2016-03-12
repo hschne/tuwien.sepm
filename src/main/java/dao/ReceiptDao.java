@@ -5,19 +5,19 @@ import entities.Receipt;
 import java.util.List;
 
 public class ReceiptDao implements IDao<Receipt> {
-    public void Create(Receipt entity) {
+    public void create(Receipt entity) {
 
     }
 
-    public List<Receipt> ReadAll() {
+    public List<Receipt> readAll() {
         return null;
     }
 
-    public void Update(Receipt entity) {
+    public void update(Receipt entity) {
 
     }
 
-    public void Delete(Receipt entity) {
+    public void delete(Receipt entity) {
 
     }
 }

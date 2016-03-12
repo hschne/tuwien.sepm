@@ -7,7 +7,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.SQLException;
-import java.util.List;
 
 public class Main {
 
@@ -28,7 +27,7 @@ public class Main {
         try {
             Article art = new Article();
             art.setId(4);
-            articleDao.Delete(art);
+            articleDao.delete(art);
         } catch (SQLException e) {
             e.printStackTrace();
         }
