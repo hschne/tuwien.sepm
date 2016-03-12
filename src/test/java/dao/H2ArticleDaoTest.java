@@ -1,4 +1,4 @@
-package dao.tests;
+package dao;
 
 import dao.H2ArticleDao;
 import dao.Database;
