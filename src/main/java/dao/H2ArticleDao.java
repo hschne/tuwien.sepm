@@ -18,7 +18,7 @@ public class H2ArticleDao implements ArticleDao {
         this.connection = database.getConnection();
     }
 
-    public List<Article> readAll() throws SQLException {
+    public List<Article> getVisible() throws SQLException {
         logger.debug("Getting all articles");
         Statement statement = connection.createStatement();
         String query = "SELECT * FROM ARTICLE WHERE VISIBLE=TRUE ORDER BY ID DESC;";

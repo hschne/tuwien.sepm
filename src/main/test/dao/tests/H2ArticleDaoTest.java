@@ -89,7 +89,7 @@ public class H2ArticleDaoTest {
         H2ArticleDao dao = new H2ArticleDao(mockDatabase);
         String query = "SELECT * FROM ARTICLE WHERE VISIBLE=TRUE ORDER BY ID DESC;";
 
-        dao.readAll();
+        dao.getVisible();
 
         verify(mockStatement).executeQuery(eq(query));
     }
@@ -100,7 +100,7 @@ public class H2ArticleDaoTest {
         when(mockResultSet.next()).thenReturn(true).thenReturn(false);
         when(mockResultSet.getString(2)).thenReturn("Name");
 
-        List<Article> articles = dao.readAll();
+        List<Article> articles = dao.getVisible();
 
         assertEquals(1, articles.size());
         Article article = articles.get(0);

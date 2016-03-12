@@ -19,8 +19,7 @@ public class Database {
     }
 
     public Database(String path, String username, String password) throws SQLException, ClassNotFoundException {
-        logger.debug("Connecting to DB...");
-        logger.debug("Path: " + path);
+        logger.debug("Connecting to Database on " +path);
         Class.forName("org.h2.Driver");
         connection = DriverManager.getConnection("jdbc:h2:" + path, username, password);
     }
@@ -30,7 +29,7 @@ public class Database {
     }
 
     public void Disconnect() {
-        logger.debug("Disconnecting...");
+        logger.debug("Disconnecting from Database");
         try {
             connection.close();
         } catch (SQLException e) {
