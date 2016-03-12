@@ -11,6 +11,7 @@ class ArticleCriteria {
     public ArticleCriteria(String name, String category, DoubleCriteria priceCriteria) {
         this.name = name;
         this.category = category;
+        this.priceCriteria = priceCriteria;
     }
 
     public DoubleCriteria getPriceCritera(){

@@ -38,7 +38,6 @@ public class ArticleRepositoryTests extends BaseTest {
         List<Article> expectedArticles = new ArrayList<>();
         when(mockArticleDao.getVisible()).thenReturn(expectedArticles);
 
-
         List<Article> result = repository.getArticles();
 
         assertEquals(expectedArticles, result);
@@ -53,7 +52,35 @@ public class ArticleRepositoryTests extends BaseTest {
     }
 
     @Test
-    public void testFilter() throws Exception {
+    public void filter_EmptyFilter_ReturnsSameList() throws Exception {
+        ArticleRepository repository = new ArticleRepository(mockArticleDao);
+        List<Article> expectedArticles = new ArrayList<>();
+        when(mockArticleDao.getVisible()).thenReturn(expectedArticles);
 
+        List<Article> articles = repository.filter(new ArticleCriteria(null, null, null));
+
+        assertEquals(expectedArticles, articles);
+    }
+
+    @Test
+    public void filter_FilterByDouble_ReturnFilteredResult() throws Exception {
+        ArticleRepository repository = new ArticleRepository(mockArticleDao);
+        List<Article> expectedArticles = createDummyArticles();
+        when(mockArticleDao.getVisible()).thenReturn(expectedArticles);
+
+        DoubleCriteria criteria = new DoubleCriteria(2.0, Operator.GREATER);
+        List<Article> articles = repository.filter(new ArticleCriteria(null,null, criteria));
+
+        assertEquals(articles.size(), 2);
+    }
+
+    //Returns articles with price from 0..4 and names name1...name4 etc.
+    private List<Article> createDummyArticles(){
+        List<Article> result = new ArrayList<>();
+        for (int i = 0; i<5;i++){
+            Article article = new Article(i, "name"+i,i,"description", "","category"+i);
+            result.add(article);
+        }
+        return result;
     }
 }

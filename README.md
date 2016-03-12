@@ -5,6 +5,7 @@ The repository for the SEPM introduction exercise.
 
 - Implement filters on article, receipts 
 - Statistische auswertung implementieren
+- Bildrender implementieren
 - Automatische preisanpassung implementieren
 - build?
 - JavaFX base setup

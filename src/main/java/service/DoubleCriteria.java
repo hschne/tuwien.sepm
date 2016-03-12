@@ -12,6 +12,7 @@ public class DoubleCriteria {
         Validate.notNull(number);
         Validate.notNull(operator);
         this.number = number;
+        this.operator = operator;
     }
 
     public boolean compare(double compareValue) {
