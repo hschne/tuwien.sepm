@@ -1,62 +1,26 @@
 package dao;
 
-import dao.H2ArticleDao;
-import dao.Database;
 import entities.Article;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
-public class H2ArticleDaoTest {
 
-    @Mock
-    Database mockDatabase;
+public class H2ArticleDaoTest extends DaoTest {
 
-    @Mock
-    Connection mockConnection;
-
-    @Mock
-    PreparedStatement mockStatement;
-
-    @Mock
-    ResultSet mockResultSet;
-
-    @Before
-    public void setUp() throws SQLException {
-        when(mockDatabase.getConnection()).thenReturn(mockConnection);
-        when(mockConnection.prepareStatement(anyString())).thenReturn(mockStatement);
-        when(mockConnection.createStatement()).thenReturn(mockStatement);
-        when(mockStatement.getGeneratedKeys()).thenReturn(mockResultSet);
-        when(mockStatement.executeQuery()).thenReturn(mockResultSet);
-        when(mockStatement.executeQuery(anyString())).thenReturn(mockResultSet);
-    }
-
-    @After
-    public void tearDown(){
-        reset(mockDatabase);
-        reset(mockConnection);
-        reset(mockStatement);
-        reset(mockResultSet);
-    }
     @Test
-    public void createArticle_NewArticle_CreateCalledWithParameters() throws Exception {
+    public void create_NewArticle_DataTransferredToDb() throws Exception {
         H2ArticleDao dao = new H2ArticleDao(mockDatabase);
         String name = "Name";
         Double price = 1.0;
@@ -65,17 +29,18 @@ public class H2ArticleDaoTest {
         String category = "Category";
         when(mockResultSet.next()).thenReturn(true);
 
-        dao.create(new Article(name, description,image,category,price));
+        dao.create(new Article(name, description, image, category, price));
 
         verify(mockStatement).setString(anyInt(), eq(name));
         verify(mockStatement).setString(anyInt(), eq(description));
         verify(mockStatement).setString(anyInt(), eq(image));
         verify(mockStatement).setString(anyInt(), eq(category));
         verify(mockStatement).setDouble(anyInt(), eq(price));
+        verify(mockStatement, times(1)).executeUpdate();
     }
 
     @Test(expected = SQLException.class)
-    public void createArticle_NewArticle_CreationFailed() throws Exception {
+    public void create_NewArticle_CreationFailed() throws Exception {
         H2ArticleDao dao = new H2ArticleDao(mockDatabase);
         when(mockResultSet.next()).thenReturn(false);
 
@@ -83,7 +48,7 @@ public class H2ArticleDaoTest {
     }
 
     @Test
-    public void createArticle_NewArticle_ArticleIdSet() throws Exception {
+    public void create_NewArticle_ArticleIdSet() throws Exception {
         H2ArticleDao dao = new H2ArticleDao(mockDatabase);
         Article article = new Article();
         when(mockResultSet.getInt(anyInt())).thenReturn(1);
@@ -119,7 +84,7 @@ public class H2ArticleDaoTest {
     }
 
     @Test
-    public void updateArticle_ArticleInReceipt_NewArticleCreated() throws Exception {
+    public void update_ArticleInReceipt_NewArticleCreated() throws Exception {
         H2ArticleDao dao = Mockito.spy(new H2ArticleDao(mockDatabase));
         Article article = new Article(1, "Name", 20.0, "Description", "Image", "Category");
         String query = "UPDATE ARTICLE SET VISIBLE=FALSE WHERE ID=?;";
@@ -132,7 +97,7 @@ public class H2ArticleDaoTest {
     }
 
     @Test
-    public void updateArticle_ArticleNotInReceipt_ArticleUpdated() throws Exception {
+    public void update_ArticleNotInReceipt_ArticleUpdated() throws Exception {
         H2ArticleDao dao = new H2ArticleDao(mockDatabase);
         Article article = new Article(1, "Name", 20.0, "Description", "Image", "Category");
         String query = "UPDATE ARTICLE SET NAME=?, PRICE=?, DESCRIPTION=?, IMAGE_PATH=?, CATEGORY=? WHERE ID=?;";
@@ -146,7 +111,7 @@ public class H2ArticleDaoTest {
     }
 
     @Test
-    public void deleteArticle_ArticleInReceipt_ArticleAltered() throws Exception {
+    public void delete_ArticleInReceipt_ArticleAltered() throws Exception {
         H2ArticleDao dao = new H2ArticleDao(mockDatabase);
         Article article = new Article();
         String query = "UPDATE ARTICLE SET VISIBLE=FALSE WHERE ID=?;";
@@ -159,7 +124,7 @@ public class H2ArticleDaoTest {
     }
 
     @Test
-    public void deleteArticle_NoLinkedReceipt_ArticleDeleted() throws Exception {
+    public void delete_NoLinkedReceipt_ArticleDeleted() throws Exception {
         H2ArticleDao dao = new H2ArticleDao(mockDatabase);
         Article article = new Article();
         String query = "DELETE FROM ARTICLE WHERE ID =?;";

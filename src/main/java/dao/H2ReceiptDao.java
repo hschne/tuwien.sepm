@@ -8,11 +8,13 @@ import java.sql.*;
 import java.util.List;
 
 public class H2ReceiptDao implements ReceiptDao {
+
     private final Connection connection;
 
     public H2ReceiptDao(Database database) {
         this.connection = database.getConnection();
     }
+
 
     public void create(Receipt receipt) throws SQLException {
         insertReceiptData(receipt);
@@ -21,19 +23,6 @@ public class H2ReceiptDao implements ReceiptDao {
 
     public List<Receipt> readAll() {
         return null;
-    }
-
-    private void insertLinkedArticles(Receipt receipt) throws SQLException {
-        String query = "INSERT INTO ARTICLE_RECEIPT (RECEIPT, ARTICLE, AMOUNT) VALUES (?,?,?)";
-        PreparedStatement statement = connection.prepareStatement(query);
-        for (ReceiptEntry receiptEntry : receipt.getReceiptEntries()) {
-            Article article = receiptEntry.getArticle();
-            statement.setInt(1, receipt.getId());
-            statement.setInt(2, article.getId());
-            statement.setInt(3, receiptEntry.getQuantity());
-            statement.addBatch();
-        }
-        statement.executeBatch();
     }
 
     private void insertReceiptData(Receipt receipt) throws SQLException {
@@ -52,4 +41,19 @@ public class H2ReceiptDao implements ReceiptDao {
             throw new SQLException("No id created for " +receipt.toString());
         }
     }
+
+    private void insertLinkedArticles(Receipt receipt) throws SQLException {
+        String query = "INSERT INTO ARTICLE_RECEIPT (RECEIPT, ARTICLE, AMOUNT) VALUES (?,?,?)";
+        PreparedStatement statement = connection.prepareStatement(query);
+        for (ReceiptEntry receiptEntry : receipt.getReceiptEntries()) {
+            Article article = receiptEntry.getArticle();
+            statement.setInt(1, receipt.getId());
+            statement.setInt(2, article.getId());
+            statement.setInt(3, receiptEntry.getQuantity());
+            statement.addBatch();
+        }
+        statement.executeBatch();
+    }
+
+
 }

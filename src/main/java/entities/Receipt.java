@@ -12,14 +12,25 @@ public class Receipt {
     private Date date;
     private String receiver;
     private String receiverAddress;
+    private List<ReceiptEntry> receiptEntries;
+
+    public Receipt() {
+    }
 
     public Receipt(int id, Date date, String receiver, String receiverAddress, List<ReceiptEntry> receiptEntries) {
+        this(date, receiver, receiverAddress, receiptEntries);
         this.id = id;
+
+    }
+
+    public Receipt(Date date, String receiver, String receiverAddress, List<ReceiptEntry> receiptEntries) {
         this.date = date;
         this.receiver = receiver;
         this.receiverAddress = receiverAddress;
         this.receiptEntries = receiptEntries;
     }
+
+
 
     public List<ReceiptEntry> getReceiptEntries() {
         return receiptEntries;
@@ -28,8 +39,6 @@ public class Receipt {
     public void setReceiptEntries(List<ReceiptEntry> receiptEntries) {
         this.receiptEntries = receiptEntries;
     }
-
-    private List<ReceiptEntry> receiptEntries;
 
     public String getReceiverAddress() {
         return receiverAddress;
