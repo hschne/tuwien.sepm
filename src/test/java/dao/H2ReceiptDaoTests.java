@@ -16,7 +16,7 @@ import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.*;
 
-public class H2ReceiptDaoTest extends DaoTest {
+public class H2ReceiptDaoTests extends DaoTest {
 
     @Test
     public void create_NewReceipt_ReceiptIdSet() throws Exception {

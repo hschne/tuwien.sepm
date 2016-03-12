@@ -14,7 +14,7 @@ import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.*;
 
 
-public class H2ArticleDaoTest extends DaoTest {
+public class H2ArticleDaoTests extends DaoTest {
 
     @Test
     public void create_NewArticle_ArticleInserted() throws Exception {

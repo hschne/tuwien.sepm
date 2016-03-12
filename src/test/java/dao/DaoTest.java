@@ -1,12 +1,10 @@
 package dao;
 
-
+import base.BaseTest;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
-import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,8 +16,7 @@ import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.when;
 
 @Ignore
-@RunWith(MockitoJUnitRunner.class)
-class DaoTest {
+class DaoTest extends BaseTest{
 
     @Mock
     protected Database mockDatabase;
@@ -44,7 +41,7 @@ class DaoTest {
     }
 
     @After
-    public void tearDown(){
+    public void tearDown() {
         reset(mockDatabase);
         reset(mockConnection);
         reset(mockStatement);
