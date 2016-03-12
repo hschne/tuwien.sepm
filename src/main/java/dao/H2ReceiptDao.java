@@ -4,7 +4,7 @@ import entities.Receipt;
 
 import java.util.List;
 
-public class H2ReceiptDao {
+public class H2ReceiptDao implements ReceiptDao {
     public void create(Receipt entity) {
 
     }
@@ -13,11 +13,4 @@ public class H2ReceiptDao {
         return null;
     }
 
-    public void update(Receipt entity) {
-
-    }
-
-    public void delete(Receipt entity) {
-
-    }
 }
