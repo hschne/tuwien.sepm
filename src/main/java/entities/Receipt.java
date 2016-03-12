@@ -1,4 +1,11 @@
 package entities;
 
-public class Receipt implements IEntity {
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+
+public class Receipt {
+
+    @Override
+    public String toString() {
+        return ReflectionToStringBuilder.toString(this);
+    }
 }

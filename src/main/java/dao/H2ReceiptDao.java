@@ -4,7 +4,7 @@ import entities.Receipt;
 
 import java.util.List;
 
-public class ReceiptDao implements IDao<Receipt> {
+public class H2ReceiptDao {
     public void create(Receipt entity) {
 
     }

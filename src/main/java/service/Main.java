@@ -1,6 +1,6 @@
 package service;
 
-import dao.ArticleDao;
+import dao.H2ArticleDao;
 import dao.Database;
 import entities.Article;
 import org.apache.logging.log4j.LogManager;
@@ -23,13 +23,12 @@ public class Main {
             logger.error(e);
             return;
         }
-        ArticleDao articleDao = new ArticleDao(database);
+        H2ArticleDao articleDao = new H2ArticleDao(database);
         try {
-            Article art = new Article();
-            art.setId(4);
-            articleDao.delete(art);
-        } catch (SQLException e) {
-            e.printStackTrace();
+            Article art = new Article(4,"name",20.0,"desc","im","dudue");
+            System.out.println(art.toString());
+        } catch (Exception e) {
+            logger.error(e);
         }
         finally {
             database.Disconnect();

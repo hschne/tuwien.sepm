@@ -1,9 +1,16 @@
 package entities;
 
 
-public class Article implements IEntity {
+public class Article extends AbstractEntity {
 
-    public Article(){
+    private String name;
+    private String description;
+    private String image;
+    private String category;
+    private double price;
+    private int id;
+
+    public Article() {
 
     }
 
@@ -12,6 +19,8 @@ public class Article implements IEntity {
         this.id = id;
 
     }
+
+
     public Article(String name, String description, String image, String category, double price) {
         this.name = name;
         this.description = description;
@@ -19,18 +28,6 @@ public class Article implements IEntity {
         this.category = category;
         this.price = price;
     }
-
-    private String name;
-
-    private String description;
-
-    private String image;
-
-    private String category;
-
-    private double price;
-
-
 
     public String getImage() {
         return image;
@@ -81,5 +78,5 @@ public class Article implements IEntity {
         this.id = id;
     }
 
-    private int id;
+
 }
