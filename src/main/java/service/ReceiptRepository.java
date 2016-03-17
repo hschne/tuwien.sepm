@@ -2,15 +2,12 @@ package service;
 
 import dao.ReceiptDao;
 import entities.Receipt;
-import service.filter.ArticleCriteria;
 import service.filter.DateCriteria;
 import service.filter.NumberCriteria;
 import service.filter.ReceiptCriteria;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class ReceiptRepository {
@@ -24,7 +21,7 @@ public class ReceiptRepository {
     }
 
     public List<Receipt> getReceipts() throws SQLException {
-        if(receipts == null){
+        if (receipts == null) {
             receipts = dao.readAll();
         }
         return receipts;
@@ -32,16 +29,16 @@ public class ReceiptRepository {
 
     public List<Receipt> filter(ReceiptCriteria criteria) throws SQLException {
         List<Receipt> filteredReceipts = getReceipts();
-        if(criteria.getReceiver() != null){
+        if (criteria.getReceiver() != null) {
             filteredReceipts = filteredReceipts.stream()
                     .filter(p -> p.getReceiver().equals(criteria.getReceiver())).collect(Collectors.toList());
         }
-        if(criteria.getDateCriteria() != null){
+        if (criteria.getDateCriteria() != null) {
             DateCriteria dateCriteria = criteria.getDateCriteria();
             filteredReceipts = filteredReceipts.stream()
                     .filter(p -> dateCriteria.compare(p.getDate())).collect(Collectors.toList());
         }
-        if(criteria.getArticleCountCriteria() != null){
+        if (criteria.getArticleCountCriteria() != null) {
             NumberCriteria numberCriteria = criteria.getArticleCountCriteria();
             filteredReceipts = filteredReceipts.stream()
                     .filter(p -> numberCriteria.compare(p.getReceiptEntries().size())).collect(Collectors.toList());
