@@ -7,6 +7,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
+import service.filter.ArticleCriteria;
+import service.filter.NumberCriteria;
+import service.filter.Operator;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -68,7 +71,7 @@ public class ArticleRepositoryTests extends BaseTest {
         List<Article> expectedArticles = createDummyArticles();
         when(mockArticleDao.getVisible()).thenReturn(expectedArticles);
 
-        DoubleCriteria criteria = new DoubleCriteria(2.0, Operator.GREATER);
+        NumberCriteria criteria = new NumberCriteria(2.0, Operator.GREATER);
         List<Article> articles = repository.filter(new ArticleCriteria(null,null, criteria));
 
         assertEquals(articles.size(), 2);

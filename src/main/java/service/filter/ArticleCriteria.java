@@ -1,20 +1,20 @@
-package service;
+package service.filter;
 
-class ArticleCriteria {
+public class ArticleCriteria {
 
     private String name;
 
     private String category;
 
-    private DoubleCriteria priceCriteria;
+    private NumberCriteria priceCriteria;
 
-    public ArticleCriteria(String name, String category, DoubleCriteria priceCriteria) {
+    public ArticleCriteria(String name, String category, NumberCriteria priceCriteria) {
         this.name = name;
         this.category = category;
         this.priceCriteria = priceCriteria;
     }
 
-    public DoubleCriteria getPriceCritera(){
+    public NumberCriteria getPriceCritera(){
         return priceCriteria;
     }
 

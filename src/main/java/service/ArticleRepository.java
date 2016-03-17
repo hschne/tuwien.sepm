@@ -2,6 +2,8 @@ package service;
 
 import dao.ArticleDao;
 import entities.Article;
+import service.filter.ArticleCriteria;
+import service.filter.NumberCriteria;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -27,16 +29,16 @@ public class ArticleRepository {
     public List<Article> filter(ArticleCriteria criteria) throws SQLException {
         List<Article> filteredArticles = getArticles();
         if (criteria.getCategory() != null){
-            filteredArticles = getArticles().stream()
+            filteredArticles = filteredArticles.stream()
                     .filter(p -> Objects.equals(p.getCategory(), criteria.getCategory())).collect(Collectors.toList());
         }
         if(criteria.getName() != null){
-            filteredArticles = getArticles().stream()
+            filteredArticles = filteredArticles.stream()
                     .filter(p -> Objects.equals(p.getName(), criteria.getName())).collect(Collectors.toList());
         }
         if(criteria.getPriceCritera() != null ){
-            DoubleCriteria priceCriteria = criteria.getPriceCritera();
-            filteredArticles = getArticles().stream()
+            NumberCriteria priceCriteria = criteria.getPriceCritera();
+            filteredArticles = filteredArticles.stream()
                     .filter(p -> priceCriteria.compare(p.getPrice())).collect(Collectors.toList());
         }
         return filteredArticles;

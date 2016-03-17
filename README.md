@@ -3,7 +3,8 @@ The repository for the SEPM introduction exercise.
 
 ## TODO:
 
-- Implement filters on article, receipts 
+- Implement filters on article, receipts
+- Wrap exceptions from dao
 - Statistische auswertung implementieren
 - Bildrender implementieren
 - Automatische preisanpassung implementieren

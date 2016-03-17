@@ -1,14 +1,14 @@
-package service;
+package service.filter;
 
 import org.apache.commons.lang3.Validate;
 
-public class DoubleCriteria {
+public class NumberCriteria {
 
     double number;
 
     Operator operator;
 
-    public DoubleCriteria(double number, Operator operator) {
+    public NumberCriteria(double number, Operator operator) {
         Validate.notNull(number);
         Validate.notNull(operator);
         this.number = number;
