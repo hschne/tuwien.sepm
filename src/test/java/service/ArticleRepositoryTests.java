@@ -18,6 +18,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.when;
+import static service.DummyObjectFactory.createDummyArticles;
 
 
 public class ArticleRepositoryTests extends BaseTest {
@@ -68,7 +69,7 @@ public class ArticleRepositoryTests extends BaseTest {
     @Test
     public void filter_ByDouble_ReturnsFilteredResult() throws Exception {
         ArticleRepository repository = new ArticleRepository(mockArticleDao);
-        List<Article> expectedArticles = createDummyArticles();
+        List<Article> expectedArticles = createDummyArticles(5);
         when(mockArticleDao.getVisible()).thenReturn(expectedArticles);
 
         NumberCriteria criteria = new NumberCriteria(2.0, Operator.GREATER);
@@ -80,7 +81,7 @@ public class ArticleRepositoryTests extends BaseTest {
     @Test
     public void filter_ByName_ReturnsFilteredResult() throws Exception {
         ArticleRepository repository = new ArticleRepository(mockArticleDao);
-        List<Article> expectedArticles = createDummyArticles();
+        List<Article> expectedArticles = createDummyArticles(5);
         when(mockArticleDao.getVisible()).thenReturn(expectedArticles);
 
         List<Article> articles = repository.filter(new ArticleCriteria("name0", null, null));
@@ -89,13 +90,4 @@ public class ArticleRepositoryTests extends BaseTest {
 
     }
 
-    //Returns articles with price from 0..4 and names name1...name4 etc.
-    private List<Article> createDummyArticles() {
-        List<Article> result = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            Article article = new Article(i, "name" + i, i, "description", "", "category" + i);
-            result.add(article);
-        }
-        return result;
-    }
 }
