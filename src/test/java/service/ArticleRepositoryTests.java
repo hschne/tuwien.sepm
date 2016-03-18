@@ -2,6 +2,7 @@ package service;
 
 import base.BaseTest;
 import dao.ArticleDao;
+import dao.DaoException;
 import entities.Article;
 import org.junit.After;
 import org.junit.Before;
@@ -50,7 +51,7 @@ public class ArticleRepositoryTests extends BaseTest {
     @Test(expected = ServiceException.class)
     public void getArticles_ExceptionOccurs_ExceptionRethrown() throws Exception {
         ArticleRepository repository = new ArticleRepository(mockArticleDao);
-        when(mockArticleDao.getVisible()).thenThrow(SQLException.class);
+        when(mockArticleDao.getVisible()).thenThrow(DaoException.class);
 
         repository.getAll();
     }

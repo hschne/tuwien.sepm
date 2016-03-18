@@ -1,6 +1,7 @@
 package service;
 
 import dao.ArticleDao;
+import dao.DaoException;
 import entities.Article;
 import service.filter.ArticleCriteria;
 import service.filter.Filter;
@@ -25,7 +26,7 @@ public class ArticleRepository extends AbstractService implements Filter<Article
         if(articles == null){
             try {
                 articles = dao.getVisible();
-            } catch (SQLException e) {
+            } catch (DaoException e) {
                 logger.error("Article retrieval from database failed.",e);
                 throw new ServiceException("Could not retrieve articles", e);
             }

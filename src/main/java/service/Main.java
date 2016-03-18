@@ -1,5 +1,6 @@
 package service;
 
+import dao.DaoException;
 import dao.Database;
 import dao.h2.H2ReceiptDao;
 import dao.ReceiptDao;
@@ -18,12 +19,8 @@ public class Main {
         Database database = null;
         try{
             database = new Database("~/sepm");
-        } catch (ClassNotFoundException e) {
-            logger.error(e);
-            return;
-        } catch (SQLException e) {
-            logger.error(e);
-            return;
+        } catch (DaoException e) {
+            e.printStackTrace();
         }
         ReceiptDao dao = new H2ReceiptDao(database);
         try {
@@ -32,7 +29,12 @@ public class Main {
             logger.error(e);
         }
         finally {
-            database.Disconnect();
+            try{
+                database.disconnect();
+            }
+            catch (DaoException e) {
+                e.printStackTrace();
+            }
         }
     }
 

@@ -16,7 +16,7 @@ public interface ReceiptDao {
      * @param receipt
      * @throws SQLException
      */
-    void create(Receipt receipt) throws SQLException;
+    void create(Receipt receipt) throws DaoException;
 
     /**
      * Retrieves all receipts with their corresponding receipt entries
@@ -24,5 +24,5 @@ public interface ReceiptDao {
      * @return
      * @throws SQLException
      */
-    List<Receipt> readAll() throws SQLException;
+    List<Receipt> readAll() throws DaoException;
 }

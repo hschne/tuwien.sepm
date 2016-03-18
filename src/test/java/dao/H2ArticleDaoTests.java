@@ -36,7 +36,7 @@ public class H2ArticleDaoTests extends DaoTest {
         verify(mockStatement, times(1)).executeUpdate();
     }
 
-    @Test(expected = SQLException.class)
+    @Test(expected = DaoException.class)
     public void create_NewArticle_CreationFailed() throws Exception {
         H2ArticleDao dao = new H2ArticleDao(mockDatabase);
         when(mockResultSet.next()).thenReturn(false);

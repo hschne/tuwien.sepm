@@ -1,5 +1,6 @@
 package service;
 
+import dao.DaoException;
 import dao.ReceiptDao;
 import entities.Receipt;
 import service.filter.DatePredicate;
@@ -26,7 +27,7 @@ public class ReceiptRepository extends AbstractService implements Repository<Rec
         if (receipts == null) {
             try {
                 receipts = dao.readAll();
-            } catch (SQLException e) {
+            } catch (DaoException e) {
                 logger.error("Receipt retrieval from database has failed", e);
                 throw new ServiceException("Could not retrieve receipts", e);
             }

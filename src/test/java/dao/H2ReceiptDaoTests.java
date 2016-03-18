@@ -23,7 +23,7 @@ public class H2ReceiptDaoTests extends DaoTest {
         ReceiptDao dao = new H2ReceiptDao(mockDatabase);
         when(mockResultSet.getInt(anyInt())).thenReturn(1);
         when(mockResultSet.next()).thenReturn(true);
-        Receipt receipt = new Receipt(1, new Date(), "", "", new ArrayList<ReceiptEntry>());
+        Receipt receipt = new Receipt(1, new Date(), "", "", new ArrayList<>());
 
         dao.create(receipt);
 
@@ -36,7 +36,7 @@ public class H2ReceiptDaoTests extends DaoTest {
         Date date = new Date();
         String receiver = "Receiver";
         String receiverAddress = "ReceiverAddress";
-        Receipt receipt = new Receipt(date, receiver, receiverAddress, new ArrayList<ReceiptEntry>());
+        Receipt receipt = new Receipt(date, receiver, receiverAddress, new ArrayList<>());
         when(mockResultSet.next()).thenReturn(true);
 
         dao.create(receipt);
@@ -65,17 +65,17 @@ public class H2ReceiptDaoTests extends DaoTest {
         verify(mockStatement, times(1)).executeBatch();
     }
 
-    @Test(expected = SQLException.class)
+    @Test(expected = DaoException.class)
     public void create_NewReceipt_ReceiptCreationFailed() throws Exception {
         ReceiptDao dao = new H2ReceiptDao(mockDatabase);
-        dao.create(new Receipt(new Date(), "", "", new ArrayList<ReceiptEntry>()));
+        dao.create(new Receipt(new Date(), "", "", new ArrayList<>()));
         when(mockResultSet.next()).thenReturn(false);
     }
 
     @Test
     public void readAll_GetAllReceipts_ReceiptReturned() throws Exception {
         int id = 1;
-        Date date = new Date(00000);
+        Date date = new Date(0);
         String receiver = "Receiver";
         String receiverAdress = "ReceiverAdress";
         ReceiptDao dao = new H2ReceiptDao(mockDatabase);
@@ -123,7 +123,7 @@ public class H2ReceiptDaoTests extends DaoTest {
     private List<ReceiptEntry> dummyReceiptEntries() {
         Article article = new Article(1, "", 0.0, "", "", "");
         ReceiptEntry entry = new ReceiptEntry(article, 1);
-        List<ReceiptEntry> entries = new ArrayList<ReceiptEntry>();
+        List<ReceiptEntry> entries = new ArrayList<>();
         entries.add(entry);
         return entries;
     }

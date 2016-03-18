@@ -1,5 +1,6 @@
 package dao.h2;
 
+import dao.DaoException;
 import dao.Database;
 import dao.ReceiptDao;
 import entities.Article;
@@ -19,19 +20,29 @@ public class H2ReceiptDao extends AbstractH2Dao implements ReceiptDao {
     }
 
     @Override
-    public void create(Receipt receipt) throws SQLException {
+    public void create(Receipt receipt) throws DaoException {
         logger.debug("Creating receipt " + receipt);
-        insertReceiptData(receipt);
-        insertLinkedArticles(receipt);
+        try {
+            insertReceiptData(receipt);
+            insertLinkedArticles(receipt);
+        } catch (SQLException e) {
+            handle(e);
+        }
     }
 
     @Override
-    public List<Receipt> readAll() throws SQLException {
+    public List<Receipt> readAll() throws DaoException {
         logger.debug("Reading all receipts");
         String query = "SELECT * FROM RECEIPT";
-        PreparedStatement statement = connection.prepareStatement(query);
-        ResultSet resultSet = statement.executeQuery();
-        return parseReceipts(resultSet);
+        ResultSet resultSet;
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            resultSet = statement.executeQuery();
+            return parseReceipts(resultSet);
+        } catch (SQLException e) {
+            logger.error(e);
+            throw new DaoException(e);
+        }
     }
 
     private List<Receipt> parseReceipts(ResultSet resultSet) throws SQLException {
@@ -100,6 +111,11 @@ public class H2ReceiptDao extends AbstractH2Dao implements ReceiptDao {
             statement.addBatch();
         }
         statement.executeBatch();
+    }
+
+    private void handle(SQLException e) throws DaoException {
+        logger.error(e);
+        throw new DaoException(e);
     }
 
 
