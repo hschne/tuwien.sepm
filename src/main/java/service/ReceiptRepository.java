@@ -2,6 +2,7 @@ package service;
 
 import dao.ReceiptDao;
 import entities.Receipt;
+import entities.ReceiptEntry;
 import service.filter.DateCriteria;
 import service.filter.NumberCriteria;
 import service.filter.ReceiptCriteria;
