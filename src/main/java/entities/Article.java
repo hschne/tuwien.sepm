@@ -20,7 +20,6 @@ public class Article extends AbstractEntity {
 
     }
 
-
     public Article(String name, String description, String image, String category, double price) {
         this.name = name;
         this.description = description;
