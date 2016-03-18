@@ -1,4 +1,4 @@
-package service;
+package service.calculation;
 
 import entities.Article;
 

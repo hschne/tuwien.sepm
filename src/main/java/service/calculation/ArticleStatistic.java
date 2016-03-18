@@ -1,35 +1,39 @@
-package service;
+package service.calculation;
 
 import entities.Article;
 import entities.Receipt;
 import entities.ReceiptEntry;
+import service.AbstractService;
+import service.ReceiptRepository;
+import service.ServiceException;
 import service.filter.DatePredicate;
 import service.filter.Operator;
 import service.filter.ReceiptCriteria;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ArticleStatistics implements Statistic {
+public class ArticleStatistic extends AbstractService implements Statistic {
 
     private ReceiptRepository receiptRepository;
 
     private List<Article> articles;
 
-    public ArticleStatistics(ReceiptRepository receiptRepository, List<Article> articles) {
+    public ArticleStatistic(ReceiptRepository receiptRepository, List<Article> articles) {
         this.receiptRepository = receiptRepository;
         this.articles = articles;
     }
 
     /**
      * Calculates how many times each article has been sold
+     *
      * @return Times sold for each article
-     * @throws CalculationException
+     * @throws ServiceException
      */
-    public List<StatisticEntry> timesSold() throws CalculationException {
+    public List<StatisticEntry> timesSold() throws ServiceException {
+        logger.debug("Calculating times sold");
         List<StatisticEntry> result = new ArrayList<>();
         for (Article article : articles) {
             result.add(timesSold(article));
@@ -39,11 +43,13 @@ public class ArticleStatistics implements Statistic {
 
     /**
      * Calculates how many times each article has been sold since a specified date
+     *
      * @param date
      * @return Times sold since date for each article
-     * @throws CalculationException
+     * @throws ServiceException
      */
-    public List<StatisticEntry> timesSoldSince(Date date) throws CalculationException {
+    public List<StatisticEntry> timesSoldSince(Date date) throws ServiceException {
+        logger.debug("Calculating times sold since "+date);
         List<StatisticEntry> result = new ArrayList<>();
         for (Article article : articles) {
             result.add(timesSoldSince(article, date));
@@ -52,26 +58,20 @@ public class ArticleStatistics implements Statistic {
         return result;
     }
 
-    private StatisticEntry timesSoldSince(Article article, Date date) throws CalculationException {
-        try {
-            List<ReceiptEntry> receiptEntries = getReceiptEntriesSince(date);
-            return countArticlesSold(article, receiptEntries);
-        } catch (SQLException e) {
-            throw new CalculationException(e);
-        }
+    private StatisticEntry timesSoldSince(Article article, Date date) throws ServiceException {
+        List<ReceiptEntry> receiptEntries = getReceiptEntriesSince(date);
+        return countArticlesSold(article, receiptEntries);
+
     }
 
-    private StatisticEntry timesSold(Article article) throws CalculationException {
-        try {
-            List<ReceiptEntry> receiptEntries = getReceiptEntries();
-            return countArticlesSold(article, receiptEntries);
-        } catch (SQLException e) {
-            throw new CalculationException(e);
-        }
+    private StatisticEntry timesSold(Article article) throws ServiceException {
+        List<ReceiptEntry> receiptEntries = getReceiptEntries();
+        return countArticlesSold(article, receiptEntries);
+
     }
 
-    private List<ReceiptEntry> getReceiptEntries() throws SQLException {
-        List<Receipt> receipts = receiptRepository.getReceipts();
+    private List<ReceiptEntry> getReceiptEntries() throws ServiceException {
+        List<Receipt> receipts = receiptRepository.getAll();
         List<ReceiptEntry> receiptEntries = new ArrayList<>();
         for (Receipt receipt : receipts) {
             receiptEntries.addAll(receipt.getReceiptEntries());
@@ -79,7 +79,7 @@ public class ArticleStatistics implements Statistic {
         return receiptEntries;
     }
 
-    private List<ReceiptEntry> getReceiptEntriesSince(Date date) throws SQLException {
+    private List<ReceiptEntry> getReceiptEntriesSince(Date date) throws ServiceException {
         DatePredicate criteria = new DatePredicate(date, Operator.GREATER);
         List<Receipt> receipts = receiptRepository.filter(new ReceiptCriteria(null, criteria, null));
         List<ReceiptEntry> receiptEntries = new ArrayList<>();

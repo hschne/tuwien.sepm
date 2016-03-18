@@ -4,7 +4,7 @@ import org.apache.commons.lang3.Validate;
 
 import java.util.Date;
 
-public class DatePredicate {
+public class DatePredicate implements Predicate {
 
     Date date;
 

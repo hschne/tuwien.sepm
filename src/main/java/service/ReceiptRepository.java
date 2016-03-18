@@ -3,6 +3,7 @@ package service;
 import dao.ReceiptDao;
 import entities.Receipt;
 import service.filter.DatePredicate;
+import service.filter.Filter;
 import service.filter.NumberPredicate;
 import service.filter.ReceiptCriteria;
 
@@ -10,7 +11,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ReceiptRepository {
+public class ReceiptRepository extends AbstractService implements Repository<Receipt>, Filter<ReceiptCriteria> {
 
     private ReceiptDao dao;
 
@@ -20,15 +21,21 @@ public class ReceiptRepository {
         this.dao = dao;
     }
 
-    public List<Receipt> getReceipts() throws SQLException {
+    public List<Receipt> getAll() throws ServiceException {
+        logger.debug("Getting all receipts");
         if (receipts == null) {
-            receipts = dao.readAll();
+            try {
+                receipts = dao.readAll();
+            } catch (SQLException e) {
+                logger.error("Receipt retrieval from database has failed", e);
+                throw new ServiceException("Could not retrieve receipts", e);
+            }
         }
         return receipts;
     }
 
-    public List<Receipt> filter(ReceiptCriteria criteria) throws SQLException {
-        List<Receipt> filteredReceipts = getReceipts();
+    public List<Receipt> filter(ReceiptCriteria criteria) throws ServiceException{
+        List<Receipt> filteredReceipts = getAll();
         if (criteria.getReceiver() != null) {
             filteredReceipts = filteredReceipts.stream()
                     .filter(p -> p.getReceiver().equals(criteria.getReceiver())).collect(Collectors.toList());

@@ -5,6 +5,8 @@ import entities.Article;
 import entities.Receipt;
 import org.junit.Test;
 import org.mockito.Mock;
+import service.calculation.ArticleStatistic;
+import service.calculation.StatisticEntry;
 import service.filter.ReceiptCriteria;
 
 import java.sql.SQLException;
@@ -24,14 +26,14 @@ public class ArticleStatisticsTest extends BaseTest {
     private ReceiptRepository mockRepository;
 
     @Test
-    public void timesSold_SingleArticle_CalculatesTimesSold() throws Exception, CalculationException {
+    public void timesSold_SingleArticle_CalculatesTimesSold() throws Exception {
         List<Article> dummyArticles = createDummyArticles(1);
         List<Receipt> dummyReceipts = new ArrayList<>();
         dummyReceipts.add(createDummyReceipt(dummyArticles));
         dummyReceipts.add(createDummyReceipt(dummyArticles));
         dummyReceipts.add(createDummyReceipt(dummyArticles));
-        when(mockRepository.getReceipts()).thenReturn(dummyReceipts);
-        ArticleStatistics statistics = new ArticleStatistics(mockRepository, dummyArticles);
+        when(mockRepository.getAll()).thenReturn(dummyReceipts);
+        ArticleStatistic statistics = new ArticleStatistic(mockRepository, dummyArticles);
         int expectedTimesSold = 3;
 
         List<StatisticEntry> statisticEntries = statistics.timesSold();
@@ -40,14 +42,14 @@ public class ArticleStatisticsTest extends BaseTest {
     }
 
     @Test
-    public void timesSold_MultipleArticles_CalculatesStatForAllArticles() throws Exception, CalculationException {
+    public void timesSold_MultipleArticles_CalculatesStatForAllArticles() throws Exception {
         List<Article> dummyArticles = createDummyArticles(5);
         List<Receipt> dummyReceipts = new ArrayList<>();
         dummyReceipts.add(createDummyReceipt(dummyArticles));
         dummyReceipts.add(createDummyReceipt(dummyArticles));
         dummyReceipts.add(createDummyReceipt(dummyArticles));
-        when(mockRepository.getReceipts()).thenReturn(dummyReceipts);
-        ArticleStatistics statistics = new ArticleStatistics(mockRepository, dummyArticles);
+        when(mockRepository.getAll()).thenReturn(dummyReceipts);
+        ArticleStatistic statistics = new ArticleStatistic(mockRepository, dummyArticles);
         int expectedStatisticsCount = 5;
 
         List<StatisticEntry> statisticEntries = statistics.timesSold();
@@ -56,22 +58,22 @@ public class ArticleStatisticsTest extends BaseTest {
     }
 
     @SuppressWarnings("unchecked")
-    @Test(expected = CalculationException.class)
-    public void timesSold_DaoErrorOccurs_RethrowsCalculationExcpeption() throws Exception, CalculationException {
+    @Test(expected = ServiceException.class)
+    public void timesSold_DaoErrorOccurs_RethrowsCalculationExcpeption() throws Exception {
         List<Article> dummyArticles = createDummyArticles(1);
-        when(mockRepository.getReceipts()).thenThrow(SQLException.class);
-        ArticleStatistics statistics = new ArticleStatistics(mockRepository, dummyArticles);
+        when(mockRepository.getAll()).thenThrow(ServiceException.class);
+        ArticleStatistic statistics = new ArticleStatistic(mockRepository, dummyArticles);
 
         statistics.timesSold();
     }
 
     @Test
-    public void timeSoldSince_SingleArticle_CalculatesTimesSold() throws Exception, CalculationException {
+    public void timeSoldSince_SingleArticle_CalculatesTimesSold() throws Exception {
         List<Article> dummyArticles = createDummyArticles(1);
         List<Receipt> dummyReceipts = new ArrayList<>();
         dummyReceipts.add(createDummyReceipt("01/01/2001", dummyArticles));
         when(mockRepository.filter(any(ReceiptCriteria.class))).thenReturn(dummyReceipts);
-        ArticleStatistics statistics = new ArticleStatistics(mockRepository, dummyArticles);
+        ArticleStatistic statistics = new ArticleStatistic(mockRepository, dummyArticles);
         int expectedTimesSold = 1;
 
         //Date is irrelevant in this case, as we build upon repository.filter(...)

@@ -2,7 +2,7 @@ package service.filter;
 
 import org.apache.commons.lang3.Validate;
 
-public class NumberPredicate {
+public class NumberPredicate implements Predicate {
 
     double number;
 

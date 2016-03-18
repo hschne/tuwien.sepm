@@ -2,7 +2,10 @@ package entities;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
-abstract class AbstractEntity {
+/**
+ * Base entity, provides better toString() for subclasses
+ */
+abstract class AbstractEntity implements Entity{
 
     @Override
     public String toString() {

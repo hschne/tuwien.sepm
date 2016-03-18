@@ -20,7 +20,6 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.when;
 
-
 public class ArticleRepositoryTests extends BaseTest {
 
     @Mock
@@ -42,18 +41,18 @@ public class ArticleRepositoryTests extends BaseTest {
         List<Article> expectedArticles = new ArrayList<>();
         when(mockArticleDao.getVisible()).thenReturn(expectedArticles);
 
-        List<Article> result = repository.getArticles();
+        List<Article> result = repository.getAll();
 
         assertEquals(expectedArticles, result);
     }
 
     @SuppressWarnings("unchecked")
-    @Test(expected = SQLException.class)
+    @Test(expected = ServiceException.class)
     public void getArticles_ExceptionOccurs_ExceptionRethrown() throws Exception {
         ArticleRepository repository = new ArticleRepository(mockArticleDao);
         when(mockArticleDao.getVisible()).thenThrow(SQLException.class);
 
-        repository.getArticles();
+        repository.getAll();
     }
 
     @Test

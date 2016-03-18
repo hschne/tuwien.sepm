@@ -29,7 +29,7 @@ public class ReceiptRepositoryTests extends BaseTest {
         List<Receipt> expectedReceipts = new ArrayList<>();
         when(mockReceiptDao.readAll()).thenReturn(expectedReceipts);
 
-        List<Receipt> result = repository.getReceipts();
+        List<Receipt> result = repository.getAll();
 
         assertEquals(expectedReceipts, result);
     }
