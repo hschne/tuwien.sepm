@@ -4,13 +4,13 @@ import org.apache.commons.lang3.Validate;
 
 import java.util.Date;
 
-public class DateCriteria {
+public class DatePredicate {
 
     Date date;
 
     Operator operator;
 
-    public DateCriteria(Date date, Operator operator) {
+    public DatePredicate(Date date, Operator operator) {
         Validate.notNull(date);
         Validate.notNull(operator);
         this.date = date;
@@ -27,9 +27,9 @@ public class DateCriteria {
             case LOWER:
             case LOWER_EQUALS:
                 return date.after(compareValue);
+            default:
+                throw new IllegalArgumentException("Can not compare using operator " + operator);
         }
-        throw new IllegalArgumentException("Can not compare using operator " + operator);
-
     }
 }
 

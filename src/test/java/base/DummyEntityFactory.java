@@ -1,4 +1,4 @@
-package service;
+package base;
 
 import entities.Article;
 import entities.Receipt;
@@ -10,11 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-class DummyObjectFactory {
-
+public class DummyEntityFactory {
 
     //Returns articles with price from 0..4 and names name1...name4 etc.
-    static List<Article> createDummyArticles(int count) {
+    public static List<Article> createDummyArticles(int count) {
         List<Article> result = new ArrayList<>();
         for (int i = 0; i < count; i++) {
             Article article = new Article(i, "name" + i, i, "description", "", "category" + i);
@@ -23,12 +22,17 @@ class DummyObjectFactory {
         return result;
     }
 
-    static Receipt createDummyReceipt(List<Article> articles) throws ParseException {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        return new Receipt(dateFormat.parse("01/01/2001"), "Receiver1", "ReceiverAdress1", createDummyReceiptEntries(articles));
+    public static Receipt createDummyReceipt(List<Article> articles) throws ParseException {
+       return createDummyReceipt("01/01/2001",articles);
     }
 
-    static List<Receipt> createDummyReceipts(int count) throws ParseException {
+
+    public static Receipt createDummyReceipt(String date, List<Article> articles) throws ParseException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        return new Receipt(dateFormat.parse(date), "Receiver1", "ReceiverAdress1", createDummyReceiptEntries(articles));
+    }
+
+    public static List<Receipt> createDummyReceipts(int count) throws ParseException {
         List<Receipt> receipts = new ArrayList<>();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         for (int i = 0; i < count; i++) {

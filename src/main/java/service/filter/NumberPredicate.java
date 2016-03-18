@@ -2,13 +2,13 @@ package service.filter;
 
 import org.apache.commons.lang3.Validate;
 
-public class NumberCriteria {
+public class NumberPredicate {
 
     double number;
 
     Operator operator;
 
-    public NumberCriteria(double number, Operator operator) {
+    public NumberPredicate(double number, Operator operator) {
         Validate.notNull(number);
         Validate.notNull(operator);
         this.number = number;
@@ -27,8 +27,8 @@ public class NumberCriteria {
                 return number >= compareValue;
             case LOWER:
                 return number > compareValue;
+            default:
+                throw new IllegalArgumentException("Can not compare using operator " + operator);
         }
-        throw new IllegalArgumentException("Can not compare using operator " + operator);
-
     }
 }

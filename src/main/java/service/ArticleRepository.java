@@ -3,7 +3,7 @@ package service;
 import dao.ArticleDao;
 import entities.Article;
 import service.filter.ArticleCriteria;
-import service.filter.NumberCriteria;
+import service.filter.NumberPredicate;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -37,7 +37,7 @@ public class ArticleRepository {
                     .filter(p -> Objects.equals(p.getName(), criteria.getName())).collect(Collectors.toList());
         }
         if(criteria.getPriceCritera() != null ){
-            NumberCriteria priceCriteria = criteria.getPriceCritera();
+            NumberPredicate priceCriteria = criteria.getPriceCritera();
             filteredArticles = filteredArticles.stream()
                     .filter(p -> priceCriteria.compare(p.getPrice())).collect(Collectors.toList());
         }

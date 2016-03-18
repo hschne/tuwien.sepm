@@ -1,6 +1,6 @@
 package dao;
 
-import dao.H2.H2ReceiptDao;
+import dao.h2.H2ReceiptDao;
 import entities.Article;
 import entities.Receipt;
 import entities.ReceiptEntry;

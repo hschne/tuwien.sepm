@@ -5,8 +5,8 @@ import dao.ReceiptDao;
 import entities.Receipt;
 import org.junit.Test;
 import org.mockito.Mock;
-import service.filter.DateCriteria;
-import service.filter.NumberCriteria;
+import service.filter.DatePredicate;
+import service.filter.NumberPredicate;
 import service.filter.Operator;
 import service.filter.ReceiptCriteria;
 
@@ -16,7 +16,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
-import static service.DummyObjectFactory.createDummyReceipts;
+import static base.DummyEntityFactory.createDummyReceipts;
 
 public class ReceiptRepositoryTests extends BaseTest {
 
@@ -53,8 +53,8 @@ public class ReceiptRepositoryTests extends BaseTest {
         when(mockReceiptDao.readAll()).thenReturn(dummyReceipts);
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        DateCriteria dateCriteria = new DateCriteria(sdf.parse("01/01/2002"), Operator.GREATER);
-        ReceiptCriteria criteria = new ReceiptCriteria(null, dateCriteria, null);
+        DatePredicate datePredicate = new DatePredicate(sdf.parse("01/01/2002"), Operator.GREATER);
+        ReceiptCriteria criteria = new ReceiptCriteria(null, datePredicate, null);
         List<Receipt> result = repository.filter(criteria);
 
         assertEquals(2, result.size());
@@ -66,8 +66,8 @@ public class ReceiptRepositoryTests extends BaseTest {
         List<Receipt> dummyReceipts = createDummyReceipts(5);
         when(mockReceiptDao.readAll()).thenReturn(dummyReceipts);
 
-        NumberCriteria numberCriteria = new NumberCriteria(3, Operator.GREATER);
-        ReceiptCriteria criteria = new ReceiptCriteria(null, null, numberCriteria);
+        NumberPredicate numberPredicate = new NumberPredicate(3, Operator.GREATER);
+        ReceiptCriteria criteria = new ReceiptCriteria(null, null, numberPredicate);
         List<Receipt> result = repository.filter(criteria);
 
         assertEquals(1, result.size());

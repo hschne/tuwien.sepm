@@ -1,4 +1,4 @@
-package dao.H2;
+package dao.h2;
 
 import dao.Database;
 import dao.ReceiptDao;
@@ -18,13 +18,14 @@ public class H2ReceiptDao extends AbstractH2Dao implements ReceiptDao {
         this.connection = database.getConnection();
     }
 
-
+    @Override
     public void create(Receipt receipt) throws SQLException {
         logger.debug("Creating receipt " + receipt);
         insertReceiptData(receipt);
         insertLinkedArticles(receipt);
     }
 
+    @Override
     public List<Receipt> readAll() throws SQLException {
         logger.debug("Reading all receipts");
         String query = "SELECT * FROM RECEIPT";
@@ -34,7 +35,7 @@ public class H2ReceiptDao extends AbstractH2Dao implements ReceiptDao {
     }
 
     private List<Receipt> parseReceipts(ResultSet resultSet) throws SQLException {
-        List<Receipt> receipts = new ArrayList<Receipt>();
+        List<Receipt> receipts = new ArrayList<>();
         while (resultSet.next()) {
             receipts.add(parseReceipt(resultSet));
         }
@@ -53,7 +54,7 @@ public class H2ReceiptDao extends AbstractH2Dao implements ReceiptDao {
 
     private List<ReceiptEntry> readReceiptEntries(int id) throws SQLException {
         logger.debug("Reading receipt entries for " + id);
-        List<ReceiptEntry> receiptEntries = new ArrayList<ReceiptEntry>();
+        List<ReceiptEntry> receiptEntries = new ArrayList<>();
         String query = "SELECT a.ID,a.NAME,a.PRICE,a.DESCRIPTION,a.IMAGE_PATH,a.CATEGORY, rec.AMOUNT " +
                 "FROM ARTICLE a , (SELECT * FROM ARTICLE_RECEIPT WHERE RECEIPT =?) rec WHERE rec.ARTICLE = a.ID;";
         PreparedStatement statement = connection.prepareStatement(query);

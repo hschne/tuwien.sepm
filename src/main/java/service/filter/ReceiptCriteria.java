@@ -1,17 +1,16 @@
 package service.filter;
 
-public class ReceiptCriteria {
+public class ReceiptCriteria implements Criteria{
 
     private String receiver;
 
-    private DateCriteria dateCriteria;
+    private DatePredicate datePredicate;
 
-    private NumberCriteria articleCount;
+    private NumberPredicate articleCount;
 
-
-    public ReceiptCriteria(String receiver, DateCriteria dateCriteria, NumberCriteria articleCount) {
+    public ReceiptCriteria(String receiver, DatePredicate datePredicate, NumberPredicate articleCount) {
         this.receiver = receiver;
-        this.dateCriteria = dateCriteria;
+        this.datePredicate = datePredicate;
         this.articleCount = articleCount;
     }
 
@@ -19,11 +18,11 @@ public class ReceiptCriteria {
         return receiver;
     }
 
-    public DateCriteria getDateCriteria() {
-        return dateCriteria;
+    public DatePredicate getDatePredicate() {
+        return datePredicate;
     }
 
-    public NumberCriteria getArticleCountCriteria() {
+    public NumberPredicate getArticleCountCriteria() {
         return articleCount;
     }
 

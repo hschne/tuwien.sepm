@@ -8,17 +8,17 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import service.filter.ArticleCriteria;
-import service.filter.NumberCriteria;
+import service.filter.NumberPredicate;
 import service.filter.Operator;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static base.DummyEntityFactory.createDummyArticles;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.when;
-import static service.DummyObjectFactory.createDummyArticles;
 
 
 public class ArticleRepositoryTests extends BaseTest {
@@ -47,6 +47,7 @@ public class ArticleRepositoryTests extends BaseTest {
         assertEquals(expectedArticles, result);
     }
 
+    @SuppressWarnings("unchecked")
     @Test(expected = SQLException.class)
     public void getArticles_ExceptionOccurs_ExceptionRethrown() throws Exception {
         ArticleRepository repository = new ArticleRepository(mockArticleDao);
@@ -72,7 +73,7 @@ public class ArticleRepositoryTests extends BaseTest {
         List<Article> expectedArticles = createDummyArticles(5);
         when(mockArticleDao.getVisible()).thenReturn(expectedArticles);
 
-        NumberCriteria criteria = new NumberCriteria(2.0, Operator.GREATER);
+        NumberPredicate criteria = new NumberPredicate(2.0, Operator.GREATER);
         List<Article> articles = repository.filter(new ArticleCriteria(null, null, criteria));
 
         assertEquals(articles.size(), 2);

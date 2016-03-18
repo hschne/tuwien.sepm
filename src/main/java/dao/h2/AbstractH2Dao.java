@@ -1,4 +1,4 @@
-package dao.H2;
+package dao.h2;
 
 import dao.Database;
 import entities.Article;
@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * Base class for H2 DAOs
+ * Base class for h2 DAOs
  */
 abstract class AbstractH2Dao {
 
@@ -22,7 +22,6 @@ abstract class AbstractH2Dao {
         String description = resultSet.getString(4);
         String image = resultSet.getString(5);
         String category = resultSet.getString(6);
-        Article article = new Article(id, name, price, description, image, category);
-        return article;
+        return new Article(id, name, price, description, image, category);
     }
 }

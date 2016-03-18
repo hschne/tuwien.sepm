@@ -2,9 +2,8 @@ package service;
 
 import dao.ReceiptDao;
 import entities.Receipt;
-import entities.ReceiptEntry;
-import service.filter.DateCriteria;
-import service.filter.NumberCriteria;
+import service.filter.DatePredicate;
+import service.filter.NumberPredicate;
 import service.filter.ReceiptCriteria;
 
 import java.sql.SQLException;
@@ -34,17 +33,16 @@ public class ReceiptRepository {
             filteredReceipts = filteredReceipts.stream()
                     .filter(p -> p.getReceiver().equals(criteria.getReceiver())).collect(Collectors.toList());
         }
-        if (criteria.getDateCriteria() != null) {
-            DateCriteria dateCriteria = criteria.getDateCriteria();
+        if (criteria.getDatePredicate() != null) {
+            DatePredicate datePredicate = criteria.getDatePredicate();
             filteredReceipts = filteredReceipts.stream()
-                    .filter(p -> dateCriteria.compare(p.getDate())).collect(Collectors.toList());
+                    .filter(p -> datePredicate.compare(p.getDate())).collect(Collectors.toList());
         }
         if (criteria.getArticleCountCriteria() != null) {
-            NumberCriteria numberCriteria = criteria.getArticleCountCriteria();
+            NumberPredicate numberPredicate = criteria.getArticleCountCriteria();
             filteredReceipts = filteredReceipts.stream()
-                    .filter(p -> numberCriteria.compare(p.getReceiptEntries().size())).collect(Collectors.toList());
+                    .filter(p -> numberPredicate.compare(p.getReceiptEntries().size())).collect(Collectors.toList());
         }
         return filteredReceipts;
-
     }
 }

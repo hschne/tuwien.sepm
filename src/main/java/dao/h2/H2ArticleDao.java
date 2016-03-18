@@ -1,10 +1,8 @@
-package dao.H2;
+package dao.h2;
 
 import dao.ArticleDao;
 import dao.Database;
 import entities.Article;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,6 +19,7 @@ public class H2ArticleDao extends AbstractH2Dao implements ArticleDao {
         this.connection = database.getConnection();
     }
 
+    @Override
     public List<Article> getVisible() throws SQLException {
         logger.debug("Getting all articles");
         String query = "SELECT * FROM ARTICLE WHERE VISIBLE=TRUE ORDER BY ID DESC;";
@@ -29,6 +28,7 @@ public class H2ArticleDao extends AbstractH2Dao implements ArticleDao {
         return parseArticles(resultSet);
     }
 
+    @Override
     public void update(Article article) throws SQLException {
         logger.debug("Updating article " + article.toString());
         if (isArticleLinked(article)) {
@@ -39,6 +39,7 @@ public class H2ArticleDao extends AbstractH2Dao implements ArticleDao {
         }
     }
 
+    @Override
     public void create(Article article) throws SQLException {
         logger.debug("Creating article " + article.toString());
         PreparedStatement statement = getCreateStatement(article);
@@ -51,6 +52,7 @@ public class H2ArticleDao extends AbstractH2Dao implements ArticleDao {
         }
     }
 
+    @Override
     public void delete(Article article) throws SQLException {
         logger.debug("Deleting article " + article.toString());
         if (isArticleLinked(article)) {
@@ -61,7 +63,7 @@ public class H2ArticleDao extends AbstractH2Dao implements ArticleDao {
     }
 
     private List<Article> parseArticles(ResultSet resultSet) throws SQLException {
-        List<Article> articles = new ArrayList<Article>();
+        List<Article> articles = new ArrayList<>();
         while (resultSet.next()) {
             articles.add(parseArticle(resultSet));
         }

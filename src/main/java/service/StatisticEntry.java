@@ -13,7 +13,7 @@ public class StatisticEntry {
         this.totalTimesSold = totalTimesSold;
     }
 
-    public int getTotalTimesSold() {
+    public int getTimesSold() {
         return totalTimesSold;
     }
 

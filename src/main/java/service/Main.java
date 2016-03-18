@@ -1,7 +1,7 @@
 package service;
 
 import dao.Database;
-import dao.H2.H2ReceiptDao;
+import dao.h2.H2ReceiptDao;
 import dao.ReceiptDao;
 import entities.Receipt;
 import org.apache.logging.log4j.LogManager;
