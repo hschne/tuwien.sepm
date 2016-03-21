@@ -5,10 +5,6 @@ import dao.ReceiptDao;
 import entities.Receipt;
 import org.junit.Test;
 import org.mockito.Mock;
-import service.filter.DatePredicate;
-import service.filter.NumberPredicate;
-import service.filter.Operator;
-import service.filter.ReceiptCriteria;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

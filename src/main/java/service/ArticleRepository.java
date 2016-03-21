@@ -3,16 +3,12 @@ package service;
 import dao.ArticleDao;
 import dao.DaoException;
 import entities.Article;
-import service.filter.ArticleCriteria;
-import service.filter.Filter;
-import service.filter.NumberPredicate;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class ArticleRepository extends AbstractService implements Filter<ArticleCriteria>, Repository<Article> {
+public class ArticleRepository extends AbstractService {
 
     private ArticleDao dao;
     private List<Article> articles;
@@ -34,24 +30,6 @@ public class ArticleRepository extends AbstractService implements Filter<Article
         return articles;
     }
 
-    public List<Article> filter(ArticleCriteria criteria) throws ServiceException{
-        List<Article> filteredArticles;
-        filteredArticles = getAll();
-        if (criteria.getCategory() != null){
-            filteredArticles = filteredArticles.stream()
-                    .filter(p -> Objects.equals(p.getCategory(), criteria.getCategory())).collect(Collectors.toList());
-        }
-        if(criteria.getName() != null){
-            filteredArticles = filteredArticles.stream()
-                    .filter(p -> Objects.equals(p.getName(), criteria.getName())).collect(Collectors.toList());
-        }
-        if(criteria.getPriceCritera() != null ){
-            NumberPredicate priceCriteria = criteria.getPriceCritera();
-            filteredArticles = filteredArticles.stream()
-                    .filter(p -> priceCriteria.compare(p.getPrice())).collect(Collectors.toList());
-        }
-        return filteredArticles;
-    }
 
 
 }

@@ -5,11 +5,8 @@ import entities.Article;
 import entities.Receipt;
 import org.junit.Test;
 import org.mockito.Mock;
-import service.calculation.ArticleStatistic;
 import service.calculation.StatisticEntry;
-import service.filter.ReceiptCriteria;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

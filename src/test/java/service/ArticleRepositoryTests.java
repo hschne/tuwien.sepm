@@ -8,9 +8,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
-import service.filter.ArticleCriteria;
-import service.filter.NumberPredicate;
-import service.filter.Operator;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
