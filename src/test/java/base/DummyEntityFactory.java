@@ -45,7 +45,7 @@ public class DummyEntityFactory {
 
 
     static List<ReceiptEntry> createDummyReceiptEntries(List<Article> articles) {
-        List<ReceiptEntry> entries = articles.stream().map(article -> new ReceiptEntry(article, 1)).collect(Collectors.toList());
+        List<ReceiptEntry> entries = articles.stream().map(article -> new ReceiptEntry(null, article, 1)).collect(Collectors.toList());
         return entries;
     }
 }

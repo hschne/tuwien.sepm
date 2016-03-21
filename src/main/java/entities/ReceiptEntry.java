@@ -2,11 +2,13 @@ package entities;
 
 public class ReceiptEntry extends AbstractEntity {
 
+    private Receipt receipt;
     private Article article;
 
     private int amount;
 
-    public ReceiptEntry(Article article, int quantity) {
+    public ReceiptEntry(Receipt receipt, Article article, int quantity) {
+        this.receipt = receipt;
         this.article = article;
         this.amount = quantity;
     }
@@ -25,5 +27,13 @@ public class ReceiptEntry extends AbstractEntity {
 
     public void setAmount(int amount) {
         this.amount = amount;
+    }
+
+    public Receipt getReceipt() {
+        return receipt;
+    }
+
+    public void setReceipt(Receipt receipt) {
+        this.receipt = receipt;
     }
 }

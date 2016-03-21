@@ -19,7 +19,7 @@ public class H2ArticleDaoTests extends DaoTest {
     @Test
     public void create_NewArticle_ArticleInserted() throws Exception {
         H2ArticleDao dao = new H2ArticleDao(mockDatabase);
-        String name = "Name";
+        String name = "NameCriteria";
         Double price = 1.0;
         String description = "Description";
         String image = "Image";
@@ -71,19 +71,19 @@ public class H2ArticleDaoTests extends DaoTest {
     public void readAll_ReadExistingArticles_ArticlesCreated() throws Exception {
         H2ArticleDao dao = new H2ArticleDao(mockDatabase);
         when(mockResultSet.next()).thenReturn(true).thenReturn(false);
-        when(mockResultSet.getString(2)).thenReturn("Name");
+        when(mockResultSet.getString(2)).thenReturn("NameCriteria");
 
         List<Article> articles = dao.getVisible();
 
         assertEquals(1, articles.size());
         Article article = articles.get(0);
-        assertEquals("Name", article.getName());
+        assertEquals("NameCriteria", article.getName());
     }
 
     @Test
     public void update_ArticleInReceipt_NewArticleCreated() throws Exception {
         H2ArticleDao dao = Mockito.spy(new H2ArticleDao(mockDatabase));
-        Article article = new Article(1, "Name", 20.0, "Description", "Image", "Category");
+        Article article = new Article(1, "NameCriteria", 20.0, "Description", "Image", "Category");
         String query = "UPDATE ARTICLE SET VISIBLE=FALSE WHERE ID=?;";
         when(mockResultSet.next()).thenReturn(true);
 
@@ -96,7 +96,7 @@ public class H2ArticleDaoTests extends DaoTest {
     @Test
     public void update_ArticleNotInReceipt_ArticleUpdated() throws Exception {
         H2ArticleDao dao = new H2ArticleDao(mockDatabase);
-        Article article = new Article(1, "Name", 20.0, "Description", "Image", "Category");
+        Article article = new Article(1, "NameCriteria", 20.0, "Description", "Image", "Category");
         String query = "UPDATE ARTICLE SET NAME=?, PRICE=?, DESCRIPTION=?, IMAGE_PATH=?, CATEGORY=? WHERE ID=?;";
         when(mockResultSet.next()).thenReturn(false);
 

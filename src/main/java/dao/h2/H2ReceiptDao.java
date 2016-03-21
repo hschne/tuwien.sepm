@@ -58,30 +58,33 @@ public class H2ReceiptDao extends AbstractH2Dao implements ReceiptDao {
         java.util.Date date = new java.util.Date(resultSet.getDate(2).getTime());
         String receiver = resultSet.getString(3);
         String receiverAdress = resultSet.getString(4);
-        return new Receipt(id, date, receiver, receiverAdress, readReceiptEntries(id));
+        Receipt receipt = new Receipt(id, date,receiver,receiverAdress,null);
+        receipt.setReceiptEntries(readReceiptEntries(receipt));
+        return receipt;
 
     }
 
 
-    private List<ReceiptEntry> readReceiptEntries(int id) throws SQLException {
-        logger.debug("Reading receipt entries for " + id);
+    private List<ReceiptEntry> readReceiptEntries(Receipt receipt) throws SQLException {
+        logger.debug("Reading receipt entries for " + receipt.getId());
         List<ReceiptEntry> receiptEntries = new ArrayList<>();
         String query = "SELECT a.ID,a.NAME,a.PRICE,a.DESCRIPTION,a.IMAGE_PATH,a.CATEGORY, rec.AMOUNT " +
                 "FROM ARTICLE a , (SELECT * FROM ARTICLE_RECEIPT WHERE RECEIPT =?) rec WHERE rec.ARTICLE = a.ID;";
         PreparedStatement statement = connection.prepareStatement(query);
-        statement.setInt(1, id);
+        statement.setInt(1, receipt.getId());
         //The result is a join of articles and article_receipts, where all data required by ReceiptEntry is given
         ResultSet resultSet = statement.executeQuery();
         while (resultSet.next()) {
-            receiptEntries.add(parseReceiptEntry(resultSet));
+            ReceiptEntry receiptEntry = parseReceiptEntry(receipt, resultSet);
+            receiptEntries.add(receiptEntry);
         }
         return receiptEntries;
     }
 
-    private ReceiptEntry parseReceiptEntry(ResultSet resultSet) throws SQLException {
+    private ReceiptEntry parseReceiptEntry(Receipt receipt, ResultSet resultSet) throws SQLException {
         int amount = resultSet.getInt(7);
         Article article = parseArticle(resultSet);
-        return new ReceiptEntry(article, amount);
+        return new ReceiptEntry(receipt, article, amount);
     }
 
     private void insertReceiptData(Receipt receipt) throws SQLException {

@@ -6,7 +6,6 @@ import entities.Receipt;
 import entities.ReceiptEntry;
 import org.junit.Test;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -101,7 +100,7 @@ public class H2ReceiptDaoTests extends DaoTest {
         int receiptId = 1;
         Date receiptDate = new Date();
         int articleId = 1;
-        String name = "Name";
+        String name = "NameCriteria";
         int articleAmount = 1;
         when(mockResultSet.next()).thenReturn(true).thenReturn(true).thenReturn(false);
         when(mockResultSet.getInt(1)).thenReturn(receiptId).thenReturn(articleId);
@@ -122,7 +121,7 @@ public class H2ReceiptDaoTests extends DaoTest {
 
     private List<ReceiptEntry> dummyReceiptEntries() {
         Article article = new Article(1, "", 0.0, "", "", "");
-        ReceiptEntry entry = new ReceiptEntry(article, 1);
+        ReceiptEntry entry = new ReceiptEntry(null,article, 1);
         List<ReceiptEntry> entries = new ArrayList<>();
         entries.add(entry);
         return entries;

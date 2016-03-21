@@ -5,7 +5,6 @@ import dao.ReceiptDao;
 import entities.Receipt;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ReceiptRepository extends AbstractService  {
 
@@ -29,5 +28,8 @@ public class ReceiptRepository extends AbstractService  {
         }
         return receipts;
     }
+
+
+
 
 }
