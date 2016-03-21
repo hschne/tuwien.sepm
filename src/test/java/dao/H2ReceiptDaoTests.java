@@ -19,7 +19,7 @@ public class H2ReceiptDaoTests extends DaoTest {
 
     @Test
     public void create_NewReceipt_ReceiptIdSet() throws Exception {
-        ReceiptDao dao = new H2ReceiptDao(mockDatabase);
+        ReceiptDao dao = new H2ReceiptDao(mockH2Database);
         when(mockResultSet.getInt(anyInt())).thenReturn(1);
         when(mockResultSet.next()).thenReturn(true);
         Receipt receipt = new Receipt(1, new Date(), "", "", new ArrayList<>());
@@ -31,7 +31,7 @@ public class H2ReceiptDaoTests extends DaoTest {
 
     @Test
     public void create_NewReceipt_ReceiptInserted() throws Exception {
-        ReceiptDao dao = new H2ReceiptDao(mockDatabase);
+        ReceiptDao dao = new H2ReceiptDao(mockH2Database);
         Date date = new Date();
         String receiver = "Receiver";
         String receiverAddress = "ReceiverAddress";
@@ -51,7 +51,7 @@ public class H2ReceiptDaoTests extends DaoTest {
         int articleId = 1;
         int receiptId = 1;
         int amount = 1;
-        ReceiptDao dao = new H2ReceiptDao(mockDatabase);
+        ReceiptDao dao = new H2ReceiptDao(mockH2Database);
         Receipt receipt = new Receipt(1, new Date(), "", "", dummyReceiptEntries());
         when(mockResultSet.next()).thenReturn(true);
         when(mockResultSet.getInt(anyInt())).thenReturn(1);
@@ -66,7 +66,7 @@ public class H2ReceiptDaoTests extends DaoTest {
 
     @Test(expected = DaoException.class)
     public void create_NewReceipt_ReceiptCreationFailed() throws Exception {
-        ReceiptDao dao = new H2ReceiptDao(mockDatabase);
+        ReceiptDao dao = new H2ReceiptDao(mockH2Database);
         dao.create(new Receipt(new Date(), "", "", new ArrayList<>()));
         when(mockResultSet.next()).thenReturn(false);
     }
@@ -77,7 +77,7 @@ public class H2ReceiptDaoTests extends DaoTest {
         Date date = new Date(0);
         String receiver = "Receiver";
         String receiverAdress = "ReceiverAdress";
-        ReceiptDao dao = new H2ReceiptDao(mockDatabase);
+        ReceiptDao dao = new H2ReceiptDao(mockH2Database);
         when(mockResultSet.next()).thenReturn(true).thenReturn(false);
         when(mockResultSet.getInt(1)).thenReturn(id);
         when(mockResultSet.getDate(2)).thenReturn(new java.sql.Date(date.getTime()));
@@ -96,7 +96,7 @@ public class H2ReceiptDaoTests extends DaoTest {
 
     @Test
     public void readAll_GetAllReceipts_ReceiptEntriesReturned() throws Exception {
-        ReceiptDao dao = new H2ReceiptDao(mockDatabase);
+        ReceiptDao dao = new H2ReceiptDao(mockH2Database);
         int receiptId = 1;
         Date receiptDate = new Date();
         int articleId = 1;

@@ -1,6 +1,5 @@
 package dao.h2;
 
-import dao.Database;
 import entities.Article;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -13,7 +12,7 @@ import java.sql.SQLException;
  */
 abstract class AbstractH2Dao {
 
-    protected final Logger logger = LogManager.getLogger(Database.class);
+    protected final Logger logger = LogManager.getLogger(H2Database.class);
 
     protected Article parseArticle(ResultSet resultSet) throws SQLException {
         int id = resultSet.getInt(1);

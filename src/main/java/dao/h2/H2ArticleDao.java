@@ -2,7 +2,6 @@ package dao.h2;
 
 import dao.ArticleDao;
 import dao.DaoException;
-import dao.Database;
 import entities.Article;
 
 import java.sql.Connection;
@@ -16,8 +15,8 @@ public class H2ArticleDao extends AbstractH2Dao implements ArticleDao {
 
     private Connection connection;
 
-    public H2ArticleDao(Database database) {
-        this.connection = database.getConnection();
+    public H2ArticleDao(H2Database h2Database) {
+        this.connection = h2Database.getConnection();
     }
 
     @Override
@@ -140,7 +139,6 @@ public class H2ArticleDao extends AbstractH2Dao implements ArticleDao {
         PreparedStatement statement = connection.prepareStatement(deleteQuery);
         statement.setInt(1, article.getId());
         statement.executeUpdate();
-
     }
 
     private void handle(SQLException e) throws DaoException {

@@ -1,6 +1,5 @@
 package entities;
 
-
 public class Article extends AbstractEntity {
 
     private String name;
@@ -9,10 +8,6 @@ public class Article extends AbstractEntity {
     private String category;
     private double price;
     private int id;
-
-    public Article() {
-
-    }
 
     public Article(int id, String name, double price, String description, String image, String category) {
         this(name, description, image, category, price);

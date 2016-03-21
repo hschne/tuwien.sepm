@@ -1,6 +1,7 @@
 package dao;
 
 import base.BaseTest;
+import dao.h2.H2Database;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -19,7 +20,7 @@ import static org.mockito.Mockito.when;
 class DaoTest extends BaseTest{
 
     @Mock
-    protected Database mockDatabase;
+    protected H2Database mockH2Database;
 
     @Mock
     protected Connection mockConnection;
@@ -32,7 +33,7 @@ class DaoTest extends BaseTest{
 
     @Before
     public void setUp() throws SQLException {
-        when(mockDatabase.getConnection()).thenReturn(mockConnection);
+        when(mockH2Database.getConnection()).thenReturn(mockConnection);
         when(mockConnection.prepareStatement(anyString())).thenReturn(mockStatement);
         when(mockConnection.createStatement()).thenReturn(mockStatement);
         when(mockStatement.getGeneratedKeys()).thenReturn(mockResultSet);
@@ -42,7 +43,7 @@ class DaoTest extends BaseTest{
 
     @After
     public void tearDown() {
-        reset(mockDatabase);
+        reset(mockH2Database);
         reset(mockConnection);
         reset(mockStatement);
         reset(mockResultSet);

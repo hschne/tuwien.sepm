@@ -5,7 +5,6 @@ import entities.Article;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -18,7 +17,7 @@ public class H2ArticleDaoTests extends DaoTest {
 
     @Test
     public void create_NewArticle_ArticleInserted() throws Exception {
-        H2ArticleDao dao = new H2ArticleDao(mockDatabase);
+        H2ArticleDao dao = new H2ArticleDao(mockH2Database);
         String name = "NameCriteria";
         Double price = 1.0;
         String description = "Description";
@@ -38,7 +37,7 @@ public class H2ArticleDaoTests extends DaoTest {
 
     @Test(expected = DaoException.class)
     public void create_NewArticle_CreationFailed() throws Exception {
-        H2ArticleDao dao = new H2ArticleDao(mockDatabase);
+        H2ArticleDao dao = new H2ArticleDao(mockH2Database);
         when(mockResultSet.next()).thenReturn(false);
 
         dao.create(new Article());
@@ -46,7 +45,7 @@ public class H2ArticleDaoTests extends DaoTest {
 
     @Test
     public void create_NewArticle_ArticleIdSet() throws Exception {
-        H2ArticleDao dao = new H2ArticleDao(mockDatabase);
+        H2ArticleDao dao = new H2ArticleDao(mockH2Database);
         Article article = new Article();
         when(mockResultSet.getInt(anyInt())).thenReturn(1);
         when(mockResultSet.next()).thenReturn(true);
@@ -58,7 +57,7 @@ public class H2ArticleDaoTests extends DaoTest {
 
     @Test
     public void readAll_ReadExistingArticles_QueryCreated() throws Exception {
-        H2ArticleDao dao = new H2ArticleDao(mockDatabase);
+        H2ArticleDao dao = new H2ArticleDao(mockH2Database);
         String query = "SELECT * FROM ARTICLE WHERE VISIBLE=TRUE ORDER BY ID DESC;";
 
         dao.getVisible();
@@ -69,7 +68,7 @@ public class H2ArticleDaoTests extends DaoTest {
 
     @Test
     public void readAll_ReadExistingArticles_ArticlesCreated() throws Exception {
-        H2ArticleDao dao = new H2ArticleDao(mockDatabase);
+        H2ArticleDao dao = new H2ArticleDao(mockH2Database);
         when(mockResultSet.next()).thenReturn(true).thenReturn(false);
         when(mockResultSet.getString(2)).thenReturn("NameCriteria");
 
@@ -82,7 +81,7 @@ public class H2ArticleDaoTests extends DaoTest {
 
     @Test
     public void update_ArticleInReceipt_NewArticleCreated() throws Exception {
-        H2ArticleDao dao = Mockito.spy(new H2ArticleDao(mockDatabase));
+        H2ArticleDao dao = Mockito.spy(new H2ArticleDao(mockH2Database));
         Article article = new Article(1, "NameCriteria", 20.0, "Description", "Image", "Category");
         String query = "UPDATE ARTICLE SET VISIBLE=FALSE WHERE ID=?;";
         when(mockResultSet.next()).thenReturn(true);
@@ -95,7 +94,7 @@ public class H2ArticleDaoTests extends DaoTest {
 
     @Test
     public void update_ArticleNotInReceipt_ArticleUpdated() throws Exception {
-        H2ArticleDao dao = new H2ArticleDao(mockDatabase);
+        H2ArticleDao dao = new H2ArticleDao(mockH2Database);
         Article article = new Article(1, "NameCriteria", 20.0, "Description", "Image", "Category");
         String query = "UPDATE ARTICLE SET NAME=?, PRICE=?, DESCRIPTION=?, IMAGE_PATH=?, CATEGORY=? WHERE ID=?;";
         when(mockResultSet.next()).thenReturn(false);
@@ -109,7 +108,7 @@ public class H2ArticleDaoTests extends DaoTest {
 
     @Test
     public void delete_ArticleInReceipt_ArticleAltered() throws Exception {
-        H2ArticleDao dao = new H2ArticleDao(mockDatabase);
+        H2ArticleDao dao = new H2ArticleDao(mockH2Database);
         Article article = new Article();
         String query = "UPDATE ARTICLE SET VISIBLE=FALSE WHERE ID=?;";
         article.setId(1);
@@ -122,7 +121,7 @@ public class H2ArticleDaoTests extends DaoTest {
 
     @Test
     public void delete_NoLinkedReceipt_ArticleDeleted() throws Exception {
-        H2ArticleDao dao = new H2ArticleDao(mockDatabase);
+        H2ArticleDao dao = new H2ArticleDao(mockH2Database);
         Article article = new Article();
         String query = "DELETE FROM ARTICLE WHERE ID =?;";
         article.setId(1);

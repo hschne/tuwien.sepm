@@ -1,7 +1,6 @@
 package dao.h2;
 
 import dao.DaoException;
-import dao.Database;
 import dao.ReceiptDao;
 import entities.Article;
 import entities.Receipt;
@@ -15,8 +14,8 @@ public class H2ReceiptDao extends AbstractH2Dao implements ReceiptDao {
 
     private final Connection connection;
 
-    public H2ReceiptDao(Database database) {
-        this.connection = database.getConnection();
+    public H2ReceiptDao(H2Database h2Database) {
+        this.connection = h2Database.getConnection();
     }
 
     @Override
