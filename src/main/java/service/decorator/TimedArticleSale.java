@@ -15,7 +15,7 @@ public class TimedArticleSale extends ArticleSale {
     private final Date date;
     private final DateOperator operator;
 
-    public TimedArticleSale(ReceiptRepository repository, Article article, Date date, DateOperator operator){
+    TimedArticleSale(ReceiptRepository repository, Article article, Date date, DateOperator operator){
         super(repository,article);
         this.date = date;
         this.operator = operator;
@@ -40,6 +40,8 @@ public class TimedArticleSale extends ArticleSale {
         switch (operator) {
             case BEFORE:
                 return getEntryDate(entry).before(date);
+            case AFTER:
+                return getEntryDate(entry).after(date);
             default:
                 throw new ServiceException("No valid operation");
         }

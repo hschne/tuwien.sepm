@@ -3,6 +3,7 @@ package service;
 import dao.ArticleDao;
 import dao.DaoException;
 import entities.Article;
+import service.criteria.Criteria;
 
 import java.util.List;
 import java.util.Objects;
@@ -30,5 +31,8 @@ public class ArticleRepository extends AbstractService {
         return articles;
     }
 
+    public List<Article> filter(Criteria<Article> criteria) throws ServiceException {
+        return criteria.apply(getAll());
+    }
 
 }

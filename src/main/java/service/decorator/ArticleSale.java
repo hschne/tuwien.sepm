@@ -15,7 +15,7 @@ public class ArticleSale extends Article {
     private ReceiptRepository repository;
     private final Article article;
 
-    public ArticleSale(ReceiptRepository repository, Article article){
+    ArticleSale(ReceiptRepository repository, Article article){
         this.repository = repository;
         this.article = article;
     }
