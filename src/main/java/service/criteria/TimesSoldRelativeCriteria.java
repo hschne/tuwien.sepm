@@ -1,38 +1,41 @@
 package service.criteria;
 
-import service.ReceiptRepository;
+import entities.Article;
 import service.ServiceException;
 import service.decorator.ArticleSale;
+import service.decorator.SaleFactory;
 
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class TimesSoldRelativeCriteria implements Criteria<ArticleSale> {
+public class TimesSoldRelativeCriteria implements Criteria<Article> {
 
-    private final ReceiptRepository repository;
     private final int count;
     private final RelativeOperator relativeOperator;
+    private SaleFactory factory;
 
-    public TimesSoldRelativeCriteria(ReceiptRepository repository, int count, RelativeOperator relativeOperator) {
-        this.repository = repository;
+    public TimesSoldRelativeCriteria(SaleFactory factory, int count, RelativeOperator relativeOperator) {
+        this.factory = factory;
         this.count = count;
         this.relativeOperator = relativeOperator;
     }
 
     @Override
-    public List<ArticleSale> apply(List<ArticleSale> list) throws ServiceException {
+    public List<Article> apply(List<Article> list) throws ServiceException {
         Collections.sort(list, createCustomComparator());
         return list.subList(0, count);
     }
 
-    private Comparator<ArticleSale> createCustomComparator() {
+    private Comparator<Article> createCustomComparator() {
         return (o1, o2) -> {
+            ArticleSale leftSale = factory.create(o1);
+            ArticleSale rightSale = factory.create(o2);
             try {
                 if (relativeOperator == RelativeOperator.TOP) {
-                    return getOrder(o1, o2);
+                    return getOrder(leftSale, rightSale);
                 } else {
-                    return getOrder(o2, o1);
+                    return getOrder(rightSale, leftSale);
                 }
             } catch (ServiceException e) {
                 return 0;
