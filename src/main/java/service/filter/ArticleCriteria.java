@@ -1,5 +1,7 @@
 package service.filter;
 
+import java.util.List;
+
 public class ArticleCriteria implements Criteria {
 
     private String name;
@@ -24,5 +26,10 @@ public class ArticleCriteria implements Criteria {
 
     public String getCategory() {
         return category;
+    }
+
+    @Override
+    public List apply(List list) {
+        return null;
     }
 }

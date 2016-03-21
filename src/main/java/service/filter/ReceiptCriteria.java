@@ -1,5 +1,7 @@
 package service.filter;
 
+import java.util.List;
+
 public class ReceiptCriteria implements Criteria{
 
     private String receiver;
@@ -26,4 +28,8 @@ public class ReceiptCriteria implements Criteria{
         return articleCount;
     }
 
+    @Override
+    public List apply(List list) {
+        return null;
+    }
 }
