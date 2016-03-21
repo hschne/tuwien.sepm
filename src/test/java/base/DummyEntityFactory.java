@@ -34,6 +34,15 @@ public class DummyEntityFactory {
         return receipt;
     }
 
+    public static List<Receipt> createDummyReceipts(int count) throws ParseException {
+        List<Receipt> receipts = new ArrayList<>();
+        for(int i = 0; i< count; i++){
+            List<Article> articles = createDummyArticles(i);
+            receipts.add(createDummyReceipt(articles));
+        }
+        return receipts;
+    }
+
     static List<ReceiptEntry> createDummyReceiptEntries(List<Article> articles, Receipt receipt) {
         List<ReceiptEntry> entries = articles.stream().map(article -> new ReceiptEntry(receipt, article, 1)).collect(Collectors.toList());
         return entries;

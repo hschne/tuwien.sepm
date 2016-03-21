@@ -3,10 +3,11 @@ package service;
 import dao.DaoException;
 import dao.ReceiptDao;
 import entities.Receipt;
+import service.criteria.Criteria;
 
 import java.util.List;
 
-public class ReceiptRepository extends AbstractService  {
+public class ReceiptRepository extends AbstractService implements Repository<Receipt> {
 
     private ReceiptDao dao;
 
@@ -16,6 +17,7 @@ public class ReceiptRepository extends AbstractService  {
         this.dao = dao;
     }
 
+    @Override
     public List<Receipt> getAll() throws ServiceException {
         logger.debug("Getting all receipts");
         if (receipts == null) {
@@ -29,7 +31,10 @@ public class ReceiptRepository extends AbstractService  {
         return receipts;
     }
 
-
+    @Override
+    public List<Receipt> filter(Criteria<Receipt> criteria) throws ServiceException {
+        return criteria.apply(getAll());
+    }
 
 
 }

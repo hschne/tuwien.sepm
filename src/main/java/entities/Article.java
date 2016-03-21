@@ -9,6 +9,10 @@ public class Article extends AbstractEntity {
     private double price;
     private int id;
 
+    public Article(){
+
+    }
+
     public Article(int id, String name, double price, String description, String image, String category) {
         this(name, description, image, category, price);
         this.id = id;

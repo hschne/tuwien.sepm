@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class ArticleRepository extends AbstractService {
+public class ArticleRepository extends AbstractService implements Repository<Article> {
 
     private ArticleDao dao;
     private List<Article> articles;
@@ -18,6 +18,7 @@ public class ArticleRepository extends AbstractService {
         this.dao = dao;
     }
 
+    @Override
     public List<Article> getAll() throws ServiceException {
         logger.debug("Retrieving all articles");
         if(articles == null){
@@ -31,6 +32,7 @@ public class ArticleRepository extends AbstractService {
         return articles;
     }
 
+    @Override
     public List<Article> filter(Criteria<Article> criteria) throws ServiceException {
         return criteria.apply(getAll());
     }
