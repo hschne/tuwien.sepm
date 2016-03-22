@@ -5,6 +5,8 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class ArticleModel implements Article {
 
@@ -16,7 +18,11 @@ public class ArticleModel implements Article {
 
     private final StringProperty description;
 
-    public ArticleModel(String name, String category, Double price, String description) {
+    private final Image image;
+
+
+    public ArticleModel(String name, Double price, String description, String category,String image) {
+        this.image = null;
         this.name = new SimpleStringProperty(name);
         this.price = new SimpleDoubleProperty(price);
         this.category = new SimpleStringProperty(category);
@@ -32,7 +38,6 @@ public class ArticleModel implements Article {
     public void setImage(String image) {
 
     }
-
     @Override
     public String getCategory() {
         return category.get();
@@ -41,9 +46,7 @@ public class ArticleModel implements Article {
     @Override
     public void setCategory(String category) {
         this.category.set(category);
-
     }
-
     @Override
     public double getPrice() {
         return price.get();
@@ -81,6 +84,25 @@ public class ArticleModel implements Article {
 
     @Override
     public void setId(int id) {
+    }
 
+    public StringProperty getNameProperty(){
+        return name;
+    }
+
+    public StringProperty getDescriptionProperty(){
+        return description;
+    }
+
+    public DoubleProperty getPriceProperty(){
+        return price;
+    }
+
+    public StringProperty getCategoryProperty(){
+        return category;
+    }
+
+    public Image getImageProperty(){
+        return image;
     }
 }

@@ -1,19 +1,31 @@
 package ui;
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import ui.controller.ArticleOverviewController;
+import ui.model.ArticleModel;
 
 import java.io.IOException;
-import java.net.URL;
 
 public class Main extends Application {
 
     private Stage primaryStage;
     private BorderPane rootLayout;
+    private ObservableList<ArticleModel> articles = FXCollections.observableArrayList();
+
+    public Main() {
+        articles.add(new ArticleModel("Art", 20.0, "Beschreibung", "categpory", "img"));
+        articles.add(new ArticleModel("Art1", 20.0, "Beschassssreibung", "catedgpory", "img"));
+        articles.add(new ArticleModel("Art2", 20.0, "Beschrhhheibung", "categpory", "img"));
+        articles.add(new ArticleModel("Art3", 20.0, "Beschrasdfeibung", "categpory", "img"));
+        articles.add(new ArticleModel("Art4", 20.0, "Beschrasdeibung", "cateagpory", "img"));
+    }
 
     public static void main(String[] args) {
         launch(args);
@@ -35,7 +47,7 @@ public class Main extends Application {
     public void initRootLayout() {
         try {
             // Load root layout from fxml file.
-             rootLayout = FXMLLoader.load(getClass().getResource("/views/root.fxml"));
+            rootLayout = FXMLLoader.load(getClass().getResource("/views/root.fxml"));
 
             // Show the scene containing the root layout.
             Scene scene = new Scene(rootLayout);
@@ -58,17 +70,18 @@ public class Main extends Application {
 
             // Set person overview into the center of root layout.
             rootLayout.setCenter(personOverview);
+
+            // Give the controller access to the main app.
+            ArticleOverviewController controller = loader.getController();
+            controller.setMainApp(this);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    /**
-     * Returns the main stage.
-     *
-     * @return
-     */
-    public Stage getPrimaryStage() {
-        return primaryStage;
+    public ObservableList<ArticleModel> getArticles() {
+        return articles;
     }
+
+
 }
