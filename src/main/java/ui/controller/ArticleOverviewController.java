@@ -4,12 +4,14 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
+import service.AbstractService;
 import ui.Main;
 import ui.model.ArticleModel;
 
-public class ArticleOverviewController {
+public class ArticleOverviewController extends AbstractController {
 
     private Main mainApp;
 
@@ -20,29 +22,35 @@ public class ArticleOverviewController {
     private TableColumn<ArticleModel, String> nameColumn;
 
     @FXML
-    private Text name;
+    private TableColumn<ArticleModel, Double> priceColumn;
+
     @FXML
-    private Text price;
+    private TableColumn<ArticleModel, String> descriptionColumn;
+
     @FXML
-    private TextArea description;
-    @FXML
-    private Text category;
-    @FXML
-    private ImageView image;
+    private TableColumn<ArticleModel, String> categoryColumn;
+
+    @FXML TableColumn<ArticleModel, Image> imageColumn;
 
     public ArticleOverviewController() {
 
     }
 
+    @Override
     public void setMainApp(Main mainApp) {
-        this.mainApp = mainApp;
         articleTable.setItems(mainApp.getArticles());
+        super.setMainApp(mainApp);
     }
 
     @FXML
     private void initialize() {
         // Initialize the person table with the two columns.
         nameColumn.setCellValueFactory(cellData -> cellData.getValue().getNameProperty());
+        priceColumn.setCellValueFactory(cellData -> cellData.getValue().getPriceProperty().asObject());
+        descriptionColumn.setCellValueFactory(cellData -> cellData.getValue().getDescriptionProperty());
+        categoryColumn.setCellValueFactory(cellData -> cellData.getValue().getCategoryProperty());
+
     }
+
 
 }
