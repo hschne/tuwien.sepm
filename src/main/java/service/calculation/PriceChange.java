@@ -2,69 +2,69 @@ package service.calculation;
 
 import dao.ArticleDao;
 import dao.DaoException;
-import entities.Article;
+import entities.ArticleDto;
 import service.ServiceException;
 
 import java.util.List;
 
 public class PriceChange {
 
-    private List<Article> articles;
+    private List<ArticleDto> articleDtos;
 
     private ArticleDao dao;
 
-    public PriceChange(ArticleDao dao, List<Article> articles) {
-        this.articles = articles;
+    public PriceChange(ArticleDao dao, List<ArticleDto> articleDtos) {
+        this.articleDtos = articleDtos;
         this.dao = dao;
     }
 
     public void raiseByPercent(double percent) throws ServiceException {
         validatePercentage(percent);
-        for (Article article : articles) {
-            double price = article.getPrice();
-            article.setPrice(price + price * (percent / 100));
-            tryUpdateArticle(article);
+        for (ArticleDto articleDto : articleDtos) {
+            double price = articleDto.getPrice();
+            articleDto.setPrice(price + price * (percent / 100));
+            tryUpdateArticle(articleDto);
         }
     }
 
     public void reduceByPercent(double percent) throws ServiceException {
         validatePercentage(percent);
         validateDiscount(percent);
-        for (Article article : articles) {
-            double price = article.getPrice();
+        for (ArticleDto articleDto : articleDtos) {
+            double price = articleDto.getPrice();
             double newPrice = price - price * (percent / 100);
-            article.setPrice(newPrice);
-            tryUpdateArticle(article);
+            articleDto.setPrice(newPrice);
+            tryUpdateArticle(articleDto);
         }
     }
 
     public void raiseByAbsolute(double value) throws ServiceException {
-        for (Article article : articles) {
-            double price = article.getPrice();
-            article.setPrice(price + value);
-            tryUpdateArticle(article);
+        for (ArticleDto articleDto : articleDtos) {
+            double price = articleDto.getPrice();
+            articleDto.setPrice(price + value);
+            tryUpdateArticle(articleDto);
         }
     }
 
     public void reduceByAbsolute(double value) throws ServiceException {
         validateAbsolute(value);
-        for (Article article : articles) {
-            double price = article.getPrice();
-            article.setPrice(price - value);
-            tryUpdateArticle(article);
+        for (ArticleDto articleDto : articleDtos) {
+            double price = articleDto.getPrice();
+            articleDto.setPrice(price - value);
+            tryUpdateArticle(articleDto);
         }
     }
 
     private void validateAbsolute(double value) throws ServiceException {
-        for (Article article : articles) {
-            if (value > article.getPrice())
+        for (ArticleDto articleDto : articleDtos) {
+            if (value > articleDto.getPrice())
                 throw new ServiceException("Can not decrease by value greater than original price");
         }
     }
 
-    private void tryUpdateArticle(Article article) throws ServiceException {
+    private void tryUpdateArticle(ArticleDto articleDto) throws ServiceException {
         try {
-            dao.update(article);
+            dao.update(articleDto);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

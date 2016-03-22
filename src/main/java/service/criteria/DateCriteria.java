@@ -1,6 +1,6 @@
 package service.criteria;
 
-import entities.Receipt;
+import entities.ReceiptDto;
 import service.ServiceException;
 
 import java.util.Date;
@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public class DateCriteria implements Criteria<Receipt> {
+public class DateCriteria implements Criteria<ReceiptDto> {
 
     private Date date;
 
@@ -20,11 +20,11 @@ public class DateCriteria implements Criteria<Receipt> {
     }
 
     @Override
-    public List<Receipt> apply(List<Receipt> list) throws ServiceException {
+    public List<ReceiptDto> apply(List<ReceiptDto> list) throws ServiceException {
         return list.stream().filter(getPredicate()).collect(Collectors.toList());
     }
 
-    private Predicate<Receipt> getPredicate() throws ServiceException {
+    private Predicate<ReceiptDto> getPredicate() throws ServiceException {
         switch(operator){
             case BEFORE:
                 return p -> p.getDate().before(date);

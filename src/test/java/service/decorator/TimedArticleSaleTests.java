@@ -2,14 +2,14 @@ package service.decorator;
 
 import base.BaseTest;
 import entities.Article;
+import entities.ArticleDto;
 import entities.Receipt;
+import entities.ReceiptDto;
 import org.junit.Test;
 import org.mockito.Mock;
 import service.ReceiptRepository;
 import service.criteria.DateOperator;
-import sun.java2d.pipe.SpanShapeRenderer;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -27,19 +27,19 @@ public class TimedArticleSaleTests extends BaseTest{
 
     @Test
     public void getTimesSold_AfterCertainDate_TimesSoldReturned() throws Exception {
-        List<Article> articles = createDummyArticles(1);
-        Receipt earlyReceipt = createDummyReceipt("01/01/2001",articles);
-        Receipt laterReceipt = createDummyReceipt("01/01/2004",articles);
-        Receipt evenLaterReceipt = createDummyReceipt("01/01/2007",articles);
-        List<Receipt> receipts = new ArrayList<>();
-        receipts.add(earlyReceipt);
-        receipts.add(laterReceipt);
-        receipts.add(evenLaterReceipt);
-        when(mockReceiptRepository.getAll()).thenReturn(receipts);
+        List<Article> articleDtos = createDummyArticles(1);
+        Receipt earlyReceiptDto = createDummyReceipt("01/01/2001", articleDtos);
+        Receipt laterReceiptDto = createDummyReceipt("01/01/2004", articleDtos);
+        Receipt evenLaterReceiptDto = createDummyReceipt("01/01/2007", articleDtos);
+        List<Receipt> receiptDtos = new ArrayList<>();
+        receiptDtos.add(earlyReceiptDto);
+        receiptDtos.add(laterReceiptDto);
+        receiptDtos.add(evenLaterReceiptDto);
+        when(mockReceiptRepository.getAll()).thenReturn(receiptDtos);
         int expectedTimesSold = 1;
 
         Date date = new SimpleDateFormat("dd/MM/yyyy").parse("01/01/2006");
-        TimedArticleSale articleSale = new TimedArticleSale(mockReceiptRepository,articles.get(0),date, DateOperator.AFTER);
+        TimedArticleDtoSale articleSale = new TimedArticleDtoSale(mockReceiptRepository, articleDtos.get(0),date, DateOperator.AFTER);
         int timesSold = articleSale.getTimesSold();
 
         assertEquals(expectedTimesSold,timesSold);
@@ -47,19 +47,19 @@ public class TimedArticleSaleTests extends BaseTest{
 
     @Test
     public void getTimesSold_BeforeCertainDate_TimesSoldReturned() throws Exception {
-        List<Article> articles = createDummyArticles(1);
-        Receipt earlyReceipt = createDummyReceipt("01/01/2001",articles);
-        Receipt laterReceipt = createDummyReceipt("01/01/2004",articles);
-        Receipt evenLaterReceipt = createDummyReceipt("01/01/2007",articles);
-        List<Receipt> receipts = new ArrayList<>();
-        receipts.add(earlyReceipt);
-        receipts.add(laterReceipt);
-        receipts.add(evenLaterReceipt);
-        when(mockReceiptRepository.getAll()).thenReturn(receipts);
+        List<Article> articleDtos = createDummyArticles(1);
+        Receipt earlyReceiptDto = createDummyReceipt("01/01/2001", articleDtos);
+        Receipt laterReceiptDto = createDummyReceipt("01/01/2004", articleDtos);
+        Receipt evenLaterReceiptDto = createDummyReceipt("01/01/2007", articleDtos);
+        List<Receipt> receiptDtos = new ArrayList<>();
+        receiptDtos.add(earlyReceiptDto);
+        receiptDtos.add(laterReceiptDto);
+        receiptDtos.add(evenLaterReceiptDto);
+        when(mockReceiptRepository.getAll()).thenReturn(receiptDtos);
         int expectedTimesSold = 1;
 
         Date date = new SimpleDateFormat("dd/MM/yyyy").parse("01/01/2003");
-        TimedArticleSale articleSale = new TimedArticleSale(mockReceiptRepository,articles.get(0),date, DateOperator.BEFORE);
+        TimedArticleDtoSale articleSale = new TimedArticleDtoSale(mockReceiptRepository, articleDtos.get(0),date, DateOperator.BEFORE);
         int timesSold = articleSale.getTimesSold();
 
         assertEquals(expectedTimesSold,timesSold);

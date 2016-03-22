@@ -9,7 +9,7 @@ public class NameCriteria implements Criteria<Article> {
 
     private String name;
 
-    public NameCriteria(String name){
+    public NameCriteria(String name) {
         this.name = name;
     }
 

@@ -1,80 +1,25 @@
 package entities;
 
-public class Article extends AbstractEntity {
+public interface Article extends Entity{
 
-    private String name;
-    private String description;
-    private String image;
-    private String category;
-    private double price;
-    private int id;
+    String getImage();
 
-    public Article(){
+    void setImage(String image);
 
-    }
+    String getCategory();
 
-    public Article(int id, String name, double price, String description, String image, String category) {
-        this(name, description, image, category, price);
-        this.id = id;
+    void setCategory(String category);
 
-    }
+    double getPrice();
 
-    public Article(String name, String description, String image, String category, double price) {
-        this.name = name;
-        this.description = description;
-        this.image = image;
-        this.category = category;
-        this.price = price;
-    }
+    void setPrice(double price);
 
-    public String getImage() {
-        return image;
-    }
+    String getDescription();
 
-    public void setImage(String image) {
-        this.image = image;
-    }
+    void setDescription(String description);
 
-    public String getCategory() {
-        return category;
-    }
+    String getName();
 
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public String getDescription() {
-
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
+    void setName(String name);
 
 }

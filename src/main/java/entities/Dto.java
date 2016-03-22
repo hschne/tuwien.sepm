@@ -5,7 +5,7 @@ import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 /**
  * Base entity, provides better toString() for subclasses
  */
-abstract class AbstractEntity implements Entity{
+abstract class Dto{
 
     @Override
     public String toString() {

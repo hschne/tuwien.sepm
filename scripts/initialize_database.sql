@@ -1,7 +1,7 @@
 /* Drop existing tables */
 DROP TABLE ARTICLE, RECEIPT, ARTICLE_RECEIPT;
 
-/* create table 'Article' */
+/* create table 'ArticleDto' */
 CREATE TABLE ARTICLE (
   id int not null AUTO_INCREMENT,
   name VARCHAR(255) not null,
@@ -13,7 +13,7 @@ CREATE TABLE ARTICLE (
   PRIMARY KEY (id)
 );
 
-/* create table 'Receipt' */
+/* create table 'ReceiptDto' */
 CREATE TABLE RECEIPT(
   ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
   creation_date DATETIME not null,
@@ -22,16 +22,16 @@ CREATE TABLE RECEIPT(
 );
 
 CREATE TABLE ARTICLE_RECEIPT (
-  receipt int not null,
-  article int not null,
+  receiptDto int not null,
+  articleDto int not null,
   amount double not null,
-  CONSTRAINT RECEIPT_FK FOREIGN KEY (receipt) REFERENCES RECEIPT (id),
-  CONSTRAINT ARTICLE_FK FOREIGN KEY (article) REFERENCES ARTICLE (id),
-  primary key (receipt,article)
+  CONSTRAINT RECEIPT_FK FOREIGN KEY (receiptDto) REFERENCES RECEIPT (id),
+  CONSTRAINT ARTICLE_FK FOREIGN KEY (articleDto) REFERENCES ARTICLE (id),
+  primary key (receiptDto,articleDto)
 
 );
 
-/* Insert dummy data into article
+/* Insert dummy data into articleDto
    Pull data from here: http://www.johnlewis.com/gifts/easter/c600003104?rdr=1 */
 INSERT INTO ARTICLE (ID, NAME, DESCRIPTION, IMAGE_PATH, CATEGORY, PRICE)
 VALUES (1, 'Kuschelente', 'Kuschelente, Dekorationsgegenstand. Weich und flauschig, und außerdem gelb!', './img/kuschelente.jpg', 'Dekoration', 18.90),
@@ -41,13 +41,13 @@ VALUES (1, 'Kuschelente', 'Kuschelente, Dekorationsgegenstand. Weich und flausch
 
 
 
-/* Insert dummy data into receipt */
+/* Insert dummy data into receiptDto */
 INSERT INTO RECEIPT (ID, creation_date, receiver, receiver_adress)
 VALUES (1, '2012-06-18 10:34:09', 'Bugs Bunny', 'Hinterwald 15, 111 Imaginationland'),
   (2, '2015-12-13 16:11:10', 'Elmer Fudd', 'Oberhausen 9, 23 Jägersdorf');
 
 /* insert dummy data into join table */
-INSERT INTO ARTICLE_RECEIPT (receipt, article, amount)
+INSERT INTO ARTICLE_RECEIPT (receiptDto, articleDto, amount)
 VALUES (1,3,1),
  (1,2,1),
  (2,1,4);

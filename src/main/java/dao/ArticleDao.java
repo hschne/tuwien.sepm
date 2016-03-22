@@ -1,12 +1,13 @@
 package dao;
 
 import entities.Article;
+import entities.ArticleDto;
 
 import java.sql.SQLException;
 import java.util.List;
 
 /**
- * Article interaction with a database
+ * ArticleDto interaction with a database
  */
 public interface ArticleDao {
     /**

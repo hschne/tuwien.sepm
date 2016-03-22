@@ -1,39 +1,16 @@
 package entities;
 
-public class ReceiptEntry extends AbstractEntity {
+public interface ReceiptEntry {
 
-    private Receipt receipt;
-    private Article article;
+    Article getArticle();
 
-    private int amount;
+    void setArticle(Article articleDto);
 
-    public ReceiptEntry(Receipt receipt, Article article, int quantity) {
-        this.receipt = receipt;
-        this.article = article;
-        this.amount = quantity;
-    }
+    int getAmount();
 
-    public Article getArticle() {
-        return article;
-    }
+    void setAmount(int amount);
 
-    public void setArticle(Article article) {
-        this.article = article;
-    }
+    Receipt getReceipt();
 
-    public int getAmount() {
-        return amount;
-    }
-
-    public void setAmount(int amount) {
-        this.amount = amount;
-    }
-
-    public Receipt getReceipt() {
-        return receipt;
-    }
-
-    public void setReceipt(Receipt receipt) {
-        this.receipt = receipt;
-    }
+    void setReceipt(Receipt receiptDto);
 }

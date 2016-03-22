@@ -1,6 +1,7 @@
 package service.decorator;
 
 import entities.Article;
+import entities.ArticleDto;
 import service.ReceiptRepository;
 import service.criteria.DateOperator;
 
@@ -18,7 +19,7 @@ public class TimedArticleSaleFactory extends ArticleSaleFactory {
     }
 
     @Override
-    public ArticleSale create(Article article) {
-        return new TimedArticleSale(repository, article, date, operator);
+    public ArticleDtoSale create(Article articleDto) {
+        return new TimedArticleDtoSale(repository, articleDto, date, operator);
     }
 }

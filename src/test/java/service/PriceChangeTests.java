@@ -2,7 +2,7 @@ package service;
 
 import base.BaseTest;
 import dao.ArticleDao;
-import entities.Article;
+import entities.ArticleDto;
 import org.junit.Test;
 import org.mockito.Mock;
 import service.calculation.PriceChange;
@@ -21,16 +21,16 @@ public class PriceChangeTests extends BaseTest {
 
     @Test
     public void raiseByPercent_RaiseBy20_PriceRaised() throws Exception {
-        Article article = new Article(1, "name", 10.0, "desc", "image", "category");
-        List<Article> articles = new ArrayList<>();
-        articles.add(article);
-        PriceChange priceChange = new PriceChange(mockArticleDao, articles);
+        ArticleDto articleDto = new ArticleDto(1, "name", 10.0, "desc", "image", "category");
+        List<ArticleDto> articleDtos = new ArrayList<>();
+        articleDtos.add(articleDto);
+        PriceChange priceChange = new PriceChange(mockArticleDao, articleDtos);
         double expectedPrice = 12.0;
 
         priceChange.raiseByPercent(20);
 
-        assertEquals(expectedPrice, article.getPrice(), 0);
-        verify(mockArticleDao).update(article);
+        assertEquals(expectedPrice, articleDto.getPrice(), 0);
+        verify(mockArticleDao).update(articleDto);
     }
 
     @Test(expected = ServiceException.class)
@@ -42,16 +42,16 @@ public class PriceChangeTests extends BaseTest {
 
     @Test
     public void reduceByPercent_ReduceBy20_PriceReduced() throws Exception {
-        Article article = new Article(1, "name", 10.0, "desc", "image", "category");
-        List<Article> articles = new ArrayList<>();
-        articles.add(article);
-        PriceChange priceChange = new PriceChange(mockArticleDao, articles);
+        ArticleDto articleDto = new ArticleDto(1, "name", 10.0, "desc", "image", "category");
+        List<ArticleDto> articleDtos = new ArrayList<>();
+        articleDtos.add(articleDto);
+        PriceChange priceChange = new PriceChange(mockArticleDao, articleDtos);
         double expectedPrice = 8.0;
 
         priceChange.reduceByPercent(20);
 
-        assertEquals(expectedPrice, article.getPrice(), 0);
-        verify(mockArticleDao).update(article);
+        assertEquals(expectedPrice, articleDto.getPrice(), 0);
+        verify(mockArticleDao).update(articleDto);
     }
 
     @Test(expected = ServiceException.class)
@@ -63,38 +63,38 @@ public class PriceChangeTests extends BaseTest {
 
     @Test
     public void raiseByAbsolute_RaiseBy5_PriceRaised() throws Exception {
-        Article article = new Article(1, "name", 10.0, "desc", "image", "category");
-        List<Article> articles = new ArrayList<>();
-        articles.add(article);
-        PriceChange priceChange = new PriceChange(mockArticleDao, articles);
+        ArticleDto articleDto = new ArticleDto(1, "name", 10.0, "desc", "image", "category");
+        List<ArticleDto> articleDtos = new ArrayList<>();
+        articleDtos.add(articleDto);
+        PriceChange priceChange = new PriceChange(mockArticleDao, articleDtos);
         double expectedPrice = 15;
 
         priceChange.raiseByAbsolute(5);
 
-        assertEquals(expectedPrice, article.getPrice(), 0);
-        verify(mockArticleDao).update(article);
+        assertEquals(expectedPrice, articleDto.getPrice(), 0);
+        verify(mockArticleDao).update(articleDto);
     }
 
     @Test
     public void reduceByAbsolute_ReduceBy5_PriceReduced() throws Exception {
-        Article article = new Article(1, "name", 10.0, "desc", "image", "category");
-        List<Article> articles = new ArrayList<>();
-        articles.add(article);
-        PriceChange priceChange = new PriceChange(mockArticleDao, articles);
+        ArticleDto articleDto = new ArticleDto(1, "name", 10.0, "desc", "image", "category");
+        List<ArticleDto> articleDtos = new ArrayList<>();
+        articleDtos.add(articleDto);
+        PriceChange priceChange = new PriceChange(mockArticleDao, articleDtos);
         double expectedPrice = 5;
 
         priceChange.reduceByAbsolute(5);
 
-        assertEquals(expectedPrice, article.getPrice(), 0);
-        verify(mockArticleDao).update(article);
+        assertEquals(expectedPrice, articleDto.getPrice(), 0);
+        verify(mockArticleDao).update(articleDto);
     }
 
     @Test(expected = ServiceException.class)
     public void reduceByAbsolute_DecreaseByTooMuch_ExceptionThrown() throws Exception {
-        Article article = new Article(1, "name", 10.0, "desc", "image", "category");
-        List<Article> articles = new ArrayList<>();
-        articles.add(article);
-        PriceChange priceChange = new PriceChange(mockArticleDao, articles);
+        ArticleDto articleDto = new ArticleDto(1, "name", 10.0, "desc", "image", "category");
+        List<ArticleDto> articleDtos = new ArrayList<>();
+        articleDtos.add(articleDto);
+        PriceChange priceChange = new PriceChange(mockArticleDao, articleDtos);
 
         priceChange.reduceByAbsolute(100);
     }

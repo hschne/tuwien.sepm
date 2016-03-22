@@ -24,7 +24,7 @@ public class ReceiptRepository extends AbstractService implements Repository<Rec
             try {
                 receipts = dao.readAll();
             } catch (DaoException e) {
-                logger.error("Receipt retrieval from database has failed", e);
+                logger.error("ReceiptDto retrieval from database has failed", e);
                 throw new ServiceException("Could not retrieve receipts", e);
             }
         }

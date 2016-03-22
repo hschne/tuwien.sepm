@@ -2,9 +2,10 @@ package service.criteria;
 
 import base.BaseTest;
 import entities.Article;
+import entities.ArticleDto;
 import org.junit.Test;
 import org.mockito.Mock;
-import service.decorator.ArticleSale;
+import service.decorator.ArticleDtoSale;
 import service.decorator.SaleFactory;
 
 import java.util.List;
@@ -20,19 +21,19 @@ public class TimesSoldRelativeCriteriaTest extends BaseTest{
     SaleFactory mockSaleFactory;
 
     @Mock
-    ArticleSale mockArticleSale;
+    ArticleDtoSale mockArticleSale;
 
     @Test
     public void apply_GetSingleTopSold_SingleReturned() throws Exception {
         List<Article> articlesToFilter = createDummyArticles(5);
-        when(mockSaleFactory.create(any(Article.class))).thenReturn(mockArticleSale);
+        when(mockSaleFactory.create(any(ArticleDto.class))).thenReturn(mockArticleSale);
         when(mockArticleSale.getTimesSold()).thenReturn(10).thenReturn(1);
         TimesSoldRelativeCriteria criteria = new TimesSoldRelativeCriteria(mockSaleFactory, 1, RelativeOperator.TOP);
         int expectedCount = 1;
 
-        List<Article> articles = criteria.apply(articlesToFilter);
+        List<Article> articleDtos = criteria.apply(articlesToFilter);
 
-        assertEquals(expectedCount,articles.size());
+        assertEquals(expectedCount, articleDtos.size());
     }
 
 }

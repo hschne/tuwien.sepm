@@ -1,8 +1,6 @@
 package base;
 
-import entities.Article;
-import entities.Receipt;
-import entities.ReceiptEntry;
+import entities.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -16,35 +14,35 @@ public class DummyEntityFactory {
     public static List<Article> createDummyArticles(int count) {
         List<Article> result = new ArrayList<>();
         for (int i = 0; i < count; i++) {
-            Article article = new Article(i, "name" + i, i, "description", "", "category" + i);
-            result.add(article);
+            ArticleDto articleDto = new ArticleDto(i, "name" + i, i, "description", "", "category" + i);
+            result.add(articleDto);
         }
         return result;
     }
 
-    public static Receipt createDummyReceipt(List<Article> articles) throws ParseException {
-       return createDummyReceipt("01/01/2001",articles);
+    public static Receipt createDummyReceipt(List<Article> articleDtos) throws ParseException {
+       return createDummyReceipt("01/01/2001", articleDtos);
     }
 
 
-    public static Receipt createDummyReceipt(String date, List<Article> articles) throws ParseException {
+    public static Receipt createDummyReceipt(String date, List<Article> articleDtos) throws ParseException {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        Receipt receipt =  new Receipt(dateFormat.parse(date), "Receiver1", "ReceiverAdress1", null);
-        receipt.setReceiptEntries(createDummyReceiptEntries(articles, receipt));
-        return receipt;
+        Receipt receiptDto =  new ReceiptDto(dateFormat.parse(date), "Receiver1", "ReceiverAdress1", null);
+        receiptDto.setReceiptEntries(createDummyReceiptEntries(articleDtos, receiptDto));
+        return receiptDto;
     }
 
     public static List<Receipt> createDummyReceipts(int count) throws ParseException {
-        List<Receipt> receipts = new ArrayList<>();
+        List<Receipt> receiptDtos = new ArrayList<>();
         for(int i = 0; i< count; i++){
-            List<Article> articles = createDummyArticles(i);
-            receipts.add(createDummyReceipt(articles));
+            List<Article> articleDtos = createDummyArticles(i);
+            receiptDtos.add(createDummyReceipt(articleDtos));
         }
-        return receipts;
+        return receiptDtos;
     }
 
-    static List<ReceiptEntry> createDummyReceiptEntries(List<Article> articles, Receipt receipt) {
-        List<ReceiptEntry> entries = articles.stream().map(article -> new ReceiptEntry(receipt, article, 1)).collect(Collectors.toList());
+    static List<ReceiptEntry> createDummyReceiptEntries(List<Article> articleDtos, Receipt receiptDto) {
+        List<ReceiptEntry> entries = articleDtos.stream().map(article -> new ReceiptEntryDto(receiptDto, article, 1)).collect(Collectors.toList());
         return entries;
     }
 }

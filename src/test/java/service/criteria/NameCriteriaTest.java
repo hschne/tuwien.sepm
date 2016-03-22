@@ -2,6 +2,7 @@ package service.criteria;
 
 import base.BaseTest;
 import entities.Article;
+import entities.ArticleDto;
 import org.junit.Test;
 
 import java.util.List;
@@ -13,11 +14,11 @@ public class NameCriteriaTest extends BaseTest {
 
     @Test
     public void testApply_FilterByName_MatchingNameReturned() throws Exception {
-        List<Article> articles = createDummyArticles(5);
+        List<Article> articleDtos = createDummyArticles(5);
         String expectedName = "name0";
         Criteria<Article> criteria = new NameCriteria(expectedName);
 
-        List<Article> result = criteria.apply(articles);
+        List<Article> result = criteria.apply(articleDtos);
 
         assertEquals(expectedName,result.get(0).getName());
     }

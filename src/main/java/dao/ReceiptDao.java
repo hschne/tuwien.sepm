@@ -1,22 +1,23 @@
 package dao;
 
 import entities.Receipt;
+import entities.ReceiptDto;
 
 import java.sql.SQLException;
 import java.util.List;
 
 /**
- * Receipt interaction with a database
+ * ReceiptDto interaction with a database
  */
 public interface ReceiptDao {
 
     /**
-     * Create a new Receipt
+     * Create a new ReceiptDto
      *
-     * @param receipt
+     * @param receiptDto
      * @throws SQLException
      */
-    void create(Receipt receipt) throws DaoException;
+    void create(Receipt receiptDto) throws DaoException;
 
     /**
      * Retrieves all receipts with their corresponding receipt entries

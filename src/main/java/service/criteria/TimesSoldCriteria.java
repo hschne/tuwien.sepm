@@ -1,13 +1,11 @@
 package service.criteria;
 
 import entities.Article;
-import service.ReceiptRepository;
 import service.ServiceException;
-import service.decorator.ArticleSale;
+import service.decorator.ArticleDtoSale;
 import service.decorator.SaleFactory;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class TimesSoldCriteria implements Criteria<Article> {
@@ -27,16 +25,16 @@ public class TimesSoldCriteria implements Criteria<Article> {
     @Override
     public List<Article> apply(List<Article> list) throws ServiceException {
         List<Article> result = new ArrayList<>();
-        for (Article article : list) {
-            if (articleMatches(article)) {
-                result.add(article);
+        for (Article articleDto : list) {
+            if (articleMatches(articleDto)) {
+                result.add(articleDto);
             }
         }
         return result;
     }
 
-    private boolean articleMatches(Article article) throws ServiceException {
-        ArticleSale articleSale = factory.create(article);
+    private boolean articleMatches(Article articleDto) throws ServiceException {
+        ArticleDtoSale articleSale = factory.create(articleDto);
         switch (operator) {
             case GREATER:
                 return articleSale.getTimesSold() > times;

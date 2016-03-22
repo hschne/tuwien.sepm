@@ -5,7 +5,7 @@ import service.criteria.Criteria;
 
 import java.util.List;
 
-public interface Repository<T extends Entity>  {
+public interface Repository<T>  {
 
     List<T> getAll() throws ServiceException;
 

@@ -1,8 +1,6 @@
 package service.decorator;
 
-import entities.Article;
-import entities.Receipt;
-import entities.ReceiptEntry;
+import entities.*;
 import service.ReceiptRepository;
 import service.ServiceException;
 
@@ -10,14 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ArticleSale extends Article {
+public class ArticleDtoSale extends ArticleDto {
 
     private ReceiptRepository repository;
-    private final Article article;
+    private final Article articleDto;
 
-    ArticleSale(ReceiptRepository repository, Article article){
+    ArticleDtoSale(ReceiptRepository repository, Article articleDto){
         this.repository = repository;
-        this.article = article;
+        this.articleDto = articleDto;
     }
 
     public int getTimesSold() throws ServiceException {
@@ -25,13 +23,13 @@ public class ArticleSale extends Article {
     }
 
     protected List<ReceiptEntry> entriesForArticle() throws ServiceException {
-        List<Receipt> receipts = repository.getAll();
+        List<Receipt> receiptDtos = repository.getAll();
         List<ReceiptEntry> receiptEntries = new ArrayList<>();
-        for (Receipt receipt : receipts) {
-            receiptEntries.addAll(receipt.getReceiptEntries());
+        for (Receipt receiptDto : receiptDtos) {
+            receiptEntries.addAll(receiptDto.getReceiptEntries());
         }
         return receiptEntries.stream()
-                .filter(p -> p.getArticle().equals(article)).collect(Collectors.toList());
+                .filter(p -> p.getArticle().equals(articleDto)).collect(Collectors.toList());
     }
 
 

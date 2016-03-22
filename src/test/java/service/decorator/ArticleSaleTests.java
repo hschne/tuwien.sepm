@@ -2,7 +2,9 @@ package service.decorator;
 
 import base.BaseTest;
 import entities.Article;
+import entities.ArticleDto;
 import entities.Receipt;
+import entities.ReceiptDto;
 import org.junit.Test;
 import org.mockito.Mock;
 import service.ReceiptRepository;
@@ -22,26 +24,26 @@ public class ArticleSaleTests extends BaseTest{
 
     @Test
     public void getTimesSold_GetTimesSoldForArticle_TimesSoldReturned() throws Exception {
-        List<Article> articles = createDummyArticles(1);
-        Receipt receipt = createDummyReceipt(articles);
-        List<Receipt> receipts = new ArrayList<>();
-        receipts.add(receipt);
-        when(mockReceiptRepository.getAll()).thenReturn(receipts);
+        List<Article> articleDtos = createDummyArticles(1);
+        Receipt receiptDto = createDummyReceipt(articleDtos);
+        List<Receipt> receiptDtos = new ArrayList<>();
+        receiptDtos.add(receiptDto);
+        when(mockReceiptRepository.getAll()).thenReturn(receiptDtos);
         int expectedTimesSold = 1;
 
-        int timesSold = new ArticleSale(mockReceiptRepository,articles.get(0)).getTimesSold();
+        int timesSold = new ArticleDtoSale(mockReceiptRepository, articleDtos.get(0)).getTimesSold();
 
         assertEquals(expectedTimesSold,timesSold);
     }
 
     @Test
     public void getTimesSold_ArticleNeverSold_ZeroReturned() throws Exception {
-        List<Article> articles = createDummyArticles(1);
-        List<Receipt> receipts = new ArrayList<>();
-        when(mockReceiptRepository.getAll()).thenReturn(receipts);
+        List<Article> articleDtos = createDummyArticles(1);
+        List<Receipt> receiptDtos = new ArrayList<>();
+        when(mockReceiptRepository.getAll()).thenReturn(receiptDtos);
         int expectedTimesSold = 0;
 
-        int timesSold = new ArticleSale(mockReceiptRepository,articles.get(0)).getTimesSold();
+        int timesSold = new ArticleDtoSale(mockReceiptRepository, articleDtos.get(0)).getTimesSold();
 
         assertEquals(expectedTimesSold,timesSold);
     }

@@ -1,8 +1,9 @@
 package service.criteria;
 
 import entities.Article;
+import entities.ArticleDto;
 import service.ServiceException;
-import service.decorator.ArticleSale;
+import service.decorator.ArticleDtoSale;
 import service.decorator.SaleFactory;
 
 import java.util.Collections;
@@ -29,8 +30,8 @@ public class TimesSoldRelativeCriteria implements Criteria<Article> {
 
     private Comparator<Article> createCustomComparator() {
         return (o1, o2) -> {
-            ArticleSale leftSale = factory.create(o1);
-            ArticleSale rightSale = factory.create(o2);
+            ArticleDtoSale leftSale = factory.create(o1);
+            ArticleDtoSale rightSale = factory.create(o2);
             try {
                 if (relativeOperator == RelativeOperator.TOP) {
                     return getOrder(leftSale, rightSale);
@@ -43,7 +44,7 @@ public class TimesSoldRelativeCriteria implements Criteria<Article> {
         };
     }
 
-    private int getOrder(ArticleSale o1, ArticleSale o2) throws ServiceException {
+    private int getOrder(ArticleDtoSale o1, ArticleDtoSale o2) throws ServiceException {
         if (o1.getTimesSold() > o2.getTimesSold()) {
             return -1;
         } else if (o1.getTimesSold() < o2.getTimesSold()) {

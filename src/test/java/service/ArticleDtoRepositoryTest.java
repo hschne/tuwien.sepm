@@ -4,6 +4,7 @@ import base.BaseTest;
 import dao.ArticleDao;
 import dao.DaoException;
 import entities.Article;
+import entities.ArticleDto;
 import org.junit.Test;
 import org.mockito.Mock;
 import service.criteria.Criteria;
@@ -16,7 +17,7 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.when;
 
-public class ArticleRepositoryTest extends BaseTest {
+public class ArticleDtoRepositoryTest extends BaseTest {
 
     @Mock
     ArticleDao mockArticleDao;
@@ -30,9 +31,9 @@ public class ArticleRepositoryTest extends BaseTest {
         ArticleRepository repository = new ArticleRepository(mockArticleDao);
         when(mockArticleDao.getVisible()).thenReturn(articlesToReturn);
 
-        List<Article> articles = repository.getAll();
+        List<Article> articleDtos = repository.getAll();
 
-        assertEquals(articlesToReturn, articles);
+        assertEquals(articlesToReturn, articleDtos);
     }
 
     @Test(expected = ServiceException.class)
@@ -50,8 +51,8 @@ public class ArticleRepositoryTest extends BaseTest {
         ArticleRepository repository = new ArticleRepository(mockArticleDao);
         when(mockArticleCriteria.apply(any(List.class))).thenReturn(articlesToReturn);
 
-        List<Article> articles = repository.filter(mockArticleCriteria);
+        List<Article> articleDtos = repository.filter(mockArticleCriteria);
 
-        assertEquals(articlesToReturn, articles);
+        assertEquals(articlesToReturn, articleDtos);
     }
 }

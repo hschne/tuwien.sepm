@@ -1,8 +1,9 @@
 package service.decorator;
 
 import entities.Article;
+import entities.ArticleDto;
 
 public interface SaleFactory {
 
-    public ArticleSale create(Article article);
+    public ArticleDtoSale create(Article articleDto);
 }

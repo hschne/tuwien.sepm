@@ -1,7 +1,9 @@
 package service.decorator;
 
 import entities.Article;
+import entities.ArticleDto;
 import entities.ReceiptEntry;
+import entities.ReceiptEntryDto;
 import service.ReceiptRepository;
 import service.ServiceException;
 import service.criteria.DateOperator;
@@ -10,13 +12,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class TimedArticleSale extends ArticleSale {
+public class TimedArticleDtoSale extends ArticleDtoSale {
 
     private final Date date;
     private final DateOperator operator;
 
-    TimedArticleSale(ReceiptRepository repository, Article article, Date date, DateOperator operator){
-        super(repository,article);
+    TimedArticleDtoSale(ReceiptRepository repository, Article articleDto, Date date, DateOperator operator){
+        super(repository, articleDto);
         this.date = date;
         this.operator = operator;
     }

@@ -1,6 +1,7 @@
 package service.decorator;
 
 import entities.Article;
+import entities.ArticleDto;
 import service.ReceiptRepository;
 
 public class ArticleSaleFactory implements SaleFactory{
@@ -12,7 +13,7 @@ public class ArticleSaleFactory implements SaleFactory{
     }
 
     @Override
-    public ArticleSale create(Article article) {
-        return new ArticleSale(repository,article);
+    public ArticleDtoSale create(Article articleDto) {
+        return new ArticleDtoSale(repository, articleDto);
     }
 }

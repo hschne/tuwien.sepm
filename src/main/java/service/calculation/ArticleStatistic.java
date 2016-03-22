@@ -1,7 +1,7 @@
 package service.calculation;
 
-import entities.Article;
-import service.decorator.ArticleSale;
+import entities.ArticleDto;
+import service.decorator.ArticleDtoSale;
 import service.decorator.ArticleSaleFactory;
 
 import java.util.ArrayList;
@@ -10,17 +10,17 @@ import java.util.List;
 public class ArticleStatistic {
 
     private ArticleSaleFactory factory;
-    private List<Article> articles;
+    private List<ArticleDto> articleDtos;
 
-    public ArticleStatistic(ArticleSaleFactory factory, List<Article> articles) {
+    public ArticleStatistic(ArticleSaleFactory factory, List<ArticleDto> articleDtos) {
         this.factory = factory;
-        this.articles = articles;
+        this.articleDtos = articleDtos;
     }
 
-    public List<ArticleSale> createStatistic() {
-        List<ArticleSale> result = new ArrayList<>();
-        for (Article article : articles) {
-            ArticleSale sale = factory.create(article);
+    public List<ArticleDtoSale> createStatistic() {
+        List<ArticleDtoSale> result = new ArrayList<>();
+        for (ArticleDto articleDto : articleDtos) {
+            ArticleDtoSale sale = factory.create(articleDto);
             result.add(sale);
         }
         return result;

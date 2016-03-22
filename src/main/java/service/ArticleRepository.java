@@ -3,16 +3,15 @@ package service;
 import dao.ArticleDao;
 import dao.DaoException;
 import entities.Article;
+import entities.ArticleDto;
 import service.criteria.Criteria;
 
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class ArticleRepository extends AbstractService implements Repository<Article> {
 
     private ArticleDao dao;
-    private List<Article> articles;
+    private List<Article> articleDtos;
 
     public ArticleRepository(ArticleDao dao) {
         this.dao = dao;
@@ -20,16 +19,16 @@ public class ArticleRepository extends AbstractService implements Repository<Art
 
     @Override
     public List<Article> getAll() throws ServiceException {
-        logger.debug("Retrieving all articles");
-        if(articles == null){
+        logger.debug("Retrieving all articleDtos");
+        if(articleDtos == null){
             try {
-                articles = dao.getVisible();
+                articleDtos = dao.getVisible();
             } catch (DaoException e) {
-                logger.error("Article retrieval from database failed.",e);
-                throw new ServiceException("Could not retrieve articles", e);
+                logger.error("ArticleDto retrieval from database failed.",e);
+                throw new ServiceException("Could not retrieve articleDtos", e);
             }
         }
-        return articles;
+        return articleDtos;
     }
 
     @Override

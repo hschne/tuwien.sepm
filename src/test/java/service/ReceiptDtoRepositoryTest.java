@@ -3,22 +3,21 @@ package service;
 import base.BaseTest;
 import dao.DaoException;
 import dao.ReceiptDao;
-import entities.Article;
 import entities.Receipt;
+import entities.ReceiptDto;
 import org.junit.Test;
 import org.mockito.Mock;
 import service.criteria.Criteria;
 
 import java.util.List;
 
-import static base.DummyEntityFactory.createDummyArticles;
 import static base.DummyEntityFactory.createDummyReceipt;
 import static base.DummyEntityFactory.createDummyReceipts;
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
-public class ReceiptRepositoryTest extends BaseTest {
+public class ReceiptDtoRepositoryTest extends BaseTest {
 
     @Mock
     ReceiptDao mockReceiptDao;
@@ -32,9 +31,9 @@ public class ReceiptRepositoryTest extends BaseTest {
         ReceiptRepository repository = new ReceiptRepository(mockReceiptDao);
         when(mockReceiptDao.readAll()).thenReturn(receiptsToReturn);
 
-        List<Receipt> receipts = repository.getAll();
+        List<Receipt> receiptDtos = repository.getAll();
 
-        assertEquals(receiptsToReturn, receipts);
+        assertEquals(receiptsToReturn, receiptDtos);
     }
 
     @Test(expected = ServiceException.class)

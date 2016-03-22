@@ -1,9 +1,7 @@
 package dao;
 
 import dao.h2.H2ReceiptDao;
-import entities.Article;
-import entities.Receipt;
-import entities.ReceiptEntry;
+import entities.*;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -22,11 +20,11 @@ public class H2ReceiptDaoTests extends DaoTest {
         ReceiptDao dao = new H2ReceiptDao(mockH2Database);
         when(mockResultSet.getInt(anyInt())).thenReturn(1);
         when(mockResultSet.next()).thenReturn(true);
-        Receipt receipt = new Receipt(1, new Date(), "", "", new ArrayList<>());
+        ReceiptDto receiptDto = new ReceiptDto(1, new Date(), "", "", new ArrayList<>());
 
-        dao.create(receipt);
+        dao.create(receiptDto);
 
-        assertEquals(1, receipt.getId());
+        assertEquals(1, receiptDto.getId());
     }
 
     @Test
@@ -35,12 +33,12 @@ public class H2ReceiptDaoTests extends DaoTest {
         Date date = new Date();
         String receiver = "Receiver";
         String receiverAddress = "ReceiverAddress";
-        Receipt receipt = new Receipt(date, receiver, receiverAddress, new ArrayList<>());
+        ReceiptDto receiptDto = new ReceiptDto(date, receiver, receiverAddress, new ArrayList<>());
         when(mockResultSet.next()).thenReturn(true);
 
-        dao.create(receipt);
+        dao.create(receiptDto);
 
-        verify(mockStatement).setDate(anyInt(), eq(new java.sql.Date(receipt.getDate().getTime())));
+        verify(mockStatement).setDate(anyInt(), eq(new java.sql.Date(receiptDto.getDate().getTime())));
         verify(mockStatement).setString(anyInt(), eq(receiver));
         verify(mockStatement).setString(anyInt(), eq(receiverAddress));
         verify(mockStatement, times(1)).executeUpdate();
@@ -52,11 +50,11 @@ public class H2ReceiptDaoTests extends DaoTest {
         int receiptId = 1;
         int amount = 1;
         ReceiptDao dao = new H2ReceiptDao(mockH2Database);
-        Receipt receipt = new Receipt(1, new Date(), "", "", dummyReceiptEntries());
+        Receipt receiptDto = new ReceiptDto(1, new Date(), "", "", dummyReceiptEntries());
         when(mockResultSet.next()).thenReturn(true);
         when(mockResultSet.getInt(anyInt())).thenReturn(1);
 
-        dao.create(receipt);
+        dao.create(receiptDto);
 
         verify(mockStatement).setInt(1, receiptId);
         verify(mockStatement).setInt(2, articleId);
@@ -67,7 +65,7 @@ public class H2ReceiptDaoTests extends DaoTest {
     @Test(expected = DaoException.class)
     public void create_NewReceipt_ReceiptCreationFailed() throws Exception {
         ReceiptDao dao = new H2ReceiptDao(mockH2Database);
-        dao.create(new Receipt(new Date(), "", "", new ArrayList<>()));
+        dao.create(new ReceiptDto(new Date(), "", "", new ArrayList<>()));
         when(mockResultSet.next()).thenReturn(false);
     }
 
@@ -84,14 +82,14 @@ public class H2ReceiptDaoTests extends DaoTest {
         when(mockResultSet.getString(3)).thenReturn(receiver);
         when(mockResultSet.getString(4)).thenReturn(receiverAdress);
 
-        List<Receipt> receipts = dao.readAll();
+        List<Receipt> receiptDtos = dao.readAll();
 
-        assertEquals(receipts.size(), 1);
-        Receipt receipt = receipts.get(0);
-        assertEquals(id, receipt.getId());
-        assertEquals(date, receipt.getDate());
-        assertEquals(receiver, receipt.getReceiver());
-        assertEquals(receiverAdress, receipt.getReceiverAddress());
+        assertEquals(receiptDtos.size(), 1);
+        Receipt receiptDto = receiptDtos.get(0);
+        assertEquals(id, receiptDto.getId());
+        assertEquals(date, receiptDto.getDate());
+        assertEquals(receiver, receiptDto.getReceiver());
+        assertEquals(receiverAdress, receiptDto.getReceiverAddress());
     }
 
     @Test
@@ -108,20 +106,20 @@ public class H2ReceiptDaoTests extends DaoTest {
         when(mockResultSet.getInt(7)).thenReturn(articleAmount);
         when(mockResultSet.getDate(2)).thenReturn(new java.sql.Date(receiptDate.getTime()));
 
-        List<Receipt> receipts = dao.readAll();
+        List<Receipt> receiptDtos = dao.readAll();
 
-        List<ReceiptEntry> receiptEntries = receipts.get(0).getReceiptEntries();
+        List<ReceiptEntry> receiptEntries = receiptDtos.get(0).getReceiptEntries();
         assertEquals(receiptEntries.size(), 1);
         ReceiptEntry entry = receiptEntries.get(0);
         assertEquals(articleAmount, entry.getAmount());
-        Article article = entry.getArticle();
-        assertEquals(articleId, article.getId());
-        assertEquals(name, article.getName());
+        Article articleDto = entry.getArticle();
+        assertEquals(articleId, articleDto.getId());
+        assertEquals(name, articleDto.getName());
     }
 
     private List<ReceiptEntry> dummyReceiptEntries() {
-        Article article = new Article(1, "", 0.0, "", "", "");
-        ReceiptEntry entry = new ReceiptEntry(null,article, 1);
+        ArticleDto articleDto = new ArticleDto(1, "", 0.0, "", "", "");
+        ReceiptEntryDto entry = new ReceiptEntryDto(null, articleDto, 1);
         List<ReceiptEntry> entries = new ArrayList<>();
         entries.add(entry);
         return entries;
