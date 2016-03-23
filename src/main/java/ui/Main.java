@@ -5,9 +5,7 @@ import dao.DaoException;
 import dao.h2.H2ArticleDao;
 import dao.h2.H2Database;
 import javafx.application.Application;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Point3D;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
@@ -75,7 +73,7 @@ public class Main extends Application {
         try {
             // Load person overview.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(Main.class.getResource("/views/articles.fxml"));
+            loader.setLocation(Main.class.getResource("/views/articleOverview.fxml"));
             AnchorPane personOverview = loader.load();
 
             // Set person overview into the center of root layout.
