@@ -2,15 +2,14 @@ package ui;
 
 import dao.ArticleDao;
 import dao.DaoException;
-import dao.Database;
 import dao.h2.H2ArticleDao;
 import dao.h2.H2Database;
-import entities.Article;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -49,7 +48,7 @@ public class Main extends Application {
 
         initRootLayout();
 
-        showPersonOverview();
+        showArticleOverview();
     }
 
     /**
@@ -72,7 +71,7 @@ public class Main extends Application {
     /**
      * Shows the person overview inside the root layout.
      */
-    public void showPersonOverview() {
+    public void showArticleOverview() {
         try {
             // Load person overview.
             FXMLLoader loader = new FXMLLoader();
@@ -108,6 +107,10 @@ public class Main extends Application {
         }
     }
 
+    public Stage getPrimaryStage() {
+        return primaryStage;
+    }
+
     private void initServices() {
         try {
             H2Database database = new H2Database("/home/hschroedl/sepm");
@@ -127,8 +130,22 @@ public class Main extends Application {
         }
     }
 
+    public void showNotification(Alert.AlertType type, String title, String headerText, String contentText) {
+        Alert alert = new Alert(type);
+        alert.initOwner(primaryStage);
+        alert.setTitle(title);
+        alert.setHeaderText(headerText);
+        alert.setContentText(contentText);
+
+        alert.showAndWait();
+    }
+
     public ObservableList<ArticleModel> getArticles(){
         return articles;
+    }
+
+    public ArticleRepository getArticleRepository(){
+        return articleRepository;
     }
 
 

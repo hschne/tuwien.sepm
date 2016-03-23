@@ -16,7 +16,7 @@ public class ModelFactory {
     }
 
     public ArticleModel createArticleModel(Article article) {
-        return new ArticleModel(article.getName(), article.getPrice(),
+        return new ArticleModel(article.getId(),article.getName(), article.getPrice(),
                 article.getDescription(), article.getCategory(), article.getImage());
     }
 }

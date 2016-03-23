@@ -6,7 +6,6 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controller.ArticleDetailsController">
    <children>
       <Label fx:id="name" text="Name" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0" />
@@ -31,7 +30,7 @@
          </children>
       </GridPane>
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="370.0" layoutY="63.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="80.0" />
-      <Button layoutX="520.0" layoutY="299.0" mnemonicParsing="false" text="Save" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="30.0" />
-      <Button layoutX="442.0" layoutY="299.0" mnemonicParsing="false" text="Cancel" AnchorPane.bottomAnchor="20.0" />
+      <Button layoutX="520.0" layoutY="299.0" mnemonicParsing="false" onAction="#handleSave" text="Save" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="30.0" />
+      <Button layoutX="442.0" layoutY="299.0" mnemonicParsing="false" onAction="#handleCancel" text="Cancel" AnchorPane.bottomAnchor="20.0" />
    </children>
 </AnchorPane>

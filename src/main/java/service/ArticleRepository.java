@@ -5,6 +5,7 @@ import dao.DaoException;
 import entities.Article;
 import entities.ArticleDto;
 import service.criteria.Criteria;
+import ui.model.ArticleModel;
 
 import java.util.List;
 
@@ -36,4 +37,12 @@ public class ArticleRepository extends AbstractService implements Repository<Art
         return criteria.apply(getAll());
     }
 
+    public void update(Article article) throws ServiceException {
+        try {
+            dao.update(article);
+        } catch (DaoException e) {
+            logger.error("Could not update article "+article.toString(), e);
+            throw new ServiceException("Could not update article.",e);
+        }
+    }
 }
