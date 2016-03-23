@@ -49,10 +49,11 @@ public class ArticleDetailsController extends AbstractController {
             article.setPrice(Double.parseDouble(price.getText()));
             article.setDescription(description.getText());
             article.setCategory(category.getText());
-            if (isNew) {
-                mainApp.getArticleRepository().create(article);
-            } else {
-                mainApp.getArticleRepository().update(article);
+            if (!isNew) {
+                mainApp.getArticleList().update(article);
+            }
+            else{
+                mainApp.getArticleList().get().add(article);
             }
         } catch (ServiceException e) {
             mainApp.showNotification(Alert.AlertType.ERROR, "Error", "Could not update article.", "");

@@ -5,9 +5,9 @@ import dao.DaoException;
 import dao.h2.H2ArticleDao;
 import dao.h2.H2Database;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Point3D;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
@@ -17,19 +17,18 @@ import service.ArticleRepository;
 import service.ServiceException;
 import ui.controller.ArticleDetailsController;
 import ui.controller.ArticleOverviewController;
+import ui.model.ArticleList;
 import ui.model.ArticleModel;
-import ui.model.ModelFactory;
 
 import java.io.IOException;
 
 public class Main extends Application {
 
-    private ArticleRepository articleRepository;
-
-    private ObservableList<ArticleModel> articles = FXCollections.observableArrayList();
+    private ArticleList articleList;
 
     private Stage primaryStage;
     private BorderPane rootLayout;
+    private ArticleList articles;
 
     public Main() {
 
@@ -43,10 +42,11 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Wendy's Easter Shop");
-        initServices();
-        initData();
+
 
         initRootLayout();
+        initServices();
+        initData();
 
         showArticleOverview();
     }
@@ -73,7 +73,6 @@ public class Main extends Application {
      */
     public void showArticleOverview() {
         try {
-            initData();
             // Load person overview.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource("/views/articles.fxml"));
@@ -90,7 +89,7 @@ public class Main extends Application {
         }
     }
 
-    public void showArticleDetails(ArticleModel article){
+    public void showArticleDetails(ArticleModel article) {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource("/views/articleDetails.fxml"));
@@ -108,26 +107,6 @@ public class Main extends Application {
         }
     }
 
-    private void initServices() {
-        try {
-            H2Database database = new H2Database("/home/hschroedl/sepm");
-            ArticleDao articleDao = new H2ArticleDao(database);
-            articleRepository = new ArticleRepository(articleDao);
-        } catch (DaoException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void initData(){
-        ModelFactory factory = new ModelFactory();
-        try {
-            articles.clear();
-            articles.addAll(factory.createArticleModels(articleRepository.getAll()));
-        } catch (ServiceException e) {
-            e.printStackTrace();
-        }
-    }
-
     public void showNotification(Alert.AlertType type, String title, String headerText, String contentText) {
         Alert alert = new Alert(type);
         alert.initOwner(primaryStage);
@@ -138,12 +117,24 @@ public class Main extends Application {
         alert.showAndWait();
     }
 
-    public ObservableList<ArticleModel> getArticles(){
-        return articles;
+    public ArticleList getArticleList() {
+        return articleList;
     }
 
-    public ArticleRepository getArticleRepository(){
-        return articleRepository;
+    private void initServices() {
+        try {
+            H2Database database = new H2Database("/home/hschroedl/sepm");
+            ArticleDao articleDao = new H2ArticleDao(database);
+            articleList = new ArticleList(new ArticleRepository(articleDao));
+        } catch (DaoException e) {
+            showNotification(Alert.AlertType.ERROR, "Critical error", "Database error", "Woat");
+        } catch (ServiceException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void initData() {
+
     }
 
 

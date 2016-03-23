@@ -3,8 +3,6 @@ package ui.controller;
 import com.sun.prism.impl.Disposer;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.TableColumn.CellDataFeatures;
@@ -35,7 +33,7 @@ public class ArticleOverviewController extends AbstractController {
 
     @Override
     public void setMainApp(Main mainApp) {
-        articleTable.setItems(mainApp.getArticles());
+        articleTable.setItems(mainApp.getArticleList().get());
         super.setMainApp(mainApp);
     }
 
@@ -91,20 +89,13 @@ public class ArticleOverviewController extends AbstractController {
     //Define the button cell
     private class ButtonCell extends TableCell<Disposer.Record, Boolean> {
         final Button cellButton = new Button("Delete");
-
         ButtonCell(){
-
             //Action when the button is pressed
             cellButton.setOnAction(t -> {
                 // get Selected Item
                 ArticleModel articleModel = (ArticleModel) ButtonCell.this.getTableView().getItems().get(ButtonCell.this.getIndex());
                 //remove selected item from the table list
-                try {
-                    mainApp.getArticleRepository().delete(articleModel);
-                    mainApp.getArticles().remove(articleModel);
-                } catch (ServiceException e) {
-                    mainApp.showNotification(Alert.AlertType.ERROR, "Error", "Article deletion failed","");
-                }
+                mainApp.getArticleList().get().remove(articleModel);
             });
         }
 
