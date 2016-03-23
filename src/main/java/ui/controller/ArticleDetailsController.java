@@ -23,7 +23,7 @@ public class ArticleDetailsController extends AbstractController {
     private TextField category;
 
     public void setArticle(ArticleModel article) {
-        if (this.article == null) {
+        if (article == null) {
             this.article = new ArticleModel("", 0.0, "", "", "");
             isNew = true;
         } else {

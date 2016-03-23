@@ -51,8 +51,18 @@ public class ArticleRepository extends AbstractService implements Repository<Art
             dao.create(article);
             articleDtos.add(article);
         } catch (DaoException e) {
-            logger.error("Could not update article "+article.toString(), e);
+            logger.error("Could not create article "+article.toString(), e);
             throw new ServiceException("Could not create article",e);
+        }
+    }
+
+    public void delete(ArticleModel article) throws ServiceException {
+        try {
+            dao.delete(article);
+            articleDtos.remove(article);
+        } catch (DaoException e) {
+            logger.error("Could not delete article "+article.toString(), e);
+            throw new ServiceException("Could not delete article",e);
         }
     }
 }
