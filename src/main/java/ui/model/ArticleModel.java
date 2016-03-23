@@ -21,8 +21,12 @@ public class ArticleModel implements Article {
     private int Id;
 
     public ArticleModel(int id, String name, Double price, String description, String category, String image) {
-        this.image = image;
+        this(name,price,description,category,image);
         this.Id = id;
+    }
+
+    public ArticleModel(String name, Double price, String description, String category, String image){
+        this.image = image;
         this.name = new SimpleStringProperty(name);
         this.price = new SimpleDoubleProperty(price);
         this.category = new SimpleStringProperty(category);

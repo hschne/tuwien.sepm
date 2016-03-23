@@ -73,6 +73,7 @@ public class Main extends Application {
      */
     public void showArticleOverview() {
         try {
+            initData();
             // Load person overview.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource("/views/articles.fxml"));
@@ -107,10 +108,6 @@ public class Main extends Application {
         }
     }
 
-    public Stage getPrimaryStage() {
-        return primaryStage;
-    }
-
     private void initServices() {
         try {
             H2Database database = new H2Database("/home/hschroedl/sepm");
@@ -124,6 +121,7 @@ public class Main extends Application {
     private void initData(){
         ModelFactory factory = new ModelFactory();
         try {
+            articles.clear();
             articles.addAll(factory.createArticleModels(articleRepository.getAll()));
         } catch (ServiceException e) {
             e.printStackTrace();

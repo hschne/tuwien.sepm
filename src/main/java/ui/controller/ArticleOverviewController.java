@@ -44,15 +44,17 @@ public class ArticleOverviewController extends AbstractController {
 
     @FXML
     private void initialize() {
-        // Initialize the person table with the two columns.
-
         initializeDoubleClick();
-
         nameColumn.setCellValueFactory(cellData -> cellData.getValue().getNameProperty());
         priceColumn.setCellValueFactory(cellData -> cellData.getValue().getPriceProperty().asObject());
         descriptionColumn.setCellValueFactory(cellData -> cellData.getValue().getDescriptionProperty());
         categoryColumn.setCellValueFactory(cellData -> cellData.getValue().getCategoryProperty());
 
+    }
+
+    @FXML
+    private void handleCreate(){
+        mainApp.showArticleDetails(null);
     }
 
     private void initializeDoubleClick() {
@@ -61,18 +63,13 @@ public class ArticleOverviewController extends AbstractController {
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
                     ArticleModel rowData = row.getItem();
-                    showArticleDetails(rowData);
+
+                        mainApp.showArticleDetails(rowData);
                 }
             });
             return row ;
         });
     }
-
-    private void showArticleDetails(ArticleModel article){
-        mainApp.showArticleDetails(article);
-    }
-
-
 
 
 }
