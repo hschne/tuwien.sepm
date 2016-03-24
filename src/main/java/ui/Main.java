@@ -4,6 +4,7 @@ import dao.ArticleDao;
 import dao.DaoException;
 import dao.h2.H2ArticleDao;
 import dao.h2.H2Database;
+import entities.Receipt;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -15,18 +16,24 @@ import service.ArticleRepository;
 import service.ServiceException;
 import ui.controller.ArticleDetailsController;
 import ui.controller.ArticleOverviewController;
+import ui.controller.ReceiptOverviewController;
 import ui.model.ArticleList;
 import ui.model.ArticleModel;
+import ui.model.ReceiptList;
+import ui.model.ReceiptModel;
 
+import javax.swing.*;
 import java.io.IOException;
 
 public class Main extends Application {
 
     private ArticleList articleList;
 
+    private ReceiptList receiptList;
+
     private Stage primaryStage;
     private BorderPane rootLayout;
-    private ArticleList articles;
+
 
     public Main() {
 
@@ -117,6 +124,27 @@ public class Main extends Application {
 
     public ArticleList getArticleList() {
         return articleList;
+    }
+
+    public void showReceiptDetails(ReceiptModel receipt) {
+
+    }
+
+    public void showReceiptOverview(){
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("/views/receiptOverview.fxml"));
+            AnchorPane receiptOverview = loader.load();
+            rootLayout.setCenter(receiptOverview);
+            ReceiptOverviewController controller = loader.getController();
+            controller.initialize(this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public ReceiptList getReceiptList() {
+        return receiptList;
     }
 
     private void initServices() {

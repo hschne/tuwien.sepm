@@ -28,7 +28,7 @@ public class ArticleOverviewController extends AbstractController {
 
     @Override
     public void initialize(Main mainApp) {
-        new CustomTableFactory(mainApp).configureArticleTable(articleTable);
+        new CustomArticleTableFactory(mainApp).configureArticleTable(articleTable);
         articleTable.setItems(mainApp.getArticleList().get());
         super.initialize(mainApp);
     }

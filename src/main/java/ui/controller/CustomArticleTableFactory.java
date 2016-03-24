@@ -8,12 +8,12 @@ import javafx.util.Callback;
 import ui.Main;
 import ui.model.ArticleModel;
 
-public class CustomTableFactory {
+public class CustomArticleTableFactory {
 
 
     private Main mainApp;
 
-    public CustomTableFactory(Main mainApp) {
+    public CustomArticleTableFactory(Main mainApp) {
         this.mainApp = mainApp;
     }
 

@@ -1,27 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controller.ArticleOverviewController">
+<?import javafx.scene.text.Font?>
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity"
+            minWidth="-Infinity" prefWidth="600.0" xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controller.ArticleOverviewController">
     <children>
-        <TableView fx:id="articleTable" layoutY="33.0" prefHeight="267.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="33.0">
+        <TableView fx:id="articleTable" layoutY="33.0" prefHeight="267.0" prefWidth="600.0"
+                   AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                   AnchorPane.topAnchor="33.0">
             <columnResizePolicy>
-                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
             </columnResizePolicy>
             <columns>
-                <TableColumn fx:id="nameColumn" minWidth="0.0" prefWidth="168.0" text="Date" />
-                <TableColumn fx:id="priceColumn" prefWidth="198.0" text="Recipient" />
-                <TableColumn fx:id="descriptionColumn" minWidth="0.0" prefWidth="204.0" text="Total" />
+                <TableColumn fx:id="nameColumn" minWidth="0.0" prefWidth="168.0" text="Date"/>
+                <TableColumn fx:id="priceColumn" prefWidth="198.0" text="Recipient"/>
+                <TableColumn fx:id="descriptionColumn" minWidth="0.0" prefWidth="204.0" text="Total"/>
             </columns>
         </TableView>
-        <Button layoutX="545.0" layoutY="4.0" mnemonicParsing="false" onAction="#handleCreate" text="New" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="5.0">
+        <Button layoutX="545.0" layoutY="4.0" mnemonicParsing="false" onAction="#handleCreate" text="New"
+                AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="5.0">
             <font>
-                <Font size="12.0" />
-            </font></Button>
+                <Font size="12.0"/>
+            </font>
+        </Button>
     </children>
 </AnchorPane>

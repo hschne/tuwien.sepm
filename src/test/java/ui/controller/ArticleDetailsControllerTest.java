@@ -3,10 +3,12 @@ package ui.controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import org.junit.Test;
 import org.mockito.Mock;
+import service.ServiceException;
 import ui.FXTest;
 import ui.Main;
 import ui.model.ArticleList;
@@ -14,7 +16,7 @@ import ui.model.ArticleModel;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -90,6 +92,21 @@ public class ArticleDetailsControllerTest extends FXTest {
 
         verify(mockArticleList).update(model);
     }
+
+    @Test
+    public void handleSave_ServiceErrorThrown_NotificationShown() throws Exception {
+        ArticleDetailsController controller = new ArticleDetailsController();
+        InitializeControls(controller);
+        when(mockMainApp.getArticleList()).thenReturn(mockArticleList);
+        when(mockArticleList.get()).thenThrow(ServiceException.class);
+
+        controller.initializeWith(null);
+        controller.handleSave();
+
+        verify(mockMainApp).showNotification(eq(Alert.AlertType.ERROR),eq("Error"),anyString(),anyString());
+
+    }
+
 
 
     private void InitializeControls(ArticleDetailsController controller) {
