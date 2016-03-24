@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
-import ui.Main;
+import ui.MainApp;
 import ui.model.ArticleModel;
 
 public class ArticleOverviewController extends AbstractController {
@@ -27,10 +27,10 @@ public class ArticleOverviewController extends AbstractController {
     }
 
     @Override
-    public void initialize(Main mainApp) {
-        new CustomArticleTableFactory(mainApp).configureArticleTable(articleTable);
-        articleTable.setItems(mainApp.getArticleList().get());
-        super.initialize(mainApp);
+    public void initialize(MainApp mainControllerApp) {
+        new CustomArticleTableFactory(mainControllerApp).configureArticleTable(articleTable);
+        articleTable.setItems(mainControllerApp.getArticleList().get());
+        super.initialize(mainControllerApp);
     }
 
     @FXML

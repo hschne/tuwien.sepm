@@ -3,7 +3,7 @@ package ui.controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import ui.Main;
+import ui.MainApp;
 import ui.model.ReceiptModel;
 
 public class ReceiptOverviewController extends AbstractController {
@@ -18,12 +18,10 @@ public class ReceiptOverviewController extends AbstractController {
     public TableColumn<ReceiptModel, Double> totalCostColumn;
 
     @Override
-    public void initialize(Main mainApp) {
-        new CustomReceiptTableFactory(mainApp).configureReceiptTable(receiptTable);
-        receiptTable.setItems(mainApp.getReceiptList().get());
-
-
-        super.initialize(mainApp);
+    public void initialize(MainApp mainControllerApp) {
+        new CustomReceiptTableFactory(mainControllerApp).configureReceiptTable(receiptTable);
+        receiptTable.setItems(mainControllerApp.getReceiptList().get());
+        super.initialize(mainControllerApp);
     }
 
     @FXML

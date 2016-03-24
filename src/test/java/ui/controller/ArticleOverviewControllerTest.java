@@ -1,15 +1,12 @@
 package ui.controller;
 
-import base.BaseTest;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableView;
-import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.Mock;
 import ui.FXTest;
-import ui.JavaFXThreadingRule;
-import ui.Main;
+import ui.MainApp;
 import ui.model.ArticleList;
 import ui.model.ArticleModel;
 import ui.model.ModelFactory;
@@ -22,7 +19,7 @@ public class ArticleOverviewControllerTest extends FXTest {
 
 
     @Mock
-    Main mockMainApp;
+    MainApp mockMainControllerApp;
     @Mock
     ArticleList mockArticleList;
 
@@ -32,10 +29,10 @@ public class ArticleOverviewControllerTest extends FXTest {
         controller.articleTable = new TableView<>();
         ObservableList<ArticleModel> models = FXCollections.observableArrayList();
         models.addAll(new ModelFactory().createArticleModels(createDummyArticles(5)));
-        when(mockMainApp.getArticleList()).thenReturn(mockArticleList);
+        when(mockMainControllerApp.getArticleList()).thenReturn(mockArticleList);
         when(mockArticleList.get()).thenReturn(models);
 
-        controller.initialize(mockMainApp);
+        controller.initialize(mockMainControllerApp);
 
         assertEquals(models, controller.articleTable.getItems());
     }

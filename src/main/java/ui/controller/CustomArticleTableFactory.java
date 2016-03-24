@@ -5,16 +5,16 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.*;
 import javafx.util.Callback;
-import ui.Main;
+import ui.MainApp;
 import ui.model.ArticleModel;
 
 public class CustomArticleTableFactory {
 
 
-    private Main mainApp;
+    private MainApp mainControllerApp;
 
-    public CustomArticleTableFactory(Main mainApp) {
-        this.mainApp = mainApp;
+    public CustomArticleTableFactory(MainApp mainControllerApp) {
+        this.mainControllerApp = mainControllerApp;
     }
 
     public void configureArticleTable(TableView<ArticleModel> tableView) {
@@ -29,7 +29,7 @@ public class CustomArticleTableFactory {
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && (!row.isEmpty())) {
                     ArticleModel rowData = row.getItem();
-                    mainApp.showArticleDetails(rowData);
+                    mainControllerApp.showArticleDetails(rowData);
                 }
             });
             return row;
@@ -80,7 +80,7 @@ public class CustomArticleTableFactory {
             cellButton.setOnAction(t -> {
                 ArticleModel articleModel = (ArticleModel) DeleteButtonCell.this.
                         getTableView().getItems().get(DeleteButtonCell.this.getIndex());
-                mainApp.getArticleList().get().remove(articleModel);
+                mainControllerApp.getArticleList().get().remove(articleModel);
             });
         }
 
@@ -103,7 +103,7 @@ public class CustomArticleTableFactory {
             cellButton.setOnAction(t -> {
                 ArticleModel articleModel = (ArticleModel) EditButtonCell.this.
                         getTableView().getItems().get(EditButtonCell.this.getIndex());
-                mainApp.showArticleDetails(articleModel);
+                mainControllerApp.showArticleDetails(articleModel);
 
             });
         }

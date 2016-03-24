@@ -5,16 +5,15 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.*;
 import javafx.util.Callback;
-import ui.Main;
-import ui.model.ArticleModel;
+import ui.MainApp;
 import ui.model.ReceiptModel;
 
 public class CustomReceiptTableFactory {
 
-    private Main mainApp;
+    private MainApp mainControllerApp;
 
-    public CustomReceiptTableFactory(Main mainApp) {
-        this.mainApp = mainApp;
+    public CustomReceiptTableFactory(MainApp mainControllerApp) {
+        this.mainControllerApp = mainControllerApp;
     }
 
     public void configureReceiptTable(TableView<ReceiptModel> tableView) {
@@ -28,7 +27,7 @@ public class CustomReceiptTableFactory {
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && (!row.isEmpty())) {
                     ReceiptModel rowData = row.getItem();
-                    mainApp.showReceiptDetails(rowData);
+                    mainControllerApp.showReceiptDetails(rowData);
                 }
             });
             return row;
@@ -63,7 +62,7 @@ public class CustomReceiptTableFactory {
             cellButton.setOnAction(t -> {
                 ReceiptModel receiptModel = (ReceiptModel) ViewButtonCell.this.
                         getTableView().getItems().get(ViewButtonCell.this.getIndex());
-                mainApp.showReceiptDetails(receiptModel);
+                mainControllerApp.showReceiptDetails(receiptModel);
 
             });
         }

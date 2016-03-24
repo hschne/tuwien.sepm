@@ -1,18 +1,17 @@
 package ui.controller;
 
-import javafx.fxml.FXML;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ui.Main;
+import ui.MainApp;
 
 public abstract class AbstractController {
 
-    protected Main mainApp;
+    protected MainApp mainApp;
 
     protected final Logger logger = LogManager.getLogger(AbstractController.class);
 
-    public void initialize(Main mainApp) {
-        this.mainApp = mainApp;
+    public void initialize(MainApp mainControllerApp) {
+        this.mainApp = mainControllerApp;
     }
 
 }
