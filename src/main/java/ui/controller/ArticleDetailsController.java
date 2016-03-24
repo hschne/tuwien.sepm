@@ -14,15 +14,15 @@ public class ArticleDetailsController extends AbstractController {
     private boolean isNew;
 
     @FXML
-    private TextField name;
+    public TextField name;
     @FXML
-    private TextField price;
+    public TextField price;
     @FXML
-    private TextArea description;
+    public TextArea description;
     @FXML
-    private TextField category;
+    public TextField category;
 
-    public void setArticle(ArticleModel article) {
+    public void initializeWith(ArticleModel article) {
         if (article == null) {
             this.article = new ArticleModel("", 0.0, "", "", "");
             isNew = true;

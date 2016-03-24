@@ -11,7 +11,7 @@ public abstract class AbstractController {
 
     protected final Logger logger = LogManager.getLogger(AbstractController.class);
 
-    public void setMainApp(Main mainApp) {
+    public void initialize(Main mainApp) {
         this.mainApp = mainApp;
     }
 

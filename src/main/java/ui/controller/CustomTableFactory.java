@@ -3,10 +3,8 @@ package ui.controller;
 import com.sun.prism.impl.Disposer;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableList;
 import javafx.scene.control.*;
 import javafx.util.Callback;
-import service.ServiceException;
 import ui.Main;
 import ui.model.ArticleModel;
 
@@ -38,7 +36,7 @@ public class CustomTableFactory {
         });
     }
 
-    private void createEditButton(TableView articleTable){
+    private void createEditButton(TableView articleTable) {
         TableColumn col_action = new TableColumn<>("");
         articleTable.getColumns().add(col_action);
         col_action.setCellValueFactory(
@@ -100,6 +98,7 @@ public class CustomTableFactory {
     //Define the button cell
     private class EditButtonCell extends TableCell<Disposer.Record, Boolean> {
         final Button cellButton = new Button("Edit");
+
         EditButtonCell() {
             cellButton.setOnAction(t -> {
                 ArticleModel articleModel = (ArticleModel) EditButtonCell.this.

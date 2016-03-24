@@ -81,7 +81,7 @@ public class Main extends Application {
 
             // Give the controller access to the main app.
             ArticleOverviewController controller = loader.getController();
-            controller.setMainApp(this);
+            controller.initialize(this);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -98,8 +98,8 @@ public class Main extends Application {
 
             // Give the controller access to the main app.
             ArticleDetailsController controller = loader.getController();
-            controller.setMainApp(this);
-            controller.setArticle(article);
+            controller.initialize(this);
+            controller.initializeWith(article);
         } catch (IOException e) {
             e.printStackTrace();
         }

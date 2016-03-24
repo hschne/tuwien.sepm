@@ -10,40 +10,40 @@ import ui.model.ArticleModel;
 public class ArticleOverviewController extends AbstractController {
 
     @FXML
-    TableColumn<ArticleModel, Image> imageColumn;
+    private TableColumn<ArticleModel, Image> imageColumn;
     @FXML
-    private TableView<ArticleModel> articleTable;
+    public TableView<ArticleModel> articleTable;
     @FXML
-    private TableColumn<ArticleModel, String> nameColumn;
+    public TableColumn<ArticleModel, String> nameColumn;
     @FXML
-    private TableColumn<ArticleModel, Double> priceColumn;
+    public TableColumn<ArticleModel, Double> priceColumn;
     @FXML
-    private TableColumn<ArticleModel, String> descriptionColumn;
+    public TableColumn<ArticleModel, String> descriptionColumn;
     @FXML
-    private TableColumn<ArticleModel, String> categoryColumn;
+    public TableColumn<ArticleModel, String> categoryColumn;
 
     public ArticleOverviewController() {
 
     }
 
     @Override
-    public void setMainApp(Main mainApp) {
+    public void initialize(Main mainApp) {
         new CustomTableFactory(mainApp).configureArticleTable(articleTable);
         articleTable.setItems(mainApp.getArticleList().get());
-        super.setMainApp(mainApp);
+        super.initialize(mainApp);
     }
 
     @FXML
-    private void initialize() {
+    public void handleCreate() {
+        mainApp.showArticleDetails(null);
+    }
+
+    @FXML
+    public void initialize() {
         nameColumn.setCellValueFactory(cellData -> cellData.getValue().getNameProperty());
         priceColumn.setCellValueFactory(cellData -> cellData.getValue().getPriceProperty().asObject());
         descriptionColumn.setCellValueFactory(cellData -> cellData.getValue().getDescriptionProperty());
         categoryColumn.setCellValueFactory(cellData -> cellData.getValue().getCategoryProperty());
-    }
-
-    @FXML
-    private void handleCreate() {
-        mainApp.showArticleDetails(null);
     }
 
 
