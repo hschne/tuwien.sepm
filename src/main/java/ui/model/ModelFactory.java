@@ -40,7 +40,7 @@ public class ModelFactory {
         return new ReceiptModel(dateFormat.format(receipt.getDate()), receipt.getReceiver(), receipt.getReceiverAddress(), totalCost, receipt.getReceiptEntries());
     }
 
-    public List<ReceiptEntryModel> createReceiptEntryModels(List<ReceiptEntry> receiptEntries) {
+    public ObservableList<ReceiptEntryModel> createReceiptEntryModels(List<ReceiptEntry> receiptEntries) {
         ObservableList<ReceiptEntryModel> result = FXCollections.observableArrayList();
         result.addAll(receiptEntries.stream().map(this::createReceiptEntryModel).collect(Collectors.toList()));
         return result;

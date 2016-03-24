@@ -21,10 +21,9 @@ import javafx.stage.Stage;
 import service.ArticleRepository;
 import service.ReceiptRepository;
 import service.ServiceException;
-import ui.controller.ArticleDetailsController;
-import ui.controller.ArticleOverviewController;
-import ui.controller.ReceiptOverviewController;
-import ui.controller.RootController;
+import ui.controller.*;
+import ui.controller.receipt.ReceiptDetailsRootController;
+import ui.controller.receipt.ReceiptOverviewController;
 import ui.model.ArticleList;
 import ui.model.ArticleModel;
 import ui.model.ReceiptList;
@@ -122,6 +121,18 @@ public class MainApp extends Application {
     }
 
     public void showReceiptDetails(ReceiptModel receipt) {
+        try{
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("/views/receiptDetailRoot.fxml"));
+            AnchorPane articleDetails = loader.load();
+            rootLayout.setCenter(articleDetails);
+            ReceiptDetailsRootController controller = loader.getController();
+            controller.initialize(this);
+            controller.initializeWith(receipt);
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
 
     }
 

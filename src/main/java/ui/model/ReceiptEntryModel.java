@@ -47,6 +47,8 @@ public class ReceiptEntryModel implements ReceiptEntry {
         return price;
     }
 
+    public IntegerProperty getAmountProperty(){ return amount;}
+
     @Override
     public Article getArticle() {
         return null;

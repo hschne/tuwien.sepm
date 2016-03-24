@@ -4,6 +4,7 @@ import entities.Receipt;
 import entities.ReceiptEntry;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.ObservableList;
 
 import java.util.Date;
 import java.util.List;
@@ -20,7 +21,7 @@ public class ReceiptModel implements Receipt {
 
     private List<ReceiptEntry> receiptEntries;
 
-    private List<ReceiptEntryModel> receiptEntryModels;
+    private ObservableList<ReceiptEntryModel> receiptEntryModels;
 
     private ModelFactory modelFactory;
 
@@ -36,7 +37,7 @@ public class ReceiptModel implements Receipt {
         this.receiptEntryModels = modelFactory.createReceiptEntryModels(receiptEntries);
     }
 
-    public List<ReceiptEntryModel> getReceiptEntryModels() {
+    public ObservableList<ReceiptEntryModel> getReceiptEntryModels() {
         return this.receiptEntryModels;
     }
 

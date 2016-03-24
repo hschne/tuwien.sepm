@@ -1,9 +1,11 @@
-package ui.controller;
+package ui.controller.receipt;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import ui.MainApp;
+import ui.controller.AbstractController;
+import ui.controller.CustomReceiptTableFactory;
 import ui.model.ReceiptModel;
 
 public class ReceiptOverviewController extends AbstractController {
@@ -24,10 +26,13 @@ public class ReceiptOverviewController extends AbstractController {
         super.initialize(mainControllerApp);
     }
 
+
+
     @FXML
     public void handleCreate() {
-        //
+        mainApp.showReceiptDetails(null);
     }
+
 
     @FXML
     public void initialize() {
