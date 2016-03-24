@@ -124,10 +124,11 @@ public class MainApp extends Application {
         try{
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("/views/receiptDetailRoot.fxml"));
-            AnchorPane articleDetails = loader.load();
-            rootLayout.setCenter(articleDetails);
+            BorderPane rootLayout = loader.load();
+            this.rootLayout.setCenter(rootLayout);
             ReceiptDetailsRootController controller = loader.getController();
             controller.initialize(this);
+            controller.setRootLayout(rootLayout);
             controller.initializeWith(receipt);
         }
         catch (IOException e){

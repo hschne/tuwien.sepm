@@ -1,75 +1,50 @@
 package ui.controller.receipt;
 
-import javafx.beans.property.StringProperty;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import ui.MainApp;
-import ui.controller.AbstractController;
-import ui.controller.ArticleDetailsController;
-import ui.controller.ArticleOverviewController;
-import ui.model.ReceiptEntryModel;
 import ui.model.ReceiptModel;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 
-public class ReceiptDetailsRootController extends AbstractController {
-
-
-    private ReceiptModel receipt;
-
-    @FXML
-    public TextField receiver;
-    @FXML
-    public TextField receiverAdress;
-    @FXML
-    public Label date;
-
-    @FXML
-    public TextField total;
-
-    @FXML
-    public TableView<ReceiptEntryModel> receiptEntryTable;
-    @FXML
-    public TableColumn<ReceiptEntryModel, String> nameColumn;
-    @FXML
-    public TableColumn<ReceiptEntryModel, Integer> quantityColumn;
-    @FXML
-    public TableColumn<ReceiptEntryModel, Double> priceColumn;
-
-    @FXML
-    private BorderPane rootLayout;
+public class ReceiptDetailsRootController extends AbstractReceiptDetailsController {
 
 
-    @FXML
-    public void initialize() {
-        nameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
-        priceColumn.setCellValueFactory(cellData -> cellData.getValue().priceProperty().asObject());
-        quantityColumn.setCellValueFactory(cellData -> cellData.getValue().getAmountProperty().asObject());
-    }
-
+    @Override
     public void initializeWith(ReceiptModel receipt) {
-        if(receipt != null){
-            this.receipt = receipt;
-            receiver.setText(this.receipt.getReceiver());
-            receiverAdress.setText(String.valueOf(this.receipt.getReceiverAddress()));
-            date.setText(this.receipt.getDate().toString());
-            total.setText(this.receipt.totalCostProperty().toString());
-            viewExistingReceiptEntries(receipt);
-        }
+        this.receipt = receipt;
+        receiver.setText(this.receipt.getReceiver());
+        receiver.setEditable(false);
+        receiverAdress.setText(this.receipt.getReceiverAddress());
+        receiverAdress.setEditable(false);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        date.setText(dateFormat.format(this.receipt.getDate()));
+        SaveButton.disableProperty().set(true);
+        viewExistingReceiptEntries(receipt);
     }
 
-    private void viewExistingReceiptEntries(ReceiptModel receipt){
+    @Override
+    public void handleSave() {
+        //The save button is disabled in this subclass
+    }
+
+    @Override
+    public void handleBack() {
+        mainApp.showReceiptOverview();
+    }
+
+    private void viewExistingReceiptEntries(ReceiptModel receipt) {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("/views/receiptDetailList.fxml"));
+            loader.setLocation(ReceiptDetailsRootController.class.getResource("/views/receiptDetailList.fxml"));
             AnchorPane articleDetails = loader.load();
             rootLayout.setCenter(articleDetails);
-            receiptEntryTable.setItems(receipt.getReceiptEntryModels());
+            ReceiptEntryListController controller = loader.getController();
+            controller.initialize(mainApp);
+            controller.initializeWith(receipt);
         } catch (IOException e) {
-            e.printStackTrace();
+            mainApp.showNotification(Alert.AlertType.ERROR, "Error", "Could not load receipt entries", "Please view the logs for details.");
         }
     }
 

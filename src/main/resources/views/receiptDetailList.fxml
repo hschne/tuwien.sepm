@@ -5,18 +5,16 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="280.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="240.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controller.receipt.ReceiptEntryListController">
    <children>
-      <TableView fx:id="receiptEntryTable" layoutX="51.0" layoutY="24.0" prefHeight="182.0" prefWidth="560.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+      <TableView fx:id="receiptEntryTable" layoutX="51.0" layoutY="24.0" prefHeight="182.0" prefWidth="560.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="15.0">
         <columns>
           <TableColumn fx:id="nameColumn" prefWidth="385.0" text="Name" />
           <TableColumn fx:id="quantityColumn" minWidth="0.0" prefWidth="90.0" text="Quantity" />
             <TableColumn fx:id="priceColumn" minWidth="0.0" prefWidth="81.0" resizable="false" text="Price" />
         </columns>
       </TableView>
-      <Label layoutX="447.0" layoutY="214.0" prefHeight="15.0" prefWidth="44.0" text="Total" />
-      <TextField layoutX="495.0" layoutY="210.0" prefHeight="25.0" prefWidth="79.0" AnchorPane.rightAnchor="20.0" />
-      <Button layoutX="540.0" layoutY="241.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="53.0" text="OK" AnchorPane.rightAnchor="20.0" />
-      <Button layoutX="19.0" layoutY="241.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="53.0" text="Back" />
+      <Label layoutX="453.0" layoutY="210.0" prefHeight="15.0" prefWidth="44.0" text="Total:" AnchorPane.bottomAnchor="15.0" />
+      <TextField fx:id="total" layoutX="495.0" layoutY="210.0" prefHeight="25.0" prefWidth="79.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="20.0" />
    </children>
 </AnchorPane>

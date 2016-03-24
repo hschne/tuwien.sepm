@@ -36,6 +36,9 @@ public class CustomReceiptTableFactory {
 
     private void createViewButton(TableView articleTable) {
         TableColumn col_action = new TableColumn<>("");
+        col_action.setPrefWidth(70);
+        col_action.setMinWidth(70);
+        col_action.setMaxWidth(70);
         articleTable.getColumns().add(col_action);
         col_action.setCellValueFactory(
                 new Callback<TableColumn.CellDataFeatures<Disposer.Record, Boolean>,

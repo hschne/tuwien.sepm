@@ -53,7 +53,7 @@ public class ReceiptModel implements Receipt {
 
     @Override
     public String getReceiverAddress() {
-        return receiver.getValue();
+        return receiverAdress.getValue();
     }
 
     @Override
