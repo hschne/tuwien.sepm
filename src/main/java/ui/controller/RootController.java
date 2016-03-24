@@ -19,7 +19,7 @@ public class RootController extends AbstractController{
 
 
     @FXML
-    private void handleAbout() {
+    public void handleAbout() {
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("About");
         alert.setHeaderText("Wendy's Easter Shop\n" +
@@ -34,7 +34,7 @@ public class RootController extends AbstractController{
      * Closes the application.
      */
     @FXML
-    private void handleExit() {
+    public void handleExit() {
         System.exit(0);
     }
 }
