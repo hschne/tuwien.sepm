@@ -3,10 +3,7 @@ package ui.model;
 import entities.Article;
 import entities.Receipt;
 import entities.ReceiptEntry;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 
 public class ReceiptEntryModel implements ReceiptEntry {
 
@@ -16,7 +13,11 @@ public class ReceiptEntryModel implements ReceiptEntry {
 
     private final DoubleProperty price;
 
-    public ReceiptEntryModel(String name, String category, Double price) {
+    private IntegerProperty amount;
+
+
+    public ReceiptEntryModel(String name, String category, Double price, int amount) {
+        this.amount = new SimpleIntegerProperty(amount);
         this.name = new SimpleStringProperty(name);
         this.category = new SimpleStringProperty(category);
         this.price = new SimpleDoubleProperty(price);
@@ -58,12 +59,12 @@ public class ReceiptEntryModel implements ReceiptEntry {
 
     @Override
     public int getAmount() {
-        return 0;
+        return amount.getValue();
     }
 
     @Override
     public void setAmount(int amount) {
-
+        this.amount.setValue(amount);
     }
 
     @Override

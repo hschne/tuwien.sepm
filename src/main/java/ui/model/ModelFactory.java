@@ -6,6 +6,7 @@ import entities.ReceiptEntry;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,7 +25,7 @@ public class ModelFactory {
 
     public ReceiptEntryModel createReceiptEntryModel(ReceiptEntry entry) {
         Article article = entry.getArticle();
-        return new ReceiptEntryModel(article.getName(), article.getCategory(), article.getPrice());
+        return new ReceiptEntryModel(article.getName(), article.getCategory(), article.getPrice(), entry.getAmount());
     }
 
     public List<ReceiptModel> createReceiptModels(List<Receipt> receipts) {
@@ -35,7 +36,8 @@ public class ModelFactory {
 
     public ReceiptModel createReceiptModel(Receipt receipt) {
         double totalCost = calculateTotalCost(receipt);
-        return new ReceiptModel(receipt.getDate().toString(), receipt.getReceiver(), receipt.getReceiverAddress(), totalCost, receipt.getReceiptEntries());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        return new ReceiptModel(dateFormat.format(receipt.getDate()), receipt.getReceiver(), receipt.getReceiverAddress(), totalCost, receipt.getReceiptEntries());
     }
 
     public List<ReceiptEntryModel> createReceiptEntryModels(List<ReceiptEntry> receiptEntries) {
@@ -49,6 +51,6 @@ public class ModelFactory {
         for (ReceiptEntry entry : receipt.getReceiptEntries()) {
             sum += entry.getAmount() * entry.getArticle().getPrice();
         }
-        return 0;
+        return sum;
     }
 }

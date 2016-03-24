@@ -13,9 +13,9 @@
                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
             </columnResizePolicy>
             <columns>
-                <TableColumn fx:id="dateColumn" minWidth="0.0" prefWidth="168.0" text="Date" />
-                <TableColumn fx:id="receiverColumn" prefWidth="198.0" text="Receiver" />
-                <TableColumn fx:id="totalCostColumn" minWidth="0.0" prefWidth="204.0" text="Total" />
+                <TableColumn fx:id="dateColumn" minWidth="0.0" prefWidth="93.0" text="Date" />
+                <TableColumn fx:id="receiverColumn" prefWidth="195.0" text="Receiver" />
+                <TableColumn fx:id="totalCostColumn" minWidth="0.0" prefWidth="207.0" text="Total" />
             </columns>
         </TableView>
         <Button layoutX="545.0" layoutY="4.0" mnemonicParsing="false" onAction="#handleCreate" text="New" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="5.0">

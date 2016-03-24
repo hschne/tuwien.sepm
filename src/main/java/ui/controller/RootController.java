@@ -21,9 +21,11 @@ public class RootController extends AbstractController{
     @FXML
     private void handleAbout() {
         Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle("AddressApp");
-        alert.setHeaderText("About");
-        alert.setContentText("Author: Marco Jakob\nWebsite: http://code.makery.ch");
+        alert.setTitle("About");
+        alert.setHeaderText("Wendy's Easter Shop\n" +
+                "Version 1.0\n");
+        alert.setContentText("Author: Hans-Jörg Schrödl" +
+                "\nWebsite: hschroedl.at");
 
         alert.showAndWait();
     }
