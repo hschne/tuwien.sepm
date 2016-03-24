@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -55,6 +56,7 @@ public class MainApp extends Application {
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Wendy's Easter Shop");
+        this.primaryStage.getIcons().add(new Image("/icons/application.png"));
 
         initRootLayout();
         initServices();
@@ -73,7 +75,7 @@ public class MainApp extends Application {
             controller.initialize(this);
             primaryStage.show();
         } catch (Exception e) {
-            showNotification(Alert.AlertType.ERROR, "ER", "das", "£");
+            showExceptionNotification("Error","Unexpected error occured", "Please view logs for more information",e);
         }
     }
 
