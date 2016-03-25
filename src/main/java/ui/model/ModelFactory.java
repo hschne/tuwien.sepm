@@ -25,7 +25,7 @@ public class ModelFactory {
 
     public ReceiptEntryModel createReceiptEntryModel(ReceiptEntry entry) {
         Article article = entry.getArticle();
-        return new ReceiptEntryModel(article.getName(), article.getCategory(), article.getPrice(), entry.getAmount());
+        return new ReceiptEntryModel(article, entry.getReceipt(), entry.getAmount());
     }
 
     public List<ReceiptModel> createReceiptModels(List<Receipt> receipts) {
@@ -53,7 +53,7 @@ public class ModelFactory {
     }
 
     private ReceiptEntryModel createReceiptEntryModel(Article article){
-        return new ReceiptEntryModel(article.getName(),article.getCategory(),article.getPrice(),0);
+        return new ReceiptEntryModel(article,0);
     }
 
     private double calculateTotalCost(Receipt receipt) {

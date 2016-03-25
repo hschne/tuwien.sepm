@@ -100,13 +100,12 @@ public class H2ReceiptDao extends AbstractH2Dao implements ReceiptDao {
         }
     }
 
-    private void insertLinkedArticles(Receipt receiptDto) throws SQLException {
+    private void insertLinkedArticles(Receipt receipt) throws SQLException {
         String query = "INSERT INTO ARTICLE_RECEIPT (RECEIPT, ARTICLE, AMOUNT) VALUES (?,?,?)";
         PreparedStatement statement = connection.prepareStatement(query);
-        for (ReceiptEntry receiptEntryDto : receiptDto.getReceiptEntries()) {
-            ArticleDto articleDto = (ArticleDto) receiptEntryDto.getArticle();
-            ReceiptDto castReceiptDto = (ReceiptDto) receiptDto;
-            statement.setInt(1, castReceiptDto.getId());
+        for (ReceiptEntry receiptEntryDto : receipt.getReceiptEntries()) {
+            Article articleDto = receiptEntryDto.getArticle();
+            statement.setInt(1, receipt.getId());
             statement.setInt(2, articleDto.getId());
             statement.setInt(3, receiptEntryDto.getAmount());
             statement.addBatch();

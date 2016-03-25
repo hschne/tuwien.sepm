@@ -22,7 +22,6 @@ public class ReceiptModel implements Receipt {
 
     private List<ReceiptEntry> receiptEntries;
 
-    private ObservableList<ReceiptEntryModel> receiptEntryModels;
 
     private ModelFactory modelFactory;
 
@@ -38,15 +37,10 @@ public class ReceiptModel implements Receipt {
         this.totalCost = new SimpleDoubleProperty(totalCost);
         modelFactory = new ModelFactory();
         this.receiptEntries = receiptEntries;
-        this.receiptEntryModels = modelFactory.createReceiptEntryModels(receiptEntries);
     }
 
     public ObservableList<ReceiptEntryModel> getReceiptEntryModels() {
-        return this.receiptEntryModels;
-    }
-
-    public void setReceiptEntryModels(ObservableList<ReceiptEntryModel> receiptEntryModels) {
-        this.receiptEntryModels = receiptEntryModels;
+        return modelFactory.createReceiptEntryModels(receiptEntries);
     }
 
     @Override

@@ -9,17 +9,27 @@ public class ReceiptEntryModel implements ReceiptEntry {
 
     private final StringProperty name;
 
-    private final StringProperty category;
-
     private final DoubleProperty price;
 
     private IntegerProperty amount;
 
+    private Article article;
 
-    public ReceiptEntryModel(String name, String category, Double price, int amount) {
+    private Receipt receipt;
+
+    public ReceiptEntryModel(Article article, Receipt receipt, int amount){
+        this(article, amount);
+        this.receipt = receipt;
+    }
+
+    public ReceiptEntryModel(Article article, int amount){
+        this(article.getName(),article.getPrice(), amount);
+        this.article = article;
+    }
+
+    public ReceiptEntryModel(String name, Double price, int amount) {
         this.amount = new SimpleIntegerProperty(amount);
         this.name = new SimpleStringProperty(name);
-        this.category = new SimpleStringProperty(category);
         this.price = new SimpleDoubleProperty(price);
     }
 
@@ -31,13 +41,6 @@ public class ReceiptEntryModel implements ReceiptEntry {
         return name;
     }
 
-    public String getCategory() {
-        return category.get();
-    }
-
-    public StringProperty categoryProperty() {
-        return category;
-    }
 
     public double getPrice() {
         return price.get();
@@ -51,12 +54,12 @@ public class ReceiptEntryModel implements ReceiptEntry {
 
     @Override
     public Article getArticle() {
-        return null;
+        return article;
     }
 
     @Override
-    public void setArticle(Article articleDto) {
-
+    public void setArticle(Article article) {
+        this.article = article;
     }
 
     @Override
@@ -71,11 +74,11 @@ public class ReceiptEntryModel implements ReceiptEntry {
 
     @Override
     public Receipt getReceipt() {
-        return null;
+        return this.receipt;
     }
 
     @Override
     public void setReceipt(Receipt receiptDto) {
-
+        this.receipt = receiptDto;
     }
 }

@@ -2,8 +2,7 @@
 The repository for the SEPM introduction exercise. 
 
 ## TODO:
-- Fix a bug where receipt entries are not created upon adding a new receipt
-- Write tests and clean that disgusting crap up.
+- Write tests for ui and clean that disgusting crap up.
 - Bildrender implementieren (must do in data layer!)
 - Create filters for article and receipts
 - Create statistic stuff
