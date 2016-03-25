@@ -32,7 +32,7 @@ public class ReceiptEntryListController extends AbstractController {
 
     public void initializeWith(ReceiptModel receipt) {
         receiptEntryTable.setItems(receipt.getReceiptEntryModels());
-        total.setText(String.valueOf(receipt.totalCostProperty().getValue()));
+        total.setText(String.valueOf(receipt.getTotalCostProperty().getValue()));
     }
 
 }

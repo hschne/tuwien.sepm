@@ -35,9 +35,9 @@ public class ReceiptOverviewController extends AbstractController {
 
     @FXML
     public void initialize() {
-        dateColumn.setCellValueFactory(cellData -> cellData.getValue().dateProperty());
-        receiverColumn.setCellValueFactory(cellData -> cellData.getValue().receiverProperty());
-        totalCostColumn.setCellValueFactory(cellData -> cellData.getValue().totalCostProperty().asObject());
+        dateColumn.setCellValueFactory(cellData -> cellData.getValue().getDateProperty());
+        receiverColumn.setCellValueFactory(cellData -> cellData.getValue().getReceiverProperty());
+        totalCostColumn.setCellValueFactory(cellData -> cellData.getValue().getTotalCostProperty().asObject());
     }
 
 }

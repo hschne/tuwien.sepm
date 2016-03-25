@@ -6,12 +6,13 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 public class ReceiptModel implements Receipt {
 
-    private final SimpleStringProperty date;
+    private final SimpleStringProperty dateProperty;
 
     private SimpleStringProperty receiver;
 
@@ -25,10 +26,13 @@ public class ReceiptModel implements Receipt {
 
     private ModelFactory modelFactory;
 
+    private Date date;
+
     private int Id;
 
-    public ReceiptModel(String date, String receiver, String receiverAdress, double totalCost, List<ReceiptEntry> receiptEntries) {
-        this.date = new SimpleStringProperty(date);
+    public ReceiptModel(Date date, String receiver, String receiverAdress, double totalCost, List<ReceiptEntry> receiptEntries) {
+        this.date = date;
+        this.dateProperty = new SimpleStringProperty(new SimpleDateFormat("dd/MM/yyyy").format(date));
         this.receiver = new SimpleStringProperty(receiver);
         this.receiverAdress = new SimpleStringProperty(receiverAdress);
         this.totalCost = new SimpleDoubleProperty(totalCost);
@@ -41,6 +45,10 @@ public class ReceiptModel implements Receipt {
         return this.receiptEntryModels;
     }
 
+    public void setReceiptEntryModels(ObservableList<ReceiptEntryModel> receiptEntryModels) {
+        this.receiptEntryModels = receiptEntryModels;
+    }
+
     @Override
     public List<ReceiptEntry> getReceiptEntries() {
         return this.receiptEntries;
@@ -48,7 +56,7 @@ public class ReceiptModel implements Receipt {
 
     @Override
     public void setReceiptEntries(List<ReceiptEntry> receiptEntries) {
-        // Not supported
+        this.receiptEntries = receiptEntries;
     }
 
     @Override
@@ -58,7 +66,7 @@ public class ReceiptModel implements Receipt {
 
     @Override
     public void setReceiverAddress(String receiverAddress) {
-        // Not supported
+        this.receiverAdress.setValue(receiverAddress);
     }
 
     @Override
@@ -68,33 +76,37 @@ public class ReceiptModel implements Receipt {
 
     @Override
     public void setReceiver(String receiver) {
-        //Not supported
+        this.receiver.setValue(receiver);
     }
 
     @Override
     public Date getDate() {
-        return new Date(date.getValue());
+        return date;
     }
 
     @Override
     public void setDate(Date date) {
-        //
+        this.date = date;
     }
 
-    public SimpleStringProperty receiverProperty() {
+    public SimpleStringProperty getReceiverProperty() {
         return receiver;
     }
 
-    public SimpleStringProperty receiverAdressProperty() {
+    public SimpleStringProperty getReceiverAdressProperty() {
         return receiverAdress;
     }
 
-    public SimpleDoubleProperty totalCostProperty() {
+    public SimpleDoubleProperty getTotalCostProperty() {
         return totalCost;
     }
 
-    public SimpleStringProperty dateProperty() {
-        return date;
+    public void setTotalCost(Double newTotal) {
+        totalCost.setValue(newTotal);
+    }
+
+    public SimpleStringProperty getDateProperty() {
+        return dateProperty;
     }
 
     @Override

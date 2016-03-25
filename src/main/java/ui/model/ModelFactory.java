@@ -37,13 +37,23 @@ public class ModelFactory {
     public ReceiptModel createReceiptModel(Receipt receipt) {
         double totalCost = calculateTotalCost(receipt);
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        return new ReceiptModel(dateFormat.format(receipt.getDate()), receipt.getReceiver(), receipt.getReceiverAddress(), totalCost, receipt.getReceiptEntries());
+        return new ReceiptModel(receipt.getDate(), receipt.getReceiver(), receipt.getReceiverAddress(), totalCost, receipt.getReceiptEntries());
     }
 
     public ObservableList<ReceiptEntryModel> createReceiptEntryModels(List<ReceiptEntry> receiptEntries) {
         ObservableList<ReceiptEntryModel> result = FXCollections.observableArrayList();
         result.addAll(receiptEntries.stream().map(this::createReceiptEntryModel).collect(Collectors.toList()));
         return result;
+    }
+
+    public ObservableList<ReceiptEntryModel> createReceiptEntryModelsFromArticles(List<ArticleModel> articles) {
+        ObservableList<ReceiptEntryModel> result = FXCollections.observableArrayList();
+        result.addAll(articles.stream().map(this::createReceiptEntryModel).collect(Collectors.toList()));
+        return result;
+    }
+
+    private ReceiptEntryModel createReceiptEntryModel(Article article){
+        return new ReceiptEntryModel(article.getName(),article.getCategory(),article.getPrice(),0);
     }
 
     private double calculateTotalCost(Receipt receipt) {

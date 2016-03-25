@@ -2,10 +2,13 @@ package ui.controller.receipt;
 
 import com.sun.prism.impl.Disposer;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.scene.control.*;
 import javafx.util.Callback;
 import ui.MainApp;
+import ui.model.ArticleModel;
 import ui.model.ReceiptModel;
 
 public class CustomReceiptTableFactory {
@@ -35,12 +38,12 @@ public class CustomReceiptTableFactory {
     }
 
     private void createViewButton(TableView articleTable) {
-        TableColumn col_action = new TableColumn<>("");
-        col_action.setPrefWidth(70);
-        col_action.setMinWidth(70);
-        col_action.setMaxWidth(70);
-        articleTable.getColumns().add(col_action);
-        col_action.setCellValueFactory(
+        TableColumn quanitityColumn = new TableColumn<>("");
+        quanitityColumn.setPrefWidth(70);
+        quanitityColumn.setMinWidth(70);
+        quanitityColumn.setMaxWidth(70);
+        articleTable.getColumns().add(quanitityColumn);
+        quanitityColumn.setCellValueFactory(
                 new Callback<TableColumn.CellDataFeatures<Disposer.Record, Boolean>,
                         ObservableValue<Boolean>>() {
 
@@ -51,7 +54,7 @@ public class CustomReceiptTableFactory {
                 });
 
         //Adding the Button to the cell
-        col_action.setCellFactory(
+        quanitityColumn.setCellFactory(
                 p -> new ViewButtonCell());
     }
 
@@ -79,4 +82,6 @@ public class CustomReceiptTableFactory {
             }
         }
     }
+
+
 }

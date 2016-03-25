@@ -24,7 +24,9 @@ import service.ServiceException;
 import ui.controller.*;
 import ui.controller.article.ArticleDetailsController;
 import ui.controller.article.ArticleOverviewController;
-import ui.controller.receipt.ReceiptDetailsRootController;
+import ui.controller.receipt.AbstractReceiptDetailsController;
+import ui.controller.receipt.ExistingReceiptDetailsController;
+import ui.controller.receipt.NewReceiptDetailsController;
 import ui.controller.receipt.ReceiptOverviewController;
 import ui.model.ArticleList;
 import ui.model.ArticleModel;
@@ -126,9 +128,16 @@ public class MainApp extends Application {
         try{
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("/views/receiptDetailRoot.fxml"));
+            AbstractReceiptDetailsController controller;
+            if(receipt == null){
+                controller = new NewReceiptDetailsController();
+            }
+            else{
+                controller = new ExistingReceiptDetailsController();
+            }
+            loader.setController(controller);
             BorderPane rootLayout = loader.load();
             this.rootLayout.setCenter(rootLayout);
-            ReceiptDetailsRootController controller = loader.getController();
             controller.initialize(this);
             controller.setRootLayout(rootLayout);
             controller.initializeWith(receipt);
@@ -154,6 +163,10 @@ public class MainApp extends Application {
 
     public ReceiptList getReceiptList() {
         return receiptList;
+    }
+
+    public void showArticleSelection() {
+
     }
 
     private void initServices() {

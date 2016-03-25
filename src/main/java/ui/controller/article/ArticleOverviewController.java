@@ -22,9 +22,6 @@ public class ArticleOverviewController extends AbstractController {
     @FXML
     public TableColumn<ArticleModel, String> categoryColumn;
 
-    public ArticleOverviewController() {
-
-    }
 
     @Override
     public void initialize(MainApp mainControllerApp) {
