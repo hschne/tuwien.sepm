@@ -103,7 +103,7 @@ public class ArticleDetailsControllerTest extends FXTest {
         controller.initializeWith(null);
         controller.handleSave();
 
-        verify(mockMainControllerApp).showNotification(eq(Alert.AlertType.ERROR),eq("Error"),anyString(),anyString());
+        verify(mockMainControllerApp).getOutput().showNotification(eq(Alert.AlertType.ERROR),eq("Error"),anyString(),anyString());
 
     }
 

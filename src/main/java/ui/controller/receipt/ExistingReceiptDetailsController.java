@@ -44,7 +44,7 @@ public class ExistingReceiptDetailsController extends AbstractReceiptDetailsCont
             controller.initialize(mainApp);
             controller.initializeWith(receipt);
         } catch (IOException e) {
-            mainApp.showNotification(Alert.AlertType.ERROR, "Error", "Could not load receipt entries", "Please view the logs for details.");
+            mainApp.getOutput().showNotification(Alert.AlertType.ERROR, "Error", "Could not load receipt entries", "Please view the logs for details.");
         }
     }
 

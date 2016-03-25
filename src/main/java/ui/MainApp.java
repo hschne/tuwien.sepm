@@ -10,18 +10,14 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
 import service.ArticleRepository;
 import service.ReceiptRepository;
 import service.ServiceException;
-import ui.controller.*;
+import ui.controller.RootController;
 import ui.controller.article.ArticleDetailsController;
 import ui.controller.article.ArticleOverviewController;
 import ui.controller.receipt.AbstractReceiptDetailsController;
@@ -34,19 +30,14 @@ import ui.model.ReceiptList;
 import ui.model.ReceiptModel;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 
 public class MainApp extends Application {
 
+    private final Output output = new Output();
     private ArticleList articleList;
-
     private ReceiptList receiptList;
-
     private Stage primaryStage;
     private BorderPane rootLayout;
-
-
     public MainApp() {
 
     }
@@ -54,6 +45,7 @@ public class MainApp extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+
 
     @Override
     public void start(Stage primaryStage) {
@@ -78,7 +70,7 @@ public class MainApp extends Application {
             controller.initialize(this);
             primaryStage.show();
         } catch (Exception e) {
-            showExceptionNotification("Error","Unexpected error occured", "Please view logs for more information",e);
+            output.showExceptionNotification("Error", "Unexpected error occured", "Please view logs for more information", e);
         }
     }
 
@@ -110,29 +102,19 @@ public class MainApp extends Application {
         }
     }
 
-    public void showNotification(Alert.AlertType type, String title, String headerText, String contentText) {
-        Alert alert = new Alert(type);
-        alert.initOwner(primaryStage);
-        alert.setTitle(title);
-        alert.setHeaderText(headerText);
-        alert.setContentText(contentText);
-
-        alert.showAndWait();
-    }
 
     public ArticleList getArticleList() {
         return articleList;
     }
 
     public void showReceiptDetails(ReceiptModel receipt) {
-        try{
+        try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("/views/receiptDetailRoot.fxml"));
             AbstractReceiptDetailsController controller;
-            if(receipt == null){
+            if (receipt == null) {
                 controller = new NewReceiptDetailsController();
-            }
-            else{
+            } else {
                 controller = new ExistingReceiptDetailsController();
             }
             loader.setController(controller);
@@ -141,8 +123,7 @@ public class MainApp extends Application {
             controller.initialize(this);
             controller.setRootLayout(rootLayout);
             controller.initializeWith(receipt);
-        }
-        catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
@@ -165,8 +146,8 @@ public class MainApp extends Application {
         return receiptList;
     }
 
-    public void showArticleSelection() {
-
+    public Output getOutput() {
+        return output;
     }
 
     private void initServices() {
@@ -177,48 +158,12 @@ public class MainApp extends Application {
             ReceiptDao receiptDao = new H2ReceiptDao(database);
             receiptList = new ReceiptList(new ReceiptRepository(receiptDao));
         } catch (DaoException e) {
-            showExceptionNotification("Error", "The database could not be reached.",
+            output.showExceptionNotification("Error", "The database could not be reached.",
                     "Please make sure that it is not currently in use.", e);
         } catch (ServiceException e) {
-            showExceptionNotification("Error", "One or more services could not be initialized",
+            output.showExceptionNotification("Error", "One or more services could not be initialized",
                     "This might be caused by a database error.", e);
         }
-    }
-
-
-    //Stolen from http://code.makery.ch/blog/javafx-dialogs-official/
-    private void showExceptionNotification(String title, String header, String content, Exception e){
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(title);
-        alert.setHeaderText(header);
-        alert.setContentText(content);
-
-        alert.setResizable(true);
-        alert.getDialogPane().setPrefWidth(500);
-
-        StringWriter sw = new StringWriter();
-        PrintWriter pw = new PrintWriter(sw);
-        e.printStackTrace(pw);
-        String exceptionText = sw.toString();
-        Label label = new Label("The exception stacktrace was:");
-        TextArea textArea = new TextArea(exceptionText);
-        textArea.setEditable(false);
-        textArea.setWrapText(true);
-
-        textArea.setMaxWidth(Double.MAX_VALUE);
-        textArea.setMaxHeight(Double.MAX_VALUE);
-        GridPane.setVgrow(textArea, Priority.ALWAYS);
-        GridPane.setHgrow(textArea, Priority.ALWAYS);
-
-        GridPane expContent = new GridPane();
-        expContent.setMaxWidth(Double.MAX_VALUE);
-        expContent.add(label, 0, 0);
-        expContent.add(textArea, 0, 1);
-
-        alert.getDialogPane().setExpandableContent(expContent);
-
-
-        alert.showAndWait();
     }
 
 
