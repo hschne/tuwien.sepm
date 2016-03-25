@@ -6,6 +6,7 @@ import dao.ReceiptDao;
 import dao.h2.H2ArticleDao;
 import dao.h2.H2Database;
 import dao.h2.H2ReceiptDao;
+import dao.h2.ImageRepository;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -13,6 +14,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import service.ArticleRepository;
 import service.ReceiptRepository;
@@ -29,6 +31,7 @@ import ui.model.ArticleModel;
 import ui.model.ReceiptList;
 import ui.model.ReceiptModel;
 
+import java.io.File;
 import java.io.IOException;
 
 public class MainApp extends Application {
@@ -153,7 +156,7 @@ public class MainApp extends Application {
     private void initServices() {
         try {
             H2Database database = new H2Database("/home/hschroedl/sepm");
-            ArticleDao articleDao = new H2ArticleDao(database);
+            ArticleDao articleDao = new H2ArticleDao(database, new ImageRepository());
             articleList = new ArticleList(new ArticleRepository(articleDao));
             ReceiptDao receiptDao = new H2ReceiptDao(database);
             receiptList = new ReceiptList(new ReceiptRepository(receiptDao));
@@ -164,6 +167,17 @@ public class MainApp extends Application {
             output.showExceptionNotification("Error", "One or more services could not be initialized",
                     "This might be caused by a database error.", e);
         }
+    }
+
+    public File openFile(){
+        FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter png = new FileChooser.ExtensionFilter("PNG (*.png)", "*.png");
+        FileChooser.ExtensionFilter jpg = new FileChooser.ExtensionFilter("JPG (*.jpg)", "*.jpg");
+        fileChooser.getExtensionFilters().add(png);
+        fileChooser.getExtensionFilters().add(jpg);
+        fileChooser.setTitle("Open Image");
+        File file = fileChooser.showOpenDialog(primaryStage);
+        return file;
     }
 
 

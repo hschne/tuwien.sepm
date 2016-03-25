@@ -5,6 +5,7 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.scene.image.Image;
 
 public class ArticleModel implements Article {
 
@@ -16,7 +17,7 @@ public class ArticleModel implements Article {
 
     private final StringProperty description;
 
-    private final String image;
+    private String image;
 
     private int Id;
 
@@ -40,7 +41,7 @@ public class ArticleModel implements Article {
 
     @Override
     public void setImage(String image) {
-
+        this.image = image;
     }
 
     @Override
@@ -107,6 +108,10 @@ public class ArticleModel implements Article {
 
     public StringProperty getCategoryProperty() {
         return category;
+    }
+
+    public Image getActualImage() {
+        return new Image(image);
     }
 
 }

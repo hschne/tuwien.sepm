@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import service.ServiceException;
 import ui.FXTest;
 import ui.MainApp;
+import ui.Output;
 import ui.controller.article.ArticleDetailsController;
 import ui.model.ArticleList;
 import ui.model.ArticleModel;
@@ -17,16 +18,19 @@ import ui.model.ArticleModel;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.*;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class ArticleDetailsControllerTest extends FXTest {
 
     @Mock
-    MainApp mockMainControllerApp;
+    MainApp mockMainApp;
 
     @Mock
     ArticleList mockArticleList;
+
+
 
     @Test
     public void initializeWith_NewArticle_FieldsSet() throws Exception {
@@ -63,7 +67,7 @@ public class ArticleDetailsControllerTest extends FXTest {
 
         controller.handleCancel();
 
-        verify(mockMainControllerApp).showArticleOverview();
+        verify(mockMainApp).showArticleOverview();
     }
 
     @Test
@@ -71,7 +75,7 @@ public class ArticleDetailsControllerTest extends FXTest {
         ArticleDetailsController controller = new ArticleDetailsController();
         InitializeControls(controller);
         ObservableList<ArticleModel> observableList = FXCollections.observableArrayList();
-        when(mockMainControllerApp.getArticleList()).thenReturn(mockArticleList);
+        when(mockMainApp.getArticleList()).thenReturn(mockArticleList);
         when(mockArticleList.get()).thenReturn(observableList);
 
         controller.initializeWith(null);
@@ -85,7 +89,7 @@ public class ArticleDetailsControllerTest extends FXTest {
         ArticleDetailsController controller = new ArticleDetailsController();
         InitializeControls(controller);
         ArticleModel model = new ArticleModel("name", 20.0, "description", "category", "img");
-        when(mockMainControllerApp.getArticleList()).thenReturn(mockArticleList);
+        when(mockMainApp.getArticleList()).thenReturn(mockArticleList);
 
         controller.initializeWith(model);
         controller.handleSave();
@@ -97,20 +101,21 @@ public class ArticleDetailsControllerTest extends FXTest {
     public void handleSave_ServiceErrorThrown_NotificationShown() throws Exception {
         ArticleDetailsController controller = new ArticleDetailsController();
         InitializeControls(controller);
-        when(mockMainControllerApp.getArticleList()).thenReturn(mockArticleList);
+        Output mockOutput = mock(Output.class);
+        when(mockMainApp.getArticleList()).thenReturn(mockArticleList);
+        when(mockMainApp.getOutput()).thenReturn(mockOutput);
         when(mockArticleList.get()).thenThrow(ServiceException.class);
 
         controller.initializeWith(null);
         controller.handleSave();
 
-        verify(mockMainControllerApp).getOutput().showNotification(eq(Alert.AlertType.ERROR),eq("Error"),anyString(),anyString());
-
+        verify(mockOutput).showNotification(eq(Alert.AlertType.ERROR),eq("Error"),anyString(),anyString());
     }
 
 
 
     private void InitializeControls(ArticleDetailsController controller) {
-        controller.initialize(mockMainControllerApp);
+        controller.initialize(mockMainApp);
         controller.name = new TextField();
         controller.price = new TextField();
         controller.description = new TextArea();

@@ -4,15 +4,14 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import service.ServiceException;
 import ui.Output;
 import ui.model.ArticleModel;
 
+import java.io.File;
+
 public class ArticleDetailsController extends AbstractController {
-
-    private ArticleModel article;
-
-    private boolean isNew;
 
     @FXML
     public TextField name;
@@ -22,6 +21,10 @@ public class ArticleDetailsController extends AbstractController {
     public TextArea description;
     @FXML
     public TextField category;
+    @FXML
+    public ImageView image;
+    private ArticleModel article;
+    private boolean isNew;
 
     public void initializeWith(ArticleModel article) {
         if (article == null) {
@@ -30,6 +33,7 @@ public class ArticleDetailsController extends AbstractController {
         } else {
             this.article = article;
             this.name.disableProperty().set(true);
+            this.image.setImage(article.getActualImage());
             isNew = false;
         }
         name.setText(this.article.getName());
@@ -52,8 +56,7 @@ public class ArticleDetailsController extends AbstractController {
             article.setCategory(category.getText());
             if (!isNew) {
                 mainApp.getArticleList().update(article);
-            }
-            else{
+            } else {
                 mainApp.getArticleList().get().add(article);
             }
         } catch (ServiceException e) {
@@ -61,6 +64,13 @@ public class ArticleDetailsController extends AbstractController {
             output.showNotification(Alert.AlertType.ERROR, "Error", "Could not update article.", "");
         }
         mainApp.showArticleOverview();
+    }
+
+    @FXML
+    public void handleImageClick() {
+        File file = mainApp.openFile();
+        article.setImage(file.getPath());
+        image.setImage(article.getActualImage());
     }
 
     @FXML

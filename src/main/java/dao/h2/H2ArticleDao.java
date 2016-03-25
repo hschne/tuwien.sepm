@@ -3,7 +3,6 @@ package dao.h2;
 import dao.ArticleDao;
 import dao.DaoException;
 import entities.Article;
-import entities.ArticleDto;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,8 +14,10 @@ import java.util.List;
 public class H2ArticleDao extends AbstractH2Dao implements ArticleDao {
 
     private Connection connection;
+    private ImageRepository imageRepository;
 
-    public H2ArticleDao(H2Database h2Database) {
+    public H2ArticleDao(H2Database h2Database, ImageRepository imageRepository) {
+        this.imageRepository = imageRepository;
         this.connection = h2Database.getConnection();
     }
 
@@ -46,18 +47,20 @@ public class H2ArticleDao extends AbstractH2Dao implements ArticleDao {
     }
 
     @Override
-    public void create(Article articleDto) throws DaoException {
-        logger.debug("Creating articleDto " + articleDto.toString());
+    public void create(Article article) throws DaoException {
+        logger.debug("Creating articleDto " + article.toString());
         PreparedStatement statement;
         try {
-            statement = getCreateStatement(articleDto);
+            article.setImage(imageRepository.add(article.getImage()));
+            statement = getCreateStatement(article);
             statement.executeUpdate();
             ResultSet result = statement.getGeneratedKeys();
             if (result.next()) {
-                articleDto.setId(result.getInt(1));
+                article.setId(result.getInt(1));
             } else {
-                throw new DaoException("No id created for " + articleDto.toString());
+                throw new DaoException("No id created for " + article.toString());
             }
+            article.setImage(imageRepository.add(article.getImage()));
         } catch (SQLException e) {
             handle(e);
         }
@@ -68,6 +71,7 @@ public class H2ArticleDao extends AbstractH2Dao implements ArticleDao {
         logger.debug("Deleting articleDto " + articleDto.toString());
         try {
             deleteOrMakeInvisible(articleDto);
+            imageRepository.delete(articleDto.getImage());
         } catch (SQLException e) {
             handle(e);
         }
