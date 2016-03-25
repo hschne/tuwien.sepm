@@ -5,7 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
-import ui.controller.AbstractController;
+import ui.controller.article.AbstractController;
 import ui.model.ReceiptModel;
 
 public abstract class AbstractReceiptDetailsController extends AbstractController {

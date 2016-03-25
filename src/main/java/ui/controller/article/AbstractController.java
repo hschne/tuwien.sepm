@@ -1,4 +1,4 @@
-package ui.controller;
+package ui.controller.article;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

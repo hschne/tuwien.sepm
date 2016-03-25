@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import service.ServiceException;
 import ui.FXTest;
 import ui.MainApp;
+import ui.controller.article.ArticleDetailsController;
 import ui.model.ArticleList;
 import ui.model.ArticleModel;
 

@@ -1,4 +1,4 @@
-package ui.controller;
+package ui.controller.receipt;
 
 import com.sun.prism.impl.Disposer;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -54,7 +54,6 @@ public class CustomReceiptTableFactory {
         col_action.setCellFactory(
                 p -> new ViewButtonCell());
     }
-
 
 
     //Define the button cell

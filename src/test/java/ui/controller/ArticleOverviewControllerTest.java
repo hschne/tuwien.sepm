@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import ui.FXTest;
 import ui.MainApp;
+import ui.controller.article.ArticleOverviewController;
 import ui.model.ArticleList;
 import ui.model.ArticleModel;
 import ui.model.ModelFactory;

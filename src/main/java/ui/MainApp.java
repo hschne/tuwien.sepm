@@ -22,6 +22,8 @@ import service.ArticleRepository;
 import service.ReceiptRepository;
 import service.ServiceException;
 import ui.controller.*;
+import ui.controller.article.ArticleDetailsController;
+import ui.controller.article.ArticleOverviewController;
 import ui.controller.receipt.ReceiptDetailsRootController;
 import ui.controller.receipt.ReceiptOverviewController;
 import ui.model.ArticleList;

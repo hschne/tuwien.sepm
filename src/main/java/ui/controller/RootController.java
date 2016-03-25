@@ -3,9 +3,10 @@ package ui.controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import ui.controller.article.AbstractController;
 
 
-public class RootController extends AbstractController{
+public class RootController extends AbstractController {
 
     @FXML
     public void handleShowArticleOverview(){

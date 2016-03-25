@@ -4,8 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import ui.MainApp;
-import ui.controller.AbstractController;
-import ui.controller.CustomReceiptTableFactory;
+import ui.controller.article.AbstractController;
 import ui.model.ReceiptModel;
 
 public class ReceiptOverviewController extends AbstractController {
