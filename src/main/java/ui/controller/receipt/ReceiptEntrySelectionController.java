@@ -39,6 +39,7 @@ public class ReceiptEntrySelectionController extends AbstractController {
         ModelFactory modelFactory = new ModelFactory();
         ObservableList<ReceiptEntryModel> receiptEntries = modelFactory.createReceiptEntryModelsFromArticles(articles);
         receiptEntryTable.setItems(receiptEntries);
+        total.editableProperty().set(false);
         total.setText("0");
     }
 

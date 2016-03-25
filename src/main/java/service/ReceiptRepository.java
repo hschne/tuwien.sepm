@@ -41,8 +41,8 @@ public class ReceiptRepository extends AbstractService implements Repository<Rec
             dao.create(receipt);
             receipts.add(receipt);
         } catch (DaoException e) {
-            logger.error("Could not create article " + receipt.toString(), e);
-            throw new ServiceException("Could not create article", e);
+            logger.error("Could not create receipt " + receipt.toString(), e);
+            throw new ServiceException("Could not create receipt", e);
         }
     }
 

@@ -3,6 +3,7 @@ package ui.controller.receipt;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
+import org.apache.logging.log4j.Level;
 import ui.Output;
 import ui.model.ReceiptModel;
 
@@ -51,7 +52,6 @@ public class NewReceiptDetailsController extends AbstractReceiptDetailsControlle
         }
     }
 
-
     private void viewReceiptEntrySelection() {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -62,21 +62,23 @@ public class NewReceiptDetailsController extends AbstractReceiptDetailsControlle
             controller.initialize(mainApp);
             controller.initializeWith(this.receipt);
         } catch (IOException e) {
+            logger.log(Level.DEBUG,e);
             Output output = mainApp.getOutput();
             output.showNotification(Alert.AlertType.ERROR, "Error", "Could not load receipt entries", "Please view the logs for details.");
         }
     }
 
     private boolean receiptChanged() {
-        if ((!Objects.equals(receiver.getText(), "")) || (!Objects.equals(receiverAdress.getText(), ""))
-                || (receipt.getReceiptEntries().size() != 0)) {
+        if (!receipt.getReceiptEntries().isEmpty()) {
+            return true;
+        } else if ((!Objects.equals(receiver.getText(), "")) || (!Objects.equals(receiverAdress.getText(), ""))) {
             return true;
         }
         return false;
     }
 
     private boolean invalidInput() {
-        if ((receipt.getReceiptEntries().size() == 0)) {
+        if (receipt.getReceiptEntries().isEmpty()) {
             return true;
         } else if ((Objects.equals(receiver.getText(), "")) || (Objects.equals(receiverAdress.getText(), ""))) {
             return true;
