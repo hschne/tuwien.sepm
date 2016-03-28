@@ -13,9 +13,9 @@ public class ImageFile {
 
     private final String imageFolder = "/images/";
 
-    public String add(String path) throws DaoException {
-        File file = new File(path);
-        String extension = getExtension(path);
+    public String add(String imageName) throws DaoException {
+        File file = new File(imageName);
+        String extension = getExtension(imageName);
         String newFileName = UUID.randomUUID().toString() + extension;
         try {
             String absolutePath = new File(".").getCanonicalPath();

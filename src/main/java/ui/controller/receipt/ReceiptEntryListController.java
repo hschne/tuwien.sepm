@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import ui.controller.article.AbstractController;
+import ui.controller.AbstractController;
 import ui.model.ReceiptEntryModel;
 import ui.model.ReceiptModel;
 

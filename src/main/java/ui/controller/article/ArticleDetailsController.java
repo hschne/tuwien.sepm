@@ -1,7 +1,5 @@
 package ui.controller.article;
 
-import dao.DaoException;
-import dao.h2.ImageFile;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
@@ -10,6 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import service.ServiceException;
 import ui.Output;
+import ui.controller.AbstractController;
 import ui.model.ArticleModel;
 
 import java.io.File;
@@ -27,10 +26,11 @@ public class ArticleDetailsController extends AbstractController {
     @FXML
     public ImageView image;
 
-
     private ArticleModel article;
 
     private boolean isNew;
+
+    private boolean hasChanged;
 
     private String imagePath;
 
@@ -48,11 +48,14 @@ public class ArticleDetailsController extends AbstractController {
         description.setText(this.article.getDescription());
         category.setText(this.article.getCategory());
         image.setImage(this.article.getActualImage());
+        imagePath = this.article.getImage();
     }
 
     @FXML
     public void handleCancel() {
-        mainApp.showArticleOverview();
+        if (discardChanges()) {
+            mainApp.showArticleOverview();
+        }
     }
 
     @FXML
@@ -66,7 +69,9 @@ public class ArticleDetailsController extends AbstractController {
             if (!isNew) {
                 mainApp.getArticleList().update(article);
             } else {
-                mainApp.getArticleList().get().add(article);
+                if(hasChanged){
+                    mainApp.getArticleList().get().add(article);
+                }
             }
             mainApp.showArticleOverview();
         } catch (ServiceException e) {
@@ -75,30 +80,41 @@ public class ArticleDetailsController extends AbstractController {
         }
     }
 
-    private void changeImage() {
-        article.setImage(imagePath);
-    }
-
     @FXML
     public void handleImageClick() {
         File file = mainApp.openFile();
-        if(file != null){
+        if (file != null) {
             imagePath = file.getPath();
             image.setImage(new Image(file.toURI().toString()));
         }
     }
 
+    private void changeImage() {
+        article.setImage(imagePath);
+    }
+
+    private boolean discardChanges() {
+        if (hasChanged) {
+            Output output = new Output();
+            return output.showConfirmationDialog("Unsaved Changes", "You have made changes", "Do you want to discard those changes?.");
+        }
+        return true;
+    }
+
 
     @FXML
     private void initialize() {
-
-    }
-
-    private void checkForChanges() {
-
-    }
-
-    private void validateInput() {
-
+        name.textProperty().addListener((observable, oldValue, newValue) -> {
+            hasChanged = true;
+        });
+        category.textProperty().addListener((observable, oldValue, newValue) -> {
+            hasChanged = true;
+        });
+        description.textProperty().addListener((observable, oldValue, newValue) -> {
+            hasChanged = true;
+        });
+        price.textProperty().addListener((observable, oldValue, newValue) -> {
+            hasChanged = true;
+        });
     }
 }

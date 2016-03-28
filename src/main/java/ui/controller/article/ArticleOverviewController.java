@@ -5,6 +5,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
 import ui.MainApp;
+import ui.controller.AbstractController;
 import ui.model.ArticleModel;
 
 public class ArticleOverviewController extends AbstractController {

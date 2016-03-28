@@ -1,12 +1,11 @@
 package ui.controller.receipt;
 
-import entities.ReceiptEntry;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import ui.controller.article.AbstractController;
+import ui.controller.AbstractController;
 import ui.model.ArticleModel;
 import ui.model.ModelFactory;
 import ui.model.ReceiptEntryModel;
