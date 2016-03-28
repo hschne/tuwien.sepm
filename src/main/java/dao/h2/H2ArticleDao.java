@@ -14,10 +14,10 @@ import java.util.List;
 public class H2ArticleDao extends AbstractH2Dao implements ArticleDao {
 
     private Connection connection;
-    private ImageRepository imageRepository;
+    private ImageFile imageFile;
 
-    public H2ArticleDao(H2Database h2Database, ImageRepository imageRepository) {
-        this.imageRepository = imageRepository;
+    public H2ArticleDao(H2Database h2Database, ImageFile imageFile) {
+        this.imageFile = imageFile;
         this.connection = h2Database.getConnection();
     }
 
@@ -51,7 +51,7 @@ public class H2ArticleDao extends AbstractH2Dao implements ArticleDao {
         logger.debug("Creating articleDto " + article.toString());
         PreparedStatement statement;
         try {
-            article.setImage(imageRepository.add(article.getImage()));
+            article.setImage(imageFile.add(article.getImage()));
             statement = getCreateStatement(article);
             statement.executeUpdate();
             ResultSet result = statement.getGeneratedKeys();
@@ -60,7 +60,6 @@ public class H2ArticleDao extends AbstractH2Dao implements ArticleDao {
             } else {
                 throw new DaoException("No id created for " + article.toString());
             }
-            article.setImage(imageRepository.add(article.getImage()));
         } catch (SQLException e) {
             handle(e);
         }
@@ -71,7 +70,7 @@ public class H2ArticleDao extends AbstractH2Dao implements ArticleDao {
         logger.debug("Deleting articleDto " + articleDto.toString());
         try {
             deleteOrMakeInvisible(articleDto);
-            imageRepository.delete(articleDto.getImage());
+            imageFile.delete(articleDto.getImage());
         } catch (SQLException e) {
             handle(e);
         }

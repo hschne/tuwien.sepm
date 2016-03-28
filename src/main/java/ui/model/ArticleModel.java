@@ -1,5 +1,7 @@
 package ui.model;
 
+import dao.DaoException;
+import dao.h2.ImageFile;
 import entities.Article;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -21,6 +23,8 @@ public class ArticleModel implements Article {
 
     private int Id;
 
+
+
     public ArticleModel(int id, String name, Double price, String description, String category, String image) {
         this(name,price,description,category,image);
         this.Id = id;
@@ -34,9 +38,17 @@ public class ArticleModel implements Article {
         this.description = new SimpleStringProperty(description);
     }
 
+    public ArticleModel() {
+        this.name = new SimpleStringProperty("");
+        this.price = new SimpleDoubleProperty(0.0);
+        this.category = new SimpleStringProperty("");
+        this.description = new SimpleStringProperty("");
+        this.image = "dummyImage.png";
+    }
+
     @Override
     public String getImage() {
-        return "";
+        return image;
     }
 
     @Override
@@ -111,7 +123,7 @@ public class ArticleModel implements Article {
     }
 
     public Image getActualImage() {
-        return new Image(image);
+        return new ImageFile().get(image);
     }
 
 }

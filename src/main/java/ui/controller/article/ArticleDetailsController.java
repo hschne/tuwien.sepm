@@ -1,9 +1,12 @@
 package ui.controller.article;
 
+import dao.DaoException;
+import dao.h2.ImageFile;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import service.ServiceException;
 import ui.Output;
@@ -23,23 +26,28 @@ public class ArticleDetailsController extends AbstractController {
     public TextField category;
     @FXML
     public ImageView image;
+
+
     private ArticleModel article;
+
     private boolean isNew;
+
+    private String imagePath;
 
     public void initializeWith(ArticleModel article) {
         if (article == null) {
-            this.article = new ArticleModel("", 0.0, "", "", "");
+            this.article = new ArticleModel();
             isNew = true;
         } else {
             this.article = article;
             this.name.disableProperty().set(true);
-            this.image.setImage(article.getActualImage());
             isNew = false;
         }
         name.setText(this.article.getName());
         price.setText(String.valueOf(this.article.getPrice()));
         description.setText(this.article.getDescription());
         category.setText(this.article.getCategory());
+        image.setImage(this.article.getActualImage());
     }
 
     @FXML
@@ -54,24 +62,32 @@ public class ArticleDetailsController extends AbstractController {
             article.setPrice(Double.parseDouble(price.getText()));
             article.setDescription(description.getText());
             article.setCategory(category.getText());
+            changeImage();
             if (!isNew) {
                 mainApp.getArticleList().update(article);
             } else {
                 mainApp.getArticleList().get().add(article);
             }
+            mainApp.showArticleOverview();
         } catch (ServiceException e) {
             Output output = mainApp.getOutput();
-            output.showNotification(Alert.AlertType.ERROR, "Error", "Could not update article.", "");
+            output.showNotification(Alert.AlertType.ERROR, "Error", "Could not update article.", e.getMessage());
         }
-        mainApp.showArticleOverview();
+    }
+
+    private void changeImage() {
+        article.setImage(imagePath);
     }
 
     @FXML
     public void handleImageClick() {
         File file = mainApp.openFile();
-        article.setImage(file.getPath());
-        image.setImage(article.getActualImage());
+        if(file != null){
+            imagePath = file.getPath();
+            image.setImage(new Image(file.toURI().toString()));
+        }
     }
+
 
     @FXML
     private void initialize() {

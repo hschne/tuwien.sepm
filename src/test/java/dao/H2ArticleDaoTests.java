@@ -1,7 +1,7 @@
 package dao;
 
 import dao.h2.H2ArticleDao;
-import dao.h2.ImageRepository;
+import dao.h2.ImageFile;
 import entities.Article;
 import entities.ArticleDto;
 import org.junit.Test;
@@ -19,11 +19,11 @@ import static org.mockito.Mockito.*;
 public class H2ArticleDaoTests extends DaoTest {
 
     @Mock
-    ImageRepository mockImageRepository;
+    ImageFile mockImageFile;
 
     @Test
     public void create_NewArticle_ArticleInserted() throws Exception {
-        H2ArticleDao dao = new H2ArticleDao(mockH2Database,mockImageRepository);
+        H2ArticleDao dao = new H2ArticleDao(mockH2Database, mockImageFile);
         String name = "NameCriteria";
         Double price = 1.0;
         String description = "Description";
@@ -42,7 +42,7 @@ public class H2ArticleDaoTests extends DaoTest {
 
     @Test
     public void create_NewArticle_ImageSaved() throws Exception {
-        H2ArticleDao dao = new H2ArticleDao(mockH2Database,mockImageRepository);
+        H2ArticleDao dao = new H2ArticleDao(mockH2Database, mockImageFile);
         String name = "NameCriteria";
         Double price = 1.0;
         String description = "Description";
@@ -52,12 +52,12 @@ public class H2ArticleDaoTests extends DaoTest {
 
         dao.create(new ArticleDto(name, description, image, category, price));
 
-        verify(mockImageRepository).add(image);
+        verify(mockImageFile).add(image);
     }
 
     @Test(expected = DaoException.class)
     public void create_NewArticle_CreationFailed() throws Exception {
-        H2ArticleDao dao = new H2ArticleDao(mockH2Database,mockImageRepository);
+        H2ArticleDao dao = new H2ArticleDao(mockH2Database, mockImageFile);
         when(mockResultSet.next()).thenReturn(false);
 
         dao.create(new ArticleDto());
@@ -65,7 +65,7 @@ public class H2ArticleDaoTests extends DaoTest {
 
     @Test
     public void create_NewArticle_ArticleIdSet() throws Exception {
-        H2ArticleDao dao = new H2ArticleDao(mockH2Database, mockImageRepository);
+        H2ArticleDao dao = new H2ArticleDao(mockH2Database, mockImageFile);
         ArticleDto articleDto = new ArticleDto();
         when(mockResultSet.getInt(anyInt())).thenReturn(1);
         when(mockResultSet.next()).thenReturn(true);
@@ -77,7 +77,7 @@ public class H2ArticleDaoTests extends DaoTest {
 
     @Test
     public void readAll_ReadExistingArticles_QueryCreated() throws Exception {
-        H2ArticleDao dao = new H2ArticleDao(mockH2Database,mockImageRepository);
+        H2ArticleDao dao = new H2ArticleDao(mockH2Database, mockImageFile);
         String query = "SELECT * FROM ARTICLE WHERE VISIBLE=TRUE ORDER BY ID DESC;";
 
         dao.getVisible();
@@ -88,7 +88,7 @@ public class H2ArticleDaoTests extends DaoTest {
 
     @Test
     public void readAll_ReadExistingArticles_ArticlesCreated() throws Exception {
-        H2ArticleDao dao = new H2ArticleDao(mockH2Database,mockImageRepository);
+        H2ArticleDao dao = new H2ArticleDao(mockH2Database, mockImageFile);
         when(mockResultSet.next()).thenReturn(true).thenReturn(false);
         when(mockResultSet.getString(2)).thenReturn("NameCriteria");
 
@@ -101,7 +101,7 @@ public class H2ArticleDaoTests extends DaoTest {
 
     @Test
     public void update_ArticleInReceipt_NewArticleCreated() throws Exception {
-        H2ArticleDao dao = Mockito.spy(new H2ArticleDao(mockH2Database,mockImageRepository));
+        H2ArticleDao dao = Mockito.spy(new H2ArticleDao(mockH2Database, mockImageFile));
         ArticleDto articleDto = new ArticleDto(1, "NameCriteria", 20.0, "Description", "Image", "Category");
         String query = "UPDATE ARTICLE SET VISIBLE=FALSE WHERE ID=?;";
         when(mockResultSet.next()).thenReturn(true);
@@ -114,7 +114,7 @@ public class H2ArticleDaoTests extends DaoTest {
 
     @Test
     public void update_ArticleNotInReceipt_ArticleUpdated() throws Exception {
-        H2ArticleDao dao = new H2ArticleDao(mockH2Database,mockImageRepository);
+        H2ArticleDao dao = new H2ArticleDao(mockH2Database, mockImageFile);
         ArticleDto articleDto = new ArticleDto(1, "NameCriteria", 20.0, "Description", "Image", "Category");
         String query = "UPDATE ARTICLE SET NAME=?, PRICE=?, DESCRIPTION=?, IMAGE_PATH=?, CATEGORY=? WHERE ID=?;";
         when(mockResultSet.next()).thenReturn(false);
@@ -128,7 +128,7 @@ public class H2ArticleDaoTests extends DaoTest {
 
     @Test
     public void delete_ArticleInReceipt_ArticleAltered() throws Exception {
-        H2ArticleDao dao = new H2ArticleDao(mockH2Database,mockImageRepository);
+        H2ArticleDao dao = new H2ArticleDao(mockH2Database, mockImageFile);
         ArticleDto articleDto = new ArticleDto();
         String query = "UPDATE ARTICLE SET VISIBLE=FALSE WHERE ID=?;";
         articleDto.setId(1);
@@ -141,7 +141,7 @@ public class H2ArticleDaoTests extends DaoTest {
 
     @Test
     public void delete_NoLinkedReceipt_ArticleDeleted() throws Exception {
-        H2ArticleDao dao = new H2ArticleDao(mockH2Database,mockImageRepository);
+        H2ArticleDao dao = new H2ArticleDao(mockH2Database, mockImageFile);
         ArticleDto articleDto = new ArticleDto();
         String query = "DELETE FROM ARTICLE WHERE ID =?;";
         articleDto.setId(1);

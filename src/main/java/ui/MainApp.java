@@ -6,11 +6,10 @@ import dao.ReceiptDao;
 import dao.h2.H2ArticleDao;
 import dao.h2.H2Database;
 import dao.h2.H2ReceiptDao;
-import dao.h2.ImageRepository;
+import dao.h2.ImageFile;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -156,7 +155,7 @@ public class MainApp extends Application {
     private void initServices() {
         try {
             H2Database database = new H2Database("/home/hschroedl/sepm");
-            ArticleDao articleDao = new H2ArticleDao(database, new ImageRepository());
+            ArticleDao articleDao = new H2ArticleDao(database, new ImageFile());
             articleList = new ArticleList(new ArticleRepository(articleDao));
             ReceiptDao receiptDao = new H2ReceiptDao(database);
             receiptList = new ReceiptList(new ReceiptRepository(receiptDao));
@@ -171,13 +170,10 @@ public class MainApp extends Application {
 
     public File openFile(){
         FileChooser fileChooser = new FileChooser();
-        FileChooser.ExtensionFilter png = new FileChooser.ExtensionFilter("PNG (*.png)", "*.png");
-        FileChooser.ExtensionFilter jpg = new FileChooser.ExtensionFilter("JPG (*.jpg)", "*.jpg");
-        fileChooser.getExtensionFilters().add(png);
-        fileChooser.getExtensionFilters().add(jpg);
+        FileChooser.ExtensionFilter images = new FileChooser.ExtensionFilter("Images", "*.png","*.jpg");
+        fileChooser.getExtensionFilters().add(images);
         fileChooser.setTitle("Open Image");
-        File file = fileChooser.showOpenDialog(primaryStage);
-        return file;
+        return fileChooser.showOpenDialog(primaryStage);
     }
 
 
