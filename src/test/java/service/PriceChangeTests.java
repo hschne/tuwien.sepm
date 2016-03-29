@@ -1,7 +1,6 @@
 package service;
 
 import base.BaseTest;
-import dao.ArticleDao;
 import entities.ArticleDto;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -17,7 +16,7 @@ public class PriceChangeTests extends BaseTest {
 
 
     @Mock
-    private ArticleDao mockArticleDao;
+    private ArticleRepository mockArticleDao;
 
     @Test
     public void raiseByPercent_RaiseBy20_PriceRaised() throws Exception {
@@ -27,7 +26,7 @@ public class PriceChangeTests extends BaseTest {
         PriceChange priceChange = new PriceChange(mockArticleDao, articleDtos);
         double expectedPrice = 12.0;
 
-        priceChange.raiseByPercent(20);
+        priceChange.changeByPercent(20);
 
         assertEquals(expectedPrice, articleDto.getPrice(), 0);
         verify(mockArticleDao).update(articleDto);
@@ -36,7 +35,7 @@ public class PriceChangeTests extends BaseTest {
     @Test(expected = ServiceException.class)
     public void raisePercentage_raiseByNegative_ExceptionThrown() throws Exception {
         PriceChange priceChange = new PriceChange(mockArticleDao, new ArrayList<>());
-        priceChange.raiseByPercent(-20);
+        priceChange.changeByPercent(-20);
 
     }
 
@@ -48,7 +47,7 @@ public class PriceChangeTests extends BaseTest {
         PriceChange priceChange = new PriceChange(mockArticleDao, articleDtos);
         double expectedPrice = 8.0;
 
-        priceChange.reduceByPercent(20);
+        priceChange.changeByPercent(-20.0);
 
         assertEquals(expectedPrice, articleDto.getPrice(), 0);
         verify(mockArticleDao).update(articleDto);
@@ -57,7 +56,7 @@ public class PriceChangeTests extends BaseTest {
     @Test(expected = ServiceException.class)
     public void reduceByPercentage_DecreaseByTooMuch_ExceptionThrown() throws Exception {
         PriceChange priceChange = new PriceChange(mockArticleDao, new ArrayList<>());
-        priceChange.reduceByPercent(100);
+        priceChange.changeByPercent(100);
 
     }
 
@@ -69,7 +68,7 @@ public class PriceChangeTests extends BaseTest {
         PriceChange priceChange = new PriceChange(mockArticleDao, articleDtos);
         double expectedPrice = 15;
 
-        priceChange.raiseByAbsolute(5);
+        priceChange.changeByAbsolute(5);
 
         assertEquals(expectedPrice, articleDto.getPrice(), 0);
         verify(mockArticleDao).update(articleDto);
@@ -83,7 +82,7 @@ public class PriceChangeTests extends BaseTest {
         PriceChange priceChange = new PriceChange(mockArticleDao, articleDtos);
         double expectedPrice = 5;
 
-        priceChange.reduceByAbsolute(5);
+        priceChange.changeByAbsolute(5);
 
         assertEquals(expectedPrice, articleDto.getPrice(), 0);
         verify(mockArticleDao).update(articleDto);
@@ -96,7 +95,7 @@ public class PriceChangeTests extends BaseTest {
         articleDtos.add(articleDto);
         PriceChange priceChange = new PriceChange(mockArticleDao, articleDtos);
 
-        priceChange.reduceByAbsolute(100);
+        priceChange.changeByAbsolute(-100);
     }
 
 
