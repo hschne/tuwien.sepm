@@ -168,6 +168,10 @@ public class MainApp extends Application {
         }
     }
 
+    public void hideFilter() {
+        rootLayout.setLeft(null);
+    }
+
     private void initServices() {
         try {
             H2Database database = new H2Database("/home/hschroedl/sepm");

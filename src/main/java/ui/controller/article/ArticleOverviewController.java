@@ -3,6 +3,7 @@ package ui.controller.article;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import ui.MainApp;
 import ui.controller.AbstractController;
@@ -10,6 +11,8 @@ import ui.model.ArticleModel;
 
 public class ArticleOverviewController extends AbstractController {
 
+    @FXML
+    private ToggleButton toggleFilter;
     @FXML
     private TableColumn<ArticleModel, Image> imageColumn;
     @FXML
@@ -38,7 +41,12 @@ public class ArticleOverviewController extends AbstractController {
 
     @FXML
     public void handleFilter(){
-        mainApp.showArticleFilter();
+        if(toggleFilter.isSelected()){
+            mainApp.showArticleFilter();
+        }
+        else{
+            mainApp.hideFilter();
+        }
     }
 
 
