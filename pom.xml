@@ -27,6 +27,7 @@
                         <manifest>
                             <mainClass>ui.MainApp</mainClass>
                         </manifest>
+                    </archive>
                 </configuration>
                 <executions>
                     <execution>
