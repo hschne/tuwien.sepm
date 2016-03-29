@@ -49,6 +49,7 @@ public class ArticleDetailsController extends AbstractController {
         category.setText(this.article.getCategory());
         image.setImage(this.article.getActualImage());
         imagePath = this.article.getImage();
+        initializeChangeListeners();
     }
 
     @FXML
@@ -66,12 +67,12 @@ public class ArticleDetailsController extends AbstractController {
             article.setDescription(description.getText());
             article.setCategory(category.getText());
             changeImage();
-            if (!isNew) {
-                mainApp.getArticleList().update(article);
-            } else {
-                if(hasChanged){
+            if (isNew) {
+                if (hasChanged) {
                     mainApp.getArticleList().get().add(article);
                 }
+            } else {
+                mainApp.getArticleList().update(article);
             }
             mainApp.showArticleOverview();
         } catch (ServiceException e) {
@@ -101,9 +102,7 @@ public class ArticleDetailsController extends AbstractController {
         return true;
     }
 
-
-    @FXML
-    private void initialize() {
+    private void initializeChangeListeners() {
         name.textProperty().addListener((observable, oldValue, newValue) -> {
             hasChanged = true;
         });

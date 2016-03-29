@@ -2,6 +2,9 @@ package dao.h2;
 
 import dao.DaoException;
 import javafx.scene.image.Image;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,49 +14,64 @@ import java.util.UUID;
 
 public class ImageFile {
 
+    private final Logger logger = LogManager.getLogger(ImageFile.class);
+
     private final String imageFolder = "/images/";
 
+    private String absoluteImageFolderPath;
+
+    public ImageFile() {
+        try {
+            absoluteImageFolderPath = new File(".").getCanonicalPath() + imageFolder;
+        } catch (IOException e) {
+            logger.error(e);
+        }
+    }
+
     public String add(String imageName) throws DaoException {
-        File file = new File(imageName);
+        if (existsInImageFolder(imageName)) {
+            return imageName;
+        } else {
+            return copyFile(imageName);
+        }
+    }
+
+    public void delete(String name) throws DaoException {
+        try {
+            String deleteFilePath = absoluteImageFolderPath + name;
+            File file = new File(deleteFilePath);
+            Files.delete(file.toPath());
+        } catch (IOException e) {
+            logger.error(e);
+            throw new DaoException("File could not be deleted", e);
+        }
+    }
+
+    public Image get(String imageName) {
+        String imageFilePath = absoluteImageFolderPath + imageName;
+        File file = new File(imageFilePath);
+        return new Image(file.toURI().toString());
+    }
+
+    @NotNull
+    private String copyFile(String imageName) throws DaoException {
+        File existingFile = new File(imageName);
         String extension = getExtension(imageName);
         String newFileName = UUID.randomUUID().toString() + extension;
         try {
-            String absolutePath = new File(".").getCanonicalPath();
-            String newFilePath = absolutePath + imageFolder + newFileName;
-            File newFile = new File(newFilePath);
-            Files.copy(file.toPath(), newFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            File newFile = new File(absoluteImageFolderPath + newFileName);
+            Files.copy(existingFile.toPath(), newFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
+            logger.error(e);
             throw new DaoException("File could not be moved", e);
         }
         return newFileName;
     }
 
-
-    public void delete(String name) throws DaoException {
-        try {
-            String absolutePath = new File(".").getCanonicalPath();
-            String deleteFilePath = absolutePath + imageFolder + name;
-            File file = new File(deleteFilePath);
-            Files.delete(file.toPath());
-        } catch (IOException e) {
-            throw new DaoException("File could not be deleted", e);
-        }
+    private boolean existsInImageFolder(String imageName) {
+        File file = new File(absoluteImageFolderPath + imageName);
+        return file.exists();
     }
-
-    public Image get(String imageName){
-        String absolutePath = null;
-        try {
-            absolutePath = new File(".").getCanonicalPath();
-            String imageFilePath = absolutePath + imageFolder + imageName;
-            File file = new File(imageFilePath);
-            return new Image(file.toURI().toString());
-        } catch (IOException e) {
-            System.out.println(e);
-        }
-        return null;
-
-    }
-
 
     private String getExtension(String path) {
         String extension = "";
