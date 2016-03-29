@@ -1,25 +1,29 @@
 package service.decorator;
 
-import entities.*;
+import entities.Article;
+import entities.ArticleDto;
+import entities.Receipt;
+import entities.ReceiptEntry;
 import service.ReceiptRepository;
 import service.ServiceException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class ArticleSale extends ArticleDto {
 
-    private ReceiptRepository repository;
     private final Article articleDto;
+    private ReceiptRepository repository;
 
-    ArticleSale(ReceiptRepository repository, Article articleDto){
+    ArticleSale(ReceiptRepository repository, Article articleDto) {
         this.repository = repository;
         this.articleDto = articleDto;
     }
 
     public int getTimesSold() throws ServiceException {
-        return entriesForArticle().size();
+        return entriesForArticle().stream().mapToInt(ReceiptEntry::getAmount).sum();
     }
 
     protected List<ReceiptEntry> entriesForArticle() throws ServiceException {
@@ -28,10 +32,8 @@ public class ArticleSale extends ArticleDto {
         for (Receipt receiptDto : receiptDtos) {
             receiptEntries.addAll(receiptDto.getReceiptEntries());
         }
-        return receiptEntries.stream().filter(entry -> entry.getArticle().getId() == articleDto.getId()).collect(Collectors.toList());
+        return receiptEntries.stream().filter(entry -> Objects.equals(entry.getArticle().getName(), articleDto.getName())).collect(Collectors.toList());
     }
-
-
 
 
 }
