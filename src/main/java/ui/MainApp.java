@@ -81,7 +81,7 @@ public class MainApp extends Application {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("/views/articleOverview.fxml"));
-            AnchorPane personOverview = loader.load();
+            BorderPane personOverview = loader.load();
             rootLayout.setCenter(personOverview);
             ArticleOverviewController controller = loader.getController();
             controller.initialize(this);
@@ -152,24 +152,6 @@ public class MainApp extends Application {
 
     public Output getOutput() {
         return output;
-    }
-
-    public void showArticleFilter() {
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("/views/articleFilter.fxml"));
-            AnchorPane articleFilter = loader.load();
-            rootLayout.setLeft(articleFilter);
-
-            ArticleFilterController controller = loader.getController();
-            controller.initialize(this);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void hideFilter() {
-        rootLayout.setLeft(null);
     }
 
     private void initServices() {

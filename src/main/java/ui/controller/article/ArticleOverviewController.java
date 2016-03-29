@@ -1,16 +1,24 @@
 package ui.controller.article;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderPane;
 import ui.MainApp;
 import ui.controller.AbstractController;
 import ui.model.ArticleModel;
 
+import java.io.IOException;
+
 public class ArticleOverviewController extends AbstractController {
 
+    @FXML
+    private BorderPane rootLayout;
     @FXML
     private ToggleButton toggleFilter;
     @FXML
@@ -42,10 +50,24 @@ public class ArticleOverviewController extends AbstractController {
     @FXML
     public void handleFilter(){
         if(toggleFilter.isSelected()){
-            mainApp.showArticleFilter();
+            showFilter();
         }
         else{
-            mainApp.hideFilter();
+            rootLayout.setLeft(null);
+        }
+    }
+
+    private void showFilter() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("/views/articleFilter.fxml"));
+            AnchorPane articleFilter = loader.load();
+            rootLayout.setLeft(articleFilter);
+
+            ArticleFilterController controller = loader.getController();
+            controller.initialize(mainApp);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

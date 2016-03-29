@@ -10,22 +10,21 @@ import service.ArticleRepository;
 import service.ServiceException;
 import service.criteria.Criteria;
 
-import java.util.List;
-
 public class ArticleList {
 
-    private ArticleRepository articleRepository;
-
-    private ObservableList<ArticleModel> articles;
-
     private final Logger logger = LogManager.getLogger(ArticleList.class);
-
+    private ArticleRepository articleRepository;
     private final ListChangeListener<ArticleModel> removeListener = c -> {
         while (c.next()) {
             removeItems(c);
+        }
+    };
+    private final ListChangeListener<ArticleModel> addListener = c -> {
+        while (c.next()) {
             addItems(c);
         }
     };
+    private ObservableList<ArticleModel> articles;
 
 
     public ArticleList(ArticleRepository repository) throws ServiceException {
@@ -57,12 +56,7 @@ public class ArticleList {
         articles = FXCollections.observableArrayList();
         ModelFactory factory = new ModelFactory();
         articles.addAll(factory.createArticleModels(articleRepository.getAll()));
-        articles.addListener((ListChangeListener<ArticleModel>) c -> {
-                    while (c.next()) {
-                        addItems(c);
-                    }
-                }
-        );
+        articles.addListener(addListener);
         articles.addListener(removeListener);
     }
 
