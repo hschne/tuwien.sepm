@@ -1,8 +1,8 @@
 #IntelliJ Folder
-.idea/
+.idea
 
 #Build folders
-images/
+images
 
 #Maven
 target/
