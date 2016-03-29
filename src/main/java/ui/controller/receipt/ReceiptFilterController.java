@@ -62,7 +62,7 @@ public class ReceiptFilterController extends AbstractController {
     }
 
     private void resetDate() {
-        dateFilter.setValue(null);
+        dateFilter.getEditor().clear();
         dateCriteria = null;
     }
 

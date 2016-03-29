@@ -56,6 +56,12 @@ public class ArticleStatisticController extends AbstractController {
         dialogStage.close();
     }
 
+    @FXML
+    public void handleReset() {
+        datePicker.getEditor().clear();
+        setArticleSales();
+    }
+
     private void initialzeChartLabels(Stage dialogStage) {
         this.dialogStage = dialogStage;
         ObservableList<String> xLabels = FXCollections.observableArrayList();
@@ -63,13 +69,12 @@ public class ArticleStatisticController extends AbstractController {
         xAxis.setCategories(xLabels);
     }
 
-    private void setArticleSales()  {
+    private void setArticleSales() {
         SaleFactory saleFactory = new ArticleSaleFactory(mainApp.getReceiptRepository());
         fillBarChart(saleFactory);
     }
 
-
-    private void setArticleSalesFromDate()  {
+    private void setArticleSalesFromDate() {
         LocalDate localDate = datePicker.getValue();
         Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
         SaleFactory saleFactory = new TimedArticleSaleFactory(mainApp.getReceiptRepository(), date, DateOperator.AFTER);

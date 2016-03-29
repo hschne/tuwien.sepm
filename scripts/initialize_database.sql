@@ -36,7 +36,7 @@ CREATE TABLE ARTICLE_RECEIPT (
 INSERT INTO ARTICLE (ID, NAME, DESCRIPTION, IMAGE_PATH, CATEGORY, PRICE)
 VALUES (1, 'Kuschelente', 'Kuschelente, Dekorationsgegenstand. Weich und flauschig, und außerdem gelb!', 'kuschelente.jpg', 'Dekoration', 18.90),
   (2, 'Glas-Osterei', 'Solides und wahnsinnig hübsches handgemaltes Osterei. Zum Aufhängen passt das in jede Bude.', 'glasei.jpg', 'Dekoration', 2),
-  (3, 'Schokoladen Henne', 'Köstliches Schokoladenhuhn. Verpackt in super glänzender Megafolie.', 'osterhenne.jpg', 'Süßigkeiten', 7),
+  (3, 'Schokoladen-Henne', 'Köstliches Schokoladenhuhn. Verpackt in super glänzender Megafolie.', 'osterhenne.jpg', 'Süßigkeiten', 7),
   (4, 'Riesenei', 'Ein gigantisches Schokoei. Falls man sich mal nur von Schokolade ernähren möchte.', 'riesenei.jpg', 'Süßigkeiten', 22);
 
 
