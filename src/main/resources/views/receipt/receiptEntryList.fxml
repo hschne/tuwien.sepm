@@ -5,7 +5,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="240.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controller.receipt.ReceiptEntryListController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="240.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controller.receipt.EntryListController">
    <children>
       <TableView fx:id="receiptEntryTable" layoutX="51.0" layoutY="24.0" prefHeight="182.0" prefWidth="560.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="15.0">
         <columns>

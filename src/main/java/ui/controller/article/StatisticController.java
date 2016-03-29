@@ -26,8 +26,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ArticleStatisticController extends AbstractController {
-
+public class StatisticController extends AbstractController {
 
     @FXML
     public DatePicker datePicker;

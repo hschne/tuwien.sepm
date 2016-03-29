@@ -8,7 +8,7 @@ import ui.model.ReceiptModel;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 
-public class ExistingReceiptDetailsController extends AbstractReceiptDetailsController {
+public class ExistingDetailsController extends AbstractDetailsController {
 
 
     @Override
@@ -37,10 +37,10 @@ public class ExistingReceiptDetailsController extends AbstractReceiptDetailsCont
     private void viewExistingReceiptEntries(ReceiptModel receipt) {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(ExistingReceiptDetailsController.class.getResource("/views/receipt/receiptEntryList.fxml"));
+            loader.setLocation(ExistingDetailsController.class.getResource("/views/receipt/receiptEntryList.fxml"));
             AnchorPane articleDetails = loader.load();
             rootLayout.setCenter(articleDetails);
-            ReceiptEntryListController controller = loader.getController();
+            EntryListController controller = loader.getController();
             controller.initialize(mainApp);
             controller.initializeWith(receipt);
         } catch (IOException e) {

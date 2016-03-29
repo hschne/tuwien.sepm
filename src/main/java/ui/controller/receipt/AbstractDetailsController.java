@@ -8,7 +8,7 @@ import javafx.scene.layout.BorderPane;
 import ui.controller.AbstractController;
 import ui.model.ReceiptModel;
 
-public abstract class AbstractReceiptDetailsController extends AbstractController {
+public abstract class AbstractDetailsController extends AbstractController {
 
     @FXML
     public TextField receiver;

@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="130.0" prefHeight="380.0" prefWidth="130.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controller.article.ArticleFilterController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="130.0" prefHeight="380.0" prefWidth="130.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controller.article.FilterController">
    <children>
       <Label layoutX="13.0" layoutY="40.0" prefHeight="15.0" prefWidth="70.0" text="by Name" />
       <TextField fx:id="nameFilter" layoutX="13.0" layoutY="63.0" prefHeight="25.0" prefWidth="99.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />

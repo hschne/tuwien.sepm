@@ -16,17 +16,18 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.jetbrains.annotations.NotNull;
 import service.ArticleRepository;
 import service.ReceiptRepository;
 import service.ServiceException;
 import ui.controller.RootController;
-import ui.controller.article.ArticleDetailsController;
-import ui.controller.article.ArticleOverviewController;
-import ui.controller.article.ArticleStatisticController;
-import ui.controller.receipt.AbstractReceiptDetailsController;
-import ui.controller.receipt.ExistingReceiptDetailsController;
-import ui.controller.receipt.NewReceiptDetailsController;
-import ui.controller.receipt.ReceiptOverviewController;
+import ui.controller.article.DetailsController;
+import ui.controller.article.StatisticController;
+import ui.controller.article.PriceChangeController;
+import ui.controller.receipt.AbstractDetailsController;
+import ui.controller.receipt.ExistingDetailsController;
+import ui.controller.receipt.NewDetailsController;
+import ui.controller.receipt.OverviewController;
 import ui.model.ArticleList;
 import ui.model.ArticleModel;
 import ui.model.ReceiptList;
@@ -91,7 +92,7 @@ public class MainApp extends Application {
             loader.setLocation(MainApp.class.getResource("/views/article/articleOverview.fxml"));
             BorderPane personOverview = loader.load();
             rootLayout.setCenter(personOverview);
-            ArticleOverviewController controller = loader.getController();
+            ui.controller.article.OverviewController controller = loader.getController();
             controller.initialize(this);
         } catch (IOException e) {
             e.printStackTrace();
@@ -105,7 +106,7 @@ public class MainApp extends Application {
             loader.setLocation(MainApp.class.getResource("/views/article/articleDetails.fxml"));
             AnchorPane articleDetails = loader.load();
             rootLayout.setCenter(articleDetails);
-            ArticleDetailsController controller = loader.getController();
+            DetailsController controller = loader.getController();
             controller.initialize(this);
             controller.initializeWith(article);
         } catch (IOException e) {
@@ -123,11 +124,11 @@ public class MainApp extends Application {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("/views/receipt/receiptDetailRoot.fxml"));
-            AbstractReceiptDetailsController controller;
+            AbstractDetailsController controller;
             if (receipt == null) {
-                controller = new NewReceiptDetailsController();
+                controller = new NewDetailsController();
             } else {
-                controller = new ExistingReceiptDetailsController();
+                controller = new ExistingDetailsController();
             }
             loader.setController(controller);
             BorderPane rootLayout = loader.load();
@@ -147,7 +148,7 @@ public class MainApp extends Application {
             loader.setLocation(MainApp.class.getResource("/views/receipt/receiptOverview.fxml"));
             BorderPane receiptOverview = loader.load();
             rootLayout.setCenter(receiptOverview);
-            ReceiptOverviewController controller = loader.getController();
+            OverviewController controller = loader.getController();
             controller.initialize(this);
         } catch (IOException e) {
             e.printStackTrace();
@@ -175,22 +176,41 @@ public class MainApp extends Application {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("/views/article/articleStatistics.fxml"));
             AnchorPane articleStatistic = loader.load();
-
-            Stage dialogStage = new Stage();
-            dialogStage.setTitle("Article times sold");
-            dialogStage.initModality(Modality.WINDOW_MODAL);
-            dialogStage.initOwner(primaryStage);
-            Scene scene = new Scene(articleStatistic);
-            dialogStage.setScene(scene);
-
-            ArticleStatisticController controller = loader.getController();
+            Stage dialogStage = createDialogStage("Article times sold", articleStatistic);
+            StatisticController controller = loader.getController();
             controller.initialize(this);
             controller.initializeWith(dialogStage, selected);
-
             dialogStage.showAndWait();
         } catch (IOException e) {
             output.showExceptionNotification("Error", "Could not open statistic window", "Please consult logs for more information", e);
         }
+    }
+
+    public void showPriceChange() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("/views/article/priceChange.fxml"));
+            AnchorPane articleStatistic = loader.load();
+            Stage dialogStage = createDialogStage("Article times sold", articleStatistic);
+
+            PriceChangeController controller = loader.getController();
+            controller.initialize(this);
+            controller.initializeWith(dialogStage);
+            dialogStage.showAndWait();
+        } catch (IOException e) {
+            output.showExceptionNotification("Error", "Could not open statistic window", "Please consult logs for more information", e);
+        }
+    }
+
+    @NotNull
+    private Stage createDialogStage(String title, AnchorPane basePane) {
+        Stage dialogStage = new Stage();
+        dialogStage.setTitle(title);
+        dialogStage.initModality(Modality.WINDOW_MODAL);
+        dialogStage.initOwner(primaryStage);
+        Scene scene = new Scene(basePane);
+        dialogStage.setScene(scene);
+        return dialogStage;
     }
 
     private void initServices() {

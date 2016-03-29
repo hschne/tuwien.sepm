@@ -14,7 +14,7 @@ import ui.model.ReceiptModel;
 
 import java.util.List;
 
-public class ReceiptEntrySelectionController extends AbstractController {
+public class EntrySelectionController extends AbstractController {
 
     @FXML
     public TextField total;

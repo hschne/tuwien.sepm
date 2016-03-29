@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
 
-public class NewReceiptDetailsController extends AbstractReceiptDetailsController {
+public class NewDetailsController extends AbstractDetailsController {
 
 
     @Override
@@ -63,10 +63,10 @@ public class NewReceiptDetailsController extends AbstractReceiptDetailsControlle
     private void viewReceiptEntrySelection() {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(ExistingReceiptDetailsController.class.getResource("/views/receipt/receiptEntrySelection.fxml"));
+            loader.setLocation(ExistingDetailsController.class.getResource("/views/receipt/receiptEntrySelection.fxml"));
             AnchorPane articleDetails = loader.load();
             rootLayout.setCenter(articleDetails);
-            ReceiptEntrySelectionController controller = loader.getController();
+            EntrySelectionController controller = loader.getController();
             controller.initialize(mainApp);
             controller.initializeWith(this.receipt);
         } catch (IOException e) {

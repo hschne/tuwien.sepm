@@ -13,7 +13,7 @@ import ui.model.ArticleModel;
 
 import java.io.File;
 
-public class ArticleDetailsController extends AbstractController {
+public class DetailsController extends AbstractController {
 
     @FXML
     public TextField name;

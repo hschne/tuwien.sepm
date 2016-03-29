@@ -8,7 +8,7 @@ import ui.controller.AbstractController;
 import ui.model.ReceiptEntryModel;
 import ui.model.ReceiptModel;
 
-public class ReceiptEntryListController extends AbstractController {
+public class EntryListController extends AbstractController {
 
     @FXML
     public TextField total;

@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="rootLayout" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="380.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controller.receipt.ReceiptOverviewController">
+<BorderPane fx:id="rootLayout" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="380.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controller.receipt.OverviewController">
     <center>
         <AnchorPane prefHeight="380.0" prefWidth="600.0" BorderPane.alignment="CENTER">
             <children>

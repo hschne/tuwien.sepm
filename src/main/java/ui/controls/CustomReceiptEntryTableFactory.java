@@ -1,24 +1,20 @@
 package ui.controls;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.util.Callback;
-import ui.controller.receipt.ReceiptEntrySelectionController;
+import ui.controller.receipt.EntrySelectionController;
 import ui.model.ArticleModel;
 import ui.model.ReceiptEntryModel;
 
 public class CustomReceiptEntryTableFactory {
 
-    private ReceiptEntrySelectionController controller;
+    private EntrySelectionController controller;
 
-    public CustomReceiptEntryTableFactory(ReceiptEntrySelectionController controller) {
+    public CustomReceiptEntryTableFactory(EntrySelectionController controller) {
         this.controller = controller;
     }
 

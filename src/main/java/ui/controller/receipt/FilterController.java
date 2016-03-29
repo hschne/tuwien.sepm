@@ -18,7 +18,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 
-public class ReceiptFilterController extends AbstractController {
+public class FilterController extends AbstractController {
 
     @FXML
     public DatePicker dateFilter;

@@ -1,5 +1,6 @@
 package ui.controller;
 
+import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ui.MainApp;
@@ -13,5 +14,6 @@ public abstract class AbstractController {
     public void initialize(MainApp mainControllerApp) {
         this.mainApp = mainControllerApp;
     }
+
 
 }

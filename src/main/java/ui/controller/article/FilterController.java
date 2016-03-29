@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class ArticleFilterController extends AbstractController {
+public class FilterController extends AbstractController {
 
     @FXML
     public TextField nameFilter;

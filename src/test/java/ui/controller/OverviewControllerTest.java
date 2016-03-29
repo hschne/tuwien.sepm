@@ -8,7 +8,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import ui.FXTest;
 import ui.MainApp;
-import ui.controller.article.ArticleOverviewController;
+import ui.controller.article.OverviewController;
 import ui.model.ArticleList;
 import ui.model.ArticleModel;
 import ui.model.ModelFactory;
@@ -19,7 +19,7 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class ArticleOverviewControllerTest extends FXTest {
+public class OverviewControllerTest extends FXTest {
 
 
     @Mock
@@ -29,7 +29,7 @@ public class ArticleOverviewControllerTest extends FXTest {
 
     @Test
     public void initialize_InitializeWithMainApp_ArticleTableFilled() throws Exception {
-        ArticleOverviewController controller = new ArticleOverviewController();
+        OverviewController controller = new OverviewController();
         controller.articleTable = new TableView<>();
         ObservableList<ArticleModel> models = FXCollections.observableArrayList();
         models.addAll(new ModelFactory().createArticleModels(createDummyArticles(5)));
@@ -43,7 +43,7 @@ public class ArticleOverviewControllerTest extends FXTest {
 
     @Test
     public void handleCreate_CreateArticle_MainAppShowDetailViewCalled() throws Exception {
-        ArticleOverviewController controller = new ArticleOverviewController();
+        OverviewController controller = new OverviewController();
         controller.articleTable = new TableView<>();
         controller.nameColumn = new TableColumn<>();
         controller.descriptionColumn= new TableColumn<>();

@@ -14,7 +14,7 @@ import ui.model.ReceiptModel;
 
 import java.io.IOException;
 
-public class ReceiptOverviewController extends AbstractController {
+public class OverviewController extends AbstractController {
 
     @FXML
     public BorderPane rootLayout;
@@ -58,7 +58,7 @@ public class ReceiptOverviewController extends AbstractController {
             AnchorPane receiptFilter = loader.load();
             rootLayout.setLeft(receiptFilter);
 
-            ReceiptFilterController controller = loader.getController();
+            FilterController controller = loader.getController();
             controller.initialize(mainApp);
         } catch (IOException e) {
             e.printStackTrace();

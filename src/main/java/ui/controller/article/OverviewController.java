@@ -14,10 +14,9 @@ import ui.controls.CustomArticleTableFactory;
 import ui.model.ArticleModel;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
-public class ArticleOverviewController extends AbstractController {
+public class OverviewController extends AbstractController {
 
     @FXML
     public TableView<ArticleModel> articleTable;
@@ -73,13 +72,17 @@ public class ArticleOverviewController extends AbstractController {
         mainApp.showArticleStatistics(selected);
     }
 
+    @FXML public void handlePriceChange(){
+        mainApp.showPriceChange();
+    }
+
     private void showFilter() {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("/views/article/articleFilter.fxml"));
             AnchorPane articleFilter = loader.load();
             rootLayout.setLeft(articleFilter);
-            ArticleFilterController controller = loader.getController();
+            FilterController controller = loader.getController();
             controller.initialize(mainApp);
         } catch (IOException e) {
             logger.error(e);
