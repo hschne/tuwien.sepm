@@ -1,8 +1,10 @@
-package service.criteria;
+package service.criteria.article;
 
 import entities.Article;
 import entities.ArticleDto;
 import service.ServiceException;
+import service.criteria.Criteria;
+import service.criteria.RelativeOperator;
 import service.decorator.ArticleDtoSale;
 import service.decorator.SaleFactory;
 

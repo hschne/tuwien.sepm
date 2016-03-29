@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="180.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controller.receipt.ReceiptFilterController">
+   <children>
+      <Label layoutX="14.0" layoutY="27.0" text="by Receiver" AnchorPane.leftAnchor="10.0" />
+      <TextField fx:id="receiverFilter" layoutX="14.0" layoutY="54.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
+      <DatePicker fx:id="dateFilter" layoutY="123.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
+      <Label layoutX="10.0" layoutY="96.0" text="by Date" AnchorPane.leftAnchor="10.0" />
+      <Button layoutX="59.0" layoutY="361.0" mnemonicParsing="false" onAction="#handleClear" text="Clear" AnchorPane.bottomAnchor="10.0" />
+   </children>
+</AnchorPane>

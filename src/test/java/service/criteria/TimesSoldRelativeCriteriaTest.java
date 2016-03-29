@@ -5,6 +5,7 @@ import entities.Article;
 import entities.ArticleDto;
 import org.junit.Test;
 import org.mockito.Mock;
+import service.criteria.article.TimesSoldRelativeCriteria;
 import service.decorator.ArticleDtoSale;
 import service.decorator.SaleFactory;
 

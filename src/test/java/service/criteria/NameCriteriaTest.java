@@ -2,8 +2,8 @@ package service.criteria;
 
 import base.BaseTest;
 import entities.Article;
-import entities.ArticleDto;
 import org.junit.Test;
+import service.criteria.article.NameCriteria;
 
 import java.util.List;
 

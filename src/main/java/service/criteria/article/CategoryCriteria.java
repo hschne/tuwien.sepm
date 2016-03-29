@@ -1,6 +1,7 @@
-package service.criteria;
+package service.criteria.article;
 
 import entities.Article;
+import service.criteria.Criteria;
 
 import java.util.List;
 import java.util.stream.Collectors;

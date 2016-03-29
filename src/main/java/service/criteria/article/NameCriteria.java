@@ -1,6 +1,8 @@
-package service.criteria;
+package service.criteria.article;
 
 import entities.Article;
+import org.apache.commons.lang3.StringUtils;
+import service.criteria.Criteria;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,6 +17,6 @@ public class NameCriteria implements Criteria<Article> {
 
     @Override
     public List<Article> apply(List<Article> list) {
-        return list.stream().filter(p -> p.getName().contains(name)).collect(Collectors.toList());
+        return list.stream().filter(p -> StringUtils.containsIgnoreCase(p.getName(),name)).collect(Collectors.toList());
     }
 }

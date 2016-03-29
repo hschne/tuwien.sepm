@@ -1,7 +1,9 @@
-package service.criteria;
+package service.criteria.article;
 
 import entities.Article;
 import service.ServiceException;
+import service.criteria.Criteria;
+import service.criteria.Operator;
 import service.decorator.ArticleDtoSale;
 import service.decorator.SaleFactory;
 
