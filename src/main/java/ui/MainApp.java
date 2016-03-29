@@ -189,9 +189,9 @@ public class MainApp extends Application {
     public void showPriceChange() {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("/views/article/priceChange.fxml"));
-            AnchorPane articleStatistic = loader.load();
-            Stage dialogStage = createDialogStage("Article times sold", articleStatistic);
+            loader.setLocation(MainApp.class.getResource("/views/article/articlePriceChange.fxml"));
+            AnchorPane priceChange = loader.load();
+            Stage dialogStage = createDialogStage("Change price", priceChange);
 
             PriceChangeController controller = loader.getController();
             controller.initialize(this);

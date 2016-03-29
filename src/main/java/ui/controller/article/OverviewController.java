@@ -65,14 +65,15 @@ public class OverviewController extends AbstractController {
     @FXML
     public void handleStatistics() {
         List<ArticleModel> selected = articleTable.getSelectionModel().getSelectedItems();
-        if(selected.isEmpty()){
+        if (selected.isEmpty()) {
             mainApp.showArticleStatistics(articleTable.getItems());
             return;
         }
         mainApp.showArticleStatistics(selected);
     }
 
-    @FXML public void handlePriceChange(){
+    @FXML
+    public void handlePriceChange() {
         mainApp.showPriceChange();
     }
 
