@@ -1,5 +1,6 @@
 package ui.controller.receipt;
 
+import entities.ReceiptEntry;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
@@ -35,8 +36,15 @@ public class NewReceiptDetailsController extends AbstractReceiptDetailsControlle
         if (shouldSave) {
             receipt.setReceiver(receiver.getText());
             receipt.setReceiverAddress(receiverAdress.getText());
+            setReceiptOnReceiptEntries();
             mainApp.getReceiptList().get().add(receipt);
             mainApp.showReceiptOverview();
+        }
+    }
+
+    private void setReceiptOnReceiptEntries() {
+        for(ReceiptEntry receiptEntry : receipt.getReceiptEntries()){
+            receiptEntry.setReceipt(receipt);
         }
     }
 

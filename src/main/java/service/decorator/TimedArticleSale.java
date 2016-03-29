@@ -23,7 +23,7 @@ public class TimedArticleSale extends ArticleSale {
 
     @Override
     public int getTimesSold() throws ServiceException {
-        return filterOnDate(entriesForArticle()).size();
+        return filterOnDate(entriesForArticle()).stream().mapToInt(ReceiptEntry::getAmount).sum();
     }
 
     private List<ReceiptEntry> filterOnDate(List<ReceiptEntry> receiptEntries) throws ServiceException {
