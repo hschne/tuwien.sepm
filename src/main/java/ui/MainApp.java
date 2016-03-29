@@ -20,7 +20,6 @@ import service.ReceiptRepository;
 import service.ServiceException;
 import ui.controller.RootController;
 import ui.controller.article.ArticleDetailsController;
-import ui.controller.article.ArticleFilterController;
 import ui.controller.article.ArticleOverviewController;
 import ui.controller.receipt.AbstractReceiptDetailsController;
 import ui.controller.receipt.ExistingReceiptDetailsController;
@@ -41,6 +40,7 @@ public class MainApp extends Application {
     private ReceiptList receiptList;
     private Stage primaryStage;
     private BorderPane rootLayout;
+
     public MainApp() {
 
     }
@@ -154,6 +154,14 @@ public class MainApp extends Application {
         return output;
     }
 
+    public File openFile() {
+        FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter images = new FileChooser.ExtensionFilter("Images", "*.png", "*.jpg");
+        fileChooser.getExtensionFilters().add(images);
+        fileChooser.setTitle("Open Image");
+        return fileChooser.showOpenDialog(primaryStage);
+    }
+
     private void initServices() {
         try {
             H2Database database = new H2Database("/home/hschroedl/sepm");
@@ -168,14 +176,6 @@ public class MainApp extends Application {
             output.showExceptionNotification("Error", "One or more services could not be initialized",
                     "This might be caused by a database error.", e);
         }
-    }
-
-    public File openFile(){
-        FileChooser fileChooser = new FileChooser();
-        FileChooser.ExtensionFilter images = new FileChooser.ExtensionFilter("Images", "*.png","*.jpg");
-        fileChooser.getExtensionFilters().add(images);
-        fileChooser.setTitle("Open Image");
-        return fileChooser.showOpenDialog(primaryStage);
     }
 
 

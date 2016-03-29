@@ -8,7 +8,10 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import service.ServiceException;
-import service.criteria.*;
+import service.criteria.CategoryCriteria;
+import service.criteria.Criteria;
+import service.criteria.CriteriaFactory;
+import service.criteria.NameCriteria;
 import ui.MainApp;
 import ui.controller.AbstractController;
 import ui.model.ArticleModel;
@@ -31,29 +34,31 @@ public class ArticleFilterController extends AbstractController {
 
     private Criteria<Article> categoryCriteria;
 
-    private ChangeListener<String> comboBoxListener = (observable, oldValue, newValue) -> {
+    private final ChangeListener<String> categorySelectionListener = (observable, oldValue, newValue) -> {
         categoryCriteria = new CategoryCriteria(newValue);
+        UpdateArticleList();
+    };
+
+    private final ChangeListener<String> nameInputListener = (observable, oldValue, newValue) -> {
+        nameCriteria = new NameCriteria(newValue);
         UpdateArticleList();
     };
 
     @FXML
     public void initialize() {
-        nameFilter.textProperty().addListener((observable, oldValue, newValue) -> {
-            nameCriteria = new NameCriteria(newValue);
-            UpdateArticleList();
-        });
-        categoryFilter.valueProperty().addListener(comboBoxListener);
+        nameFilter.textProperty().addListener(nameInputListener);
+        categoryFilter.valueProperty().addListener(categorySelectionListener);
     }
 
     @Override
-    public void initialize(MainApp mainApp){
+    public void initialize(MainApp mainApp) {
         super.initialize(mainApp);
         categoryFilter.getItems().addAll(getAllCategories());
     }
 
     @FXML
     public void handleClear() {
-        nameCriteria = null;
+        resetName();
         resetCategory();
         try {
             mainApp.getArticleList().applyFilter(new NameCriteria(""));
@@ -63,10 +68,17 @@ public class ArticleFilterController extends AbstractController {
         }
     }
 
+    private void resetName() {
+        nameFilter.textProperty().removeListener(nameInputListener);
+        nameFilter.setText("");
+        nameFilter.textProperty().addListener(nameInputListener);
+        nameCriteria = null;
+    }
+
     private void resetCategory() {
-        categoryFilter.valueProperty().removeListener(comboBoxListener);
+        categoryFilter.valueProperty().removeListener(categorySelectionListener);
         categoryFilter.setValue("");
-        categoryFilter.valueProperty().addListener(comboBoxListener);
+        categoryFilter.valueProperty().addListener(categorySelectionListener);
         categoryCriteria = null;
     }
 
@@ -81,10 +93,10 @@ public class ArticleFilterController extends AbstractController {
 
     private Criteria<Article> createCriteria() {
         CriteriaFactory criteriaFactory = new CriteriaFactory();
-        if(nameCriteria != null){
+        if (nameCriteria != null) {
             criteriaFactory.append(nameCriteria);
         }
-        if(categoryCriteria != null){
+        if (categoryCriteria != null) {
             criteriaFactory.append(categoryCriteria);
         }
         return criteriaFactory.get();

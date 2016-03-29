@@ -42,8 +42,14 @@ public class ArticleList {
 
     public void applyFilter(Criteria<Article> criteria) throws ServiceException {
         clearList();
+        addItems(criteria);
+    }
+
+    private void addItems(Criteria<Article> criteria) throws ServiceException {
+        articles.removeListener(addListener);
         ModelFactory factory = new ModelFactory();
         articles.addAll(factory.createArticleModels(articleRepository.filter(criteria)));
+        articles.addListener(addListener);
     }
 
     private void clearList() {
