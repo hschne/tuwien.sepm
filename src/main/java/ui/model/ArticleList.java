@@ -1,5 +1,6 @@
 package ui.model;
 
+import entities.Article;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -7,6 +8,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import service.ArticleRepository;
 import service.ServiceException;
+import service.criteria.Criteria;
+
+import java.util.List;
 
 public class ArticleList {
 
@@ -15,6 +19,14 @@ public class ArticleList {
     private ObservableList<ArticleModel> articles;
 
     private final Logger logger = LogManager.getLogger(ArticleList.class);
+
+    private final ListChangeListener<ArticleModel> removeListener = c -> {
+        while (c.next()) {
+            removeItems(c);
+            addItems(c);
+        }
+    };
+
 
     public ArticleList(ArticleRepository repository) throws ServiceException {
         this.articleRepository = repository;
@@ -29,17 +41,29 @@ public class ArticleList {
         articleRepository.update(article);
     }
 
+    public void applyFilter(Criteria<Article> criteria) throws ServiceException {
+        clearList();
+        ModelFactory factory = new ModelFactory();
+        articles.addAll(factory.createArticleModels(articleRepository.filter(criteria)));
+    }
+
+    private void clearList() {
+        articles.removeListener(removeListener);
+        articles.clear();
+        articles.addListener(removeListener);
+    }
+
     private void initializeList() throws ServiceException {
         articles = FXCollections.observableArrayList();
         ModelFactory factory = new ModelFactory();
         articles.addAll(factory.createArticleModels(articleRepository.getAll()));
         articles.addListener((ListChangeListener<ArticleModel>) c -> {
                     while (c.next()) {
-                        removeItems(c);
                         addItems(c);
                     }
                 }
         );
+        articles.addListener(removeListener);
     }
 
     private void addItems(ListChangeListener.Change<? extends ArticleModel> c) {

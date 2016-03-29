@@ -20,6 +20,7 @@ import service.ReceiptRepository;
 import service.ServiceException;
 import ui.controller.RootController;
 import ui.controller.article.ArticleDetailsController;
+import ui.controller.article.ArticleFilterController;
 import ui.controller.article.ArticleOverviewController;
 import ui.controller.receipt.AbstractReceiptDetailsController;
 import ui.controller.receipt.ExistingReceiptDetailsController;
@@ -109,6 +110,7 @@ public class MainApp extends Application {
         return articleList;
     }
 
+
     public void showReceiptDetails(ReceiptModel receipt) {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -150,6 +152,20 @@ public class MainApp extends Application {
 
     public Output getOutput() {
         return output;
+    }
+
+    public void showArticleFilter() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("/views/articleFilter.fxml"));
+            AnchorPane articleFilter = loader.load();
+            rootLayout.setLeft(articleFilter);
+
+            ArticleFilterController controller = loader.getController();
+            controller.initialize(this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void initServices() {

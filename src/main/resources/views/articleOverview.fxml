@@ -24,5 +24,6 @@
          <font>
             <Font size="12.0" />
          </font></Button>
+      <Button layoutX="9.0" layoutY="7.0" mnemonicParsing="false" onAction="#handleFilter" text="Filter" />
   </children>
 </AnchorPane>

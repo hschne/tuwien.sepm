@@ -15,6 +15,6 @@ public class NameCriteria implements Criteria<Article> {
 
     @Override
     public List<Article> apply(List<Article> list) {
-        return list.stream().filter(p -> p.getName().equals(name)).collect(Collectors.toList());
+        return list.stream().filter(p -> p.getName().contains(name)).collect(Collectors.toList());
     }
 }

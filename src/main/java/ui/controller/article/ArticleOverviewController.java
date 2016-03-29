@@ -37,6 +37,12 @@ public class ArticleOverviewController extends AbstractController {
     }
 
     @FXML
+    public void handleFilter(){
+        mainApp.showArticleFilter();
+    }
+
+
+    @FXML
     public void initialize() {
         nameColumn.setCellValueFactory(cellData -> cellData.getValue().getNameProperty());
         priceColumn.setCellValueFactory(cellData -> cellData.getValue().getPriceProperty().asObject());
