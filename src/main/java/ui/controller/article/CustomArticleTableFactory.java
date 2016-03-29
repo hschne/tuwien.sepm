@@ -6,6 +6,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.control.*;
 import javafx.util.Callback;
 import ui.MainApp;
+import ui.Output;
 import ui.model.ArticleModel;
 
 public class CustomArticleTableFactory {
@@ -80,7 +81,7 @@ public class CustomArticleTableFactory {
             cellButton.setOnAction(t -> {
                 ArticleModel articleModel = (ArticleModel) DeleteButtonCell.this.
                         getTableView().getItems().get(DeleteButtonCell.this.getIndex());
-                mainControllerApp.getArticleList().get().remove(articleModel);
+                RemoveArticle(articleModel);
             });
         }
 
@@ -92,6 +93,14 @@ public class CustomArticleTableFactory {
             } else {
                 setGraphic(null);
             }
+        }
+    }
+
+    private void RemoveArticle(ArticleModel articleModel) {
+        Output output = mainControllerApp.getOutput();
+        boolean shouldDelete = output.showConfirmationDialog("Delete article", "Are you sure you want to delete this article?", "This action can not be undone.");
+        if(shouldDelete){
+            mainControllerApp.getArticleList().get().remove(articleModel);
         }
     }
 

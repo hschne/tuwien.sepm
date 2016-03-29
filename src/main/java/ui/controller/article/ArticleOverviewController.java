@@ -2,6 +2,7 @@ package ui.controller.article;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.ToggleButton;
@@ -63,11 +64,11 @@ public class ArticleOverviewController extends AbstractController {
             loader.setLocation(MainApp.class.getResource("/views/articleFilter.fxml"));
             AnchorPane articleFilter = loader.load();
             rootLayout.setLeft(articleFilter);
-
             ArticleFilterController controller = loader.getController();
             controller.initialize(mainApp);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e);
+            mainApp.getOutput().showNotification(Alert.AlertType.ERROR, "Error", "Filter view could not be initialized", "Please view the log for details");
         }
     }
 
