@@ -2,9 +2,7 @@ package service.decorator;
 
 import base.BaseTest;
 import entities.Article;
-import entities.ArticleDto;
 import entities.Receipt;
-import entities.ReceiptDto;
 import org.junit.Test;
 import org.mockito.Mock;
 import service.ReceiptRepository;
@@ -31,7 +29,7 @@ public class ArticleSaleTests extends BaseTest{
         when(mockReceiptRepository.getAll()).thenReturn(receiptDtos);
         int expectedTimesSold = 1;
 
-        int timesSold = new ArticleDtoSale(mockReceiptRepository, articleDtos.get(0)).getTimesSold();
+        int timesSold = new ArticleSale(mockReceiptRepository, articleDtos.get(0)).getTimesSold();
 
         assertEquals(expectedTimesSold,timesSold);
     }
@@ -43,7 +41,7 @@ public class ArticleSaleTests extends BaseTest{
         when(mockReceiptRepository.getAll()).thenReturn(receiptDtos);
         int expectedTimesSold = 0;
 
-        int timesSold = new ArticleDtoSale(mockReceiptRepository, articleDtos.get(0)).getTimesSold();
+        int timesSold = new ArticleSale(mockReceiptRepository, articleDtos.get(0)).getTimesSold();
 
         assertEquals(expectedTimesSold,timesSold);
     }

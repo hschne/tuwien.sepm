@@ -7,6 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,6 +23,7 @@ public class ModelFactory {
         return new ArticleModel(article.getId(), article.getName(), article.getPrice(),
                 article.getDescription(), article.getCategory(), article.getImage());
     }
+
 
     public ReceiptEntryModel createReceiptEntryModel(ReceiptEntry entry) {
         Article article = entry.getArticle();

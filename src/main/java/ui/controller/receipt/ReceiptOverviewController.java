@@ -9,7 +9,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import ui.MainApp;
 import ui.controller.AbstractController;
-import ui.controller.article.ArticleFilterController;
+import ui.controls.CustomReceiptTableFactory;
 import ui.model.ReceiptModel;
 
 import java.io.IOException;
@@ -54,7 +54,7 @@ public class ReceiptOverviewController extends AbstractController {
     private void showFilter() {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("/views/receiptFilter.fxml"));
+            loader.setLocation(MainApp.class.getResource("/views/receipt/receiptFilter.fxml"));
             AnchorPane receiptFilter = loader.load();
             rootLayout.setLeft(receiptFilter);
 

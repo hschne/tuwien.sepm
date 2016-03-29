@@ -6,7 +6,7 @@ import entities.ArticleDto;
 import org.junit.Test;
 import org.mockito.Mock;
 import service.criteria.article.TimesSoldRelativeCriteria;
-import service.decorator.ArticleDtoSale;
+import service.decorator.ArticleSale;
 import service.decorator.SaleFactory;
 
 import java.util.List;
@@ -22,7 +22,7 @@ public class TimesSoldRelativeCriteriaTest extends BaseTest{
     SaleFactory mockSaleFactory;
 
     @Mock
-    ArticleDtoSale mockArticleSale;
+    ArticleSale mockArticleSale;
 
     @Test
     public void apply_GetSingleTopSold_SingleReturned() throws Exception {

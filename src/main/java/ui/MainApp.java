@@ -14,6 +14,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import service.ArticleRepository;
 import service.ReceiptRepository;
@@ -21,6 +22,7 @@ import service.ServiceException;
 import ui.controller.RootController;
 import ui.controller.article.ArticleDetailsController;
 import ui.controller.article.ArticleOverviewController;
+import ui.controller.article.ArticleStatisticController;
 import ui.controller.receipt.AbstractReceiptDetailsController;
 import ui.controller.receipt.ExistingReceiptDetailsController;
 import ui.controller.receipt.NewReceiptDetailsController;
@@ -32,23 +34,29 @@ import ui.model.ReceiptModel;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 public class MainApp extends Application {
 
     private final Output output = new Output();
     private ArticleList articleList;
     private ReceiptList receiptList;
+    private ReceiptRepository receiptRepository;
+    private ArticleRepository articleRepository;
     private Stage primaryStage;
     private BorderPane rootLayout;
-
-    public MainApp() {
-
-    }
 
     public static void main(String[] args) {
         launch(args);
     }
 
+    public ReceiptRepository getReceiptRepository() {
+        return receiptRepository;
+    }
+
+    public ArticleRepository getArticleRepository() {
+        return articleRepository;
+    }
 
     @Override
     public void start(Stage primaryStage) {
@@ -80,7 +88,7 @@ public class MainApp extends Application {
     public void showArticleOverview() {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("/views/articleOverview.fxml"));
+            loader.setLocation(MainApp.class.getResource("/views/article/articleOverview.fxml"));
             BorderPane personOverview = loader.load();
             rootLayout.setCenter(personOverview);
             ArticleOverviewController controller = loader.getController();
@@ -94,7 +102,7 @@ public class MainApp extends Application {
     public void showArticleDetails(ArticleModel article) {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("/views/articleDetails.fxml"));
+            loader.setLocation(MainApp.class.getResource("/views/article/articleDetails.fxml"));
             AnchorPane articleDetails = loader.load();
             rootLayout.setCenter(articleDetails);
             ArticleDetailsController controller = loader.getController();
@@ -114,7 +122,7 @@ public class MainApp extends Application {
     public void showReceiptDetails(ReceiptModel receipt) {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("/views/receiptDetailRoot.fxml"));
+            loader.setLocation(MainApp.class.getResource("/views/receipt/receiptDetailRoot.fxml"));
             AbstractReceiptDetailsController controller;
             if (receipt == null) {
                 controller = new NewReceiptDetailsController();
@@ -136,7 +144,7 @@ public class MainApp extends Application {
     public void showReceiptOverview() {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("/views/receiptOverview.fxml"));
+            loader.setLocation(MainApp.class.getResource("/views/receipt/receiptOverview.fxml"));
             BorderPane receiptOverview = loader.load();
             rootLayout.setCenter(receiptOverview);
             ReceiptOverviewController controller = loader.getController();
@@ -162,13 +170,38 @@ public class MainApp extends Application {
         return fileChooser.showOpenDialog(primaryStage);
     }
 
+    public void showArticleStatistics(List<ArticleModel> selected) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("/views/article/articleStatistics.fxml"));
+            AnchorPane articleStatistic = loader.load();
+
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Article times sold");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(articleStatistic);
+            dialogStage.setScene(scene);
+
+            ArticleStatisticController controller = loader.getController();
+            controller.initialize(this);
+            controller.initializeWith(dialogStage, selected);
+
+            dialogStage.showAndWait();
+        } catch (IOException e) {
+            output.showExceptionNotification("Error", "Could not open statistic window", "Please consult logs for more information", e);
+        }
+    }
+
     private void initServices() {
         try {
             H2Database database = new H2Database("/home/hschroedl/sepm");
             ArticleDao articleDao = new H2ArticleDao(database, new ImageFile());
-            articleList = new ArticleList(new ArticleRepository(articleDao));
+            articleRepository = new ArticleRepository(articleDao);
+            articleList = new ArticleList(articleRepository);
             ReceiptDao receiptDao = new H2ReceiptDao(database);
-            receiptList = new ReceiptList(new ReceiptRepository(receiptDao));
+            receiptRepository = new ReceiptRepository(receiptDao);
+            receiptList = new ReceiptList(receiptRepository);
         } catch (DaoException e) {
             output.showExceptionNotification("Error", "The database could not be reached.",
                     "Please make sure that it is not currently in use.", e);

@@ -1,4 +1,4 @@
-package ui.controller.receipt;
+package ui.controls;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -10,6 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.util.Callback;
+import ui.controller.receipt.ReceiptEntrySelectionController;
 import ui.model.ArticleModel;
 import ui.model.ReceiptEntryModel;
 

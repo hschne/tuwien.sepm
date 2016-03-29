@@ -37,7 +37,7 @@ public class ExistingReceiptDetailsController extends AbstractReceiptDetailsCont
     private void viewExistingReceiptEntries(ReceiptModel receipt) {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(ExistingReceiptDetailsController.class.getResource("/views/receiptEntryList.fxml"));
+            loader.setLocation(ExistingReceiptDetailsController.class.getResource("/views/receipt/receiptEntryList.fxml"));
             AnchorPane articleDetails = loader.load();
             rootLayout.setCenter(articleDetails);
             ReceiptEntryListController controller = loader.getController();

@@ -6,24 +6,19 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.ToggleButton;
-import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import ui.MainApp;
 import ui.controller.AbstractController;
+import ui.controls.CustomArticleTableFactory;
 import ui.model.ArticleModel;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ArticleOverviewController extends AbstractController {
 
-    @FXML
-    private BorderPane rootLayout;
-    @FXML
-    private ToggleButton toggleFilter;
-    @FXML
-    private TableColumn<ArticleModel, Image> imageColumn;
     @FXML
     public TableView<ArticleModel> articleTable;
     @FXML
@@ -34,7 +29,10 @@ public class ArticleOverviewController extends AbstractController {
     public TableColumn<ArticleModel, String> descriptionColumn;
     @FXML
     public TableColumn<ArticleModel, String> categoryColumn;
-
+    @FXML
+    public BorderPane rootLayout;
+    @FXML
+    public ToggleButton toggleFilter;
 
     @Override
     public void initialize(MainApp mainControllerApp) {
@@ -49,19 +47,36 @@ public class ArticleOverviewController extends AbstractController {
     }
 
     @FXML
-    public void handleFilter(){
-        if(toggleFilter.isSelected()){
+    public void handleFilter() {
+        if (toggleFilter.isSelected()) {
             showFilter();
-        }
-        else{
+        } else {
             rootLayout.setLeft(null);
         }
+    }
+
+    @FXML
+    public void initialize() {
+        nameColumn.setCellValueFactory(cellData -> cellData.getValue().getNameProperty());
+        priceColumn.setCellValueFactory(cellData -> cellData.getValue().getPriceProperty().asObject());
+        descriptionColumn.setCellValueFactory(cellData -> cellData.getValue().getDescriptionProperty());
+        categoryColumn.setCellValueFactory(cellData -> cellData.getValue().getCategoryProperty());
+    }
+
+    @FXML
+    public void handleStatistics() {
+        List<ArticleModel> selected = articleTable.getSelectionModel().getSelectedItems();
+        if(selected.isEmpty()){
+            mainApp.showArticleStatistics(articleTable.getItems());
+            return;
+        }
+        mainApp.showArticleStatistics(selected);
     }
 
     private void showFilter() {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("/views/articleFilter.fxml"));
+            loader.setLocation(MainApp.class.getResource("/views/article/articleFilter.fxml"));
             AnchorPane articleFilter = loader.load();
             rootLayout.setLeft(articleFilter);
             ArticleFilterController controller = loader.getController();
@@ -70,15 +85,6 @@ public class ArticleOverviewController extends AbstractController {
             logger.error(e);
             mainApp.getOutput().showNotification(Alert.AlertType.ERROR, "Error", "Filter view could not be initialized", "Please view the log for details");
         }
-    }
-
-
-    @FXML
-    public void initialize() {
-        nameColumn.setCellValueFactory(cellData -> cellData.getValue().getNameProperty());
-        priceColumn.setCellValueFactory(cellData -> cellData.getValue().getPriceProperty().asObject());
-        descriptionColumn.setCellValueFactory(cellData -> cellData.getValue().getDescriptionProperty());
-        categoryColumn.setCellValueFactory(cellData -> cellData.getValue().getCategoryProperty());
     }
 
 

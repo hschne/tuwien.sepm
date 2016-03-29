@@ -4,7 +4,7 @@ import entities.Article;
 import service.ServiceException;
 import service.criteria.Criteria;
 import service.criteria.Operator;
-import service.decorator.ArticleDtoSale;
+import service.decorator.ArticleSale;
 import service.decorator.SaleFactory;
 
 import java.util.ArrayList;
@@ -36,7 +36,7 @@ public class TimesSoldCriteria implements Criteria<Article> {
     }
 
     private boolean articleMatches(Article articleDto) throws ServiceException {
-        ArticleDtoSale articleSale = factory.create(articleDto);
+        ArticleSale articleSale = factory.create(articleDto);
         switch (operator) {
             case GREATER:
                 return articleSale.getTimesSold() > times;

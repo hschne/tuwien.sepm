@@ -1,4 +1,5 @@
-package ui.controller.article;
+package ui.controls;
+
 
 import com.sun.prism.impl.Disposer;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -11,7 +12,6 @@ import ui.model.ArticleModel;
 
 public class CustomArticleTableFactory {
 
-
     private MainApp mainControllerApp;
 
     public CustomArticleTableFactory(MainApp mainControllerApp) {
@@ -19,6 +19,7 @@ public class CustomArticleTableFactory {
     }
 
     public void configureArticleTable(TableView<ArticleModel> tableView) {
+        tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         initializeDoubleClick(tableView);
         createEditButton(tableView);
         createDeleteButton(tableView);
@@ -36,6 +37,7 @@ public class CustomArticleTableFactory {
             return row;
         });
     }
+
 
     private void createEditButton(TableView articleTable) {
         TableColumn col_action = new TableColumn<>("");
@@ -73,6 +75,14 @@ public class CustomArticleTableFactory {
                 p -> new DeleteButtonCell());
     }
 
+    private void RemoveArticle(ArticleModel articleModel) {
+        Output output = mainControllerApp.getOutput();
+        boolean shouldDelete = output.showConfirmationDialog("Delete article", "Are you sure you want to delete this article?", "This action can not be undone.");
+        if (shouldDelete) {
+            mainControllerApp.getArticleList().get().remove(articleModel);
+        }
+    }
+
     //Define the button cell
     private class DeleteButtonCell extends TableCell<Disposer.Record, Boolean> {
         final Button cellButton = new Button("Delete");
@@ -96,15 +106,7 @@ public class CustomArticleTableFactory {
         }
     }
 
-    private void RemoveArticle(ArticleModel articleModel) {
-        Output output = mainControllerApp.getOutput();
-        boolean shouldDelete = output.showConfirmationDialog("Delete article", "Are you sure you want to delete this article?", "This action can not be undone.");
-        if(shouldDelete){
-            mainControllerApp.getArticleList().get().remove(articleModel);
-        }
-    }
-
-    //Define the button cell
+    //Define the edit button
     private class EditButtonCell extends TableCell<Disposer.Record, Boolean> {
         final Button cellButton = new Button("Edit");
 
@@ -127,4 +129,7 @@ public class CustomArticleTableFactory {
             }
         }
     }
+
+
 }
+

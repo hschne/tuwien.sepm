@@ -2,9 +2,7 @@ package service.decorator;
 
 import base.BaseTest;
 import entities.Article;
-import entities.ArticleDto;
 import entities.Receipt;
-import entities.ReceiptDto;
 import org.junit.Test;
 import org.mockito.Mock;
 import service.ReceiptRepository;
@@ -39,7 +37,7 @@ public class TimedArticleSaleTests extends BaseTest{
         int expectedTimesSold = 1;
 
         Date date = new SimpleDateFormat("dd/MM/yyyy").parse("01/01/2006");
-        TimedArticleDtoSale articleSale = new TimedArticleDtoSale(mockReceiptRepository, articleDtos.get(0),date, DateOperator.AFTER);
+        TimedArticleSale articleSale = new TimedArticleSale(mockReceiptRepository, articleDtos.get(0),date, DateOperator.AFTER);
         int timesSold = articleSale.getTimesSold();
 
         assertEquals(expectedTimesSold,timesSold);
@@ -59,7 +57,7 @@ public class TimedArticleSaleTests extends BaseTest{
         int expectedTimesSold = 1;
 
         Date date = new SimpleDateFormat("dd/MM/yyyy").parse("01/01/2003");
-        TimedArticleDtoSale articleSale = new TimedArticleDtoSale(mockReceiptRepository, articleDtos.get(0),date, DateOperator.BEFORE);
+        TimedArticleSale articleSale = new TimedArticleSale(mockReceiptRepository, articleDtos.get(0),date, DateOperator.BEFORE);
         int timesSold = articleSale.getTimesSold();
 
         assertEquals(expectedTimesSold,timesSold);

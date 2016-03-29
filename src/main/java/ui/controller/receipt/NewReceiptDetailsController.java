@@ -55,7 +55,7 @@ public class NewReceiptDetailsController extends AbstractReceiptDetailsControlle
     private void viewReceiptEntrySelection() {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(ExistingReceiptDetailsController.class.getResource("/views/receiptEntrySelection.fxml"));
+            loader.setLocation(ExistingReceiptDetailsController.class.getResource("/views/receipt/receiptEntrySelection.fxml"));
             AnchorPane articleDetails = loader.load();
             rootLayout.setCenter(articleDetails);
             ReceiptEntrySelectionController controller = loader.getController();

@@ -1,4 +1,4 @@
-package ui.controller.receipt;
+package ui.controls;
 
 import com.sun.prism.impl.Disposer;
 import javafx.beans.property.SimpleBooleanProperty;
