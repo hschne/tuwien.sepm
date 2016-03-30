@@ -1,5 +1,6 @@
 package ui.controller.article;
 
+import dao.h2.ImageFile;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
@@ -34,7 +35,25 @@ public class DetailsController extends AbstractController {
 
     private String imagePath;
 
-    public void initializeWith(ArticleModel article) {
+    private ImageFile imageFile;
+
+    public void initializeWith(ArticleModel article, ImageFile imageFile) {
+        initializeArticle(article);
+        name.setText(this.article.getName());
+        price.setText(String.valueOf(this.article.getPrice()));
+        description.setText(this.article.getDescription());
+        category.setText(this.article.getCategory());
+        initializeImage(imageFile);
+        initializeChangeListeners();
+    }
+
+    private void initializeImage(ImageFile imageFile) {
+        this.imageFile = imageFile;
+        image.setImage(this.imageFile.get(article.getImage()));
+        imagePath = this.article.getImage();
+    }
+
+    private void initializeArticle(ArticleModel article) {
         if (article == null) {
             this.article = new ArticleModel();
             isNew = true;
@@ -43,13 +62,6 @@ public class DetailsController extends AbstractController {
             this.name.disableProperty().set(true);
             isNew = false;
         }
-        name.setText(this.article.getName());
-        price.setText(String.valueOf(this.article.getPrice()));
-        description.setText(this.article.getDescription());
-        category.setText(this.article.getCategory());
-        image.setImage(this.article.getActualImage());
-        imagePath = this.article.getImage();
-        initializeChangeListeners();
     }
 
     @FXML

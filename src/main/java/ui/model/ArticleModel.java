@@ -1,13 +1,10 @@
 package ui.model;
 
-import dao.DaoException;
-import dao.h2.ImageFile;
 import entities.Article;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.scene.image.Image;
 
 public class ArticleModel implements Article {
 
@@ -121,8 +118,5 @@ public class ArticleModel implements Article {
         return category;
     }
 
-    public Image getActualImage() {
-        return new ImageFile().get(image);
-    }
 
 }

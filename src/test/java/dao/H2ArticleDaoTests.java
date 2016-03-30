@@ -116,6 +116,7 @@ public class H2ArticleDaoTests extends DaoTest {
     public void update_ArticleNotInReceipt_ArticleUpdated() throws Exception {
         H2ArticleDao dao = new H2ArticleDao(mockH2Database, mockImageFile);
         ArticleDto articleDto = new ArticleDto(1, "NameCriteria", 20.0, "Description", "Image", "Category");
+        
         String query = "UPDATE ARTICLE SET NAME=?, PRICE=?, DESCRIPTION=?, IMAGE_PATH=?, CATEGORY=? WHERE ID=?;";
         when(mockResultSet.next()).thenReturn(false);
 

@@ -89,7 +89,6 @@ public class H2ArticleDao extends AbstractH2Dao implements ArticleDao {
             makeInvisible(articleDto);
             create(articleDto);
         } else {
-            ImageFile imageFile = new ImageFile();
             articleDto.setImage(imageFile.add(articleDto.getImage()));
             updateArticle(articleDto);
         }

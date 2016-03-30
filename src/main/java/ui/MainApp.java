@@ -108,7 +108,7 @@ public class MainApp extends Application {
             rootLayout.setCenter(articleDetails);
             DetailsController controller = loader.getController();
             controller.initialize(this);
-            controller.initializeWith(article);
+            controller.initializeWith(article, new ImageFile());
         } catch (IOException e) {
             e.printStackTrace();
         }

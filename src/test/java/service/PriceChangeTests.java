@@ -32,13 +32,6 @@ public class PriceChangeTests extends BaseTest {
         verify(mockArticleDao).update(articleDto);
     }
 
-    @Test(expected = ServiceException.class)
-    public void raisePercentage_raiseByNegative_ExceptionThrown() throws Exception {
-        PriceChange priceChange = new PriceChange(mockArticleDao, new ArrayList<>());
-        priceChange.changeByPercent(-20);
-
-    }
-
     @Test
     public void reduceByPercent_ReduceBy20_PriceReduced() throws Exception {
         ArticleDto articleDto = new ArticleDto(1, "name", 10.0, "desc", "image", "category");
@@ -56,7 +49,7 @@ public class PriceChangeTests extends BaseTest {
     @Test(expected = ServiceException.class)
     public void reduceByPercentage_DecreaseByTooMuch_ExceptionThrown() throws Exception {
         PriceChange priceChange = new PriceChange(mockArticleDao, new ArrayList<>());
-        priceChange.changeByPercent(100);
+        priceChange.changeByPercent(-100);
 
     }
 
@@ -82,7 +75,7 @@ public class PriceChangeTests extends BaseTest {
         PriceChange priceChange = new PriceChange(mockArticleDao, articleDtos);
         double expectedPrice = 5;
 
-        priceChange.changeByAbsolute(5);
+        priceChange.changeByAbsolute(-5);
 
         assertEquals(expectedPrice, articleDto.getPrice(), 0);
         verify(mockArticleDao).update(articleDto);
