@@ -22,7 +22,7 @@ public class ReceiptRepository extends AbstractService implements Repository<Rec
         logger.debug("Getting all receipts");
         if (receipts == null) {
             try {
-                receipts = dao.readAll();
+                receipts = dao.getAll();
             } catch (DaoException e) {
                 logger.error("ReceiptDto retrieval from database has failed", e);
                 throw new ServiceException("Could not retrieve receipts", e);
@@ -39,7 +39,7 @@ public class ReceiptRepository extends AbstractService implements Repository<Rec
     public void create(Receipt receipt) throws ServiceException {
         try {
             dao.create(receipt);
-            receipts.add(receipt);
+            getAll().add(receipt);
         } catch (DaoException e) {
             logger.error("Could not create receipt " + receipt.toString(), e);
             throw new ServiceException("Could not create receipt", e);

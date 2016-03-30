@@ -82,7 +82,7 @@ public class H2ReceiptDaoTests extends DaoTest {
         when(mockResultSet.getString(3)).thenReturn(receiver);
         when(mockResultSet.getString(4)).thenReturn(receiverAdress);
 
-        List<Receipt> receiptDtos = dao.readAll();
+        List<Receipt> receiptDtos = dao.getAll();
 
         assertEquals(receiptDtos.size(), 1);
         Receipt receiptDto = receiptDtos.get(0);
@@ -106,7 +106,7 @@ public class H2ReceiptDaoTests extends DaoTest {
         when(mockResultSet.getInt(7)).thenReturn(articleAmount);
         when(mockResultSet.getDate(2)).thenReturn(new java.sql.Date(receiptDate.getTime()));
 
-        List<Receipt> receiptDtos = dao.readAll();
+        List<Receipt> receiptDtos = dao.getAll();
 
         List<ReceiptEntry> receiptEntries = receiptDtos.get(0).getReceiptEntries();
         assertEquals(receiptEntries.size(), 1);

@@ -25,5 +25,5 @@ public interface ReceiptDao {
      * @return
      * @throws SQLException
      */
-    List<Receipt> readAll() throws DaoException;
+    List<Receipt> getAll() throws DaoException;
 }

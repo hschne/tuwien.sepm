@@ -25,7 +25,7 @@ public class ArticleRepository extends AbstractService implements Repository<Art
             try {
                 articleDtos = dao.getVisible();
             } catch (DaoException e) {
-                logger.error("ArticleDto retrieval from database failed.",e);
+                logger.error("Could not retrieve articles.",e);
                 throw new ServiceException("Could not retrieve articles.", e);
             }
         }
@@ -38,6 +38,7 @@ public class ArticleRepository extends AbstractService implements Repository<Art
     }
 
     public void update(Article article) throws ServiceException {
+        logger.debug("Update article " + article.toString());
         try {
             dao.update(article);
         } catch (DaoException e) {
@@ -47,22 +48,24 @@ public class ArticleRepository extends AbstractService implements Repository<Art
     }
 
     public void create(Article article) throws ServiceException {
+        logger.debug("Create article "+article);
         try {
             dao.create(article);
-            articleDtos.add(article);
+            getAll().add(article);
         } catch (DaoException e) {
             logger.error("Could not create article "+article.toString(), e);
-            throw new ServiceException("Could not create article",e);
+            throw new ServiceException("Could not create article.",e);
         }
     }
 
-    public void delete(ArticleModel article) throws ServiceException {
+    public void delete(Article article) throws ServiceException {
+        logger.debug("Delete article "+article);
         try {
             dao.delete(article);
-            articleDtos.remove(article);
+            getAll().remove(article);
         } catch (DaoException e) {
             logger.error("Could not delete article "+article.toString(), e);
-            throw new ServiceException("Could not delete article",e);
+            throw new ServiceException("Could not delete article.",e);
         }
     }
 }

@@ -1,9 +1,11 @@
-package service;
+package service.calculation;
 
 import base.BaseTest;
 import entities.ArticleDto;
 import org.junit.Test;
 import org.mockito.Mock;
+import service.ArticleRepository;
+import service.ServiceException;
 import service.calculation.PriceChange;
 
 import java.util.ArrayList;

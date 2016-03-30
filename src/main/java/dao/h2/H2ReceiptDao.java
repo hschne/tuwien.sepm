@@ -28,7 +28,7 @@ public class H2ReceiptDao extends AbstractH2Dao implements ReceiptDao {
     }
 
     @Override
-    public List<Receipt> readAll() throws DaoException {
+    public List<Receipt> getAll() throws DaoException {
         logger.debug("Reading all receipts");
         String query = "SELECT * FROM RECEIPT";
         ResultSet resultSet;
