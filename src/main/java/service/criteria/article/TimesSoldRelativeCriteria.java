@@ -3,10 +3,11 @@ package service.criteria.article;
 import entities.Article;
 import service.ServiceException;
 import service.criteria.Criteria;
-import service.criteria.RelativeOperator;
+import service.criteria.operator.RelativeOperator;
 import service.decorator.ArticleSale;
 import service.decorator.SaleFactory;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -24,9 +25,13 @@ public class TimesSoldRelativeCriteria implements Criteria<Article> {
     }
 
     @Override
-    public List<Article> apply(List<Article> list) throws ServiceException {
+    public List<Article> apply(List<? extends Article> list) throws ServiceException {
         Collections.sort(list, createCustomComparator());
-        return list.subList(0, count);
+        List<Article> result = new ArrayList<>();
+        for(int i = 0; i<count; i++){
+            result.add(list.get(i));
+        }
+        return result;
     }
 
     private Comparator<Article> createCustomComparator() {
@@ -40,6 +45,7 @@ public class TimesSoldRelativeCriteria implements Criteria<Article> {
                     return getOrder(rightSale, leftSale);
                 }
             } catch (ServiceException e) {
+
                 return 0;
             }
         };

@@ -10,6 +10,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import service.ServiceException;
 import service.criteria.*;
+import service.criteria.operator.DateOperator;
 import service.criteria.receipt.DateCriteria;
 import service.criteria.receipt.ReceiverCriteria;
 import ui.controller.AbstractController;

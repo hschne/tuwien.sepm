@@ -1,5 +1,6 @@
 package service.criteria;
 
+import entities.Article;
 import service.ServiceException;
 
 import java.util.List;
@@ -15,7 +16,7 @@ public class AndCriteria<T> implements Criteria<T> {
     }
 
     @Override
-    public List apply(List list) throws ServiceException {
+    public List apply(List<? extends T> list) throws ServiceException {
         return second.apply(first.apply(list));
     }
 }

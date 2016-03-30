@@ -2,7 +2,7 @@ package service.decorator;
 
 import entities.Article;
 import service.ReceiptRepository;
-import service.criteria.DateOperator;
+import service.criteria.operator.DateOperator;
 
 import java.util.Date;
 

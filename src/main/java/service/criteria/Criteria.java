@@ -4,7 +4,8 @@ import service.ServiceException;
 
 import java.util.List;
 
-public interface Criteria<T>  {
+@FunctionalInterface
+public interface Criteria<T> {
 
-    public List<T> apply(List<T> list) throws ServiceException;
+    List<T> apply(List<? extends T> list) throws ServiceException;
 }

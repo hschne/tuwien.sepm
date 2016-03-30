@@ -10,6 +10,8 @@ import service.ArticleRepository;
 import service.ServiceException;
 import service.criteria.Criteria;
 
+import java.util.List;
+
 public class ArticleList {
 
     private final Logger logger = LogManager.getLogger(ArticleList.class);

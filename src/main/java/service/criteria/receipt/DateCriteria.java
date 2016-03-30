@@ -1,10 +1,9 @@
 package service.criteria.receipt;
 
 import entities.Receipt;
-import entities.ReceiptDto;
 import service.ServiceException;
 import service.criteria.Criteria;
-import service.criteria.DateOperator;
+import service.criteria.operator.DateOperator;
 
 import java.util.Date;
 import java.util.List;
@@ -23,12 +22,12 @@ public class DateCriteria implements Criteria<Receipt> {
     }
 
     @Override
-    public List<Receipt> apply(List<Receipt> list) throws ServiceException {
+    public List<Receipt> apply(List<? extends Receipt> list) throws ServiceException {
         return list.stream().filter(getPredicate()).collect(Collectors.toList());
     }
 
     private Predicate<Receipt> getPredicate() throws ServiceException {
-        switch(operator){
+        switch (operator) {
             case BEFORE:
                 return p -> p.getDate().before(date);
             case AFTER:

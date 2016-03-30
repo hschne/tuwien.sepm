@@ -3,7 +3,7 @@ package service.criteria.article;
 import entities.Article;
 import service.ServiceException;
 import service.criteria.Criteria;
-import service.criteria.Operator;
+import service.criteria.operator.NumericOperator;
 import service.decorator.ArticleSale;
 import service.decorator.SaleFactory;
 
@@ -14,18 +14,18 @@ public class TimesSoldCriteria implements Criteria<Article> {
 
     private SaleFactory factory;
     private final int times;
-    private final Operator operator;
+    private final NumericOperator numericOperator;
 
 
-    public TimesSoldCriteria(SaleFactory factory, int times, Operator operator) {
+    public TimesSoldCriteria(SaleFactory factory, int times, NumericOperator numericOperator) {
         this.factory = factory;
         this.times = times;
-        this.operator = operator;
+        this.numericOperator = numericOperator;
 
     }
 
     @Override
-    public List<Article> apply(List<Article> list) throws ServiceException {
+    public List<Article> apply(List<? extends Article> list) throws ServiceException {
         List<Article> result = new ArrayList<>();
         for (Article articleDto : list) {
             if (articleMatches(articleDto)) {
@@ -37,7 +37,7 @@ public class TimesSoldCriteria implements Criteria<Article> {
 
     private boolean articleMatches(Article articleDto) throws ServiceException {
         ArticleSale articleSale = factory.create(articleDto);
-        switch (operator) {
+        switch (numericOperator) {
             case GREATER:
                 return articleSale.getTimesSold() > times;
             case GREATER_EQUALS:
@@ -49,7 +49,7 @@ public class TimesSoldCriteria implements Criteria<Article> {
             case EQUALS:
                 return articleSale.getTimesSold() == times;
             default:
-                throw new ServiceException("Unsupported Operator");
+                throw new ServiceException("Unsupported NumericOperator");
         }
     }
 

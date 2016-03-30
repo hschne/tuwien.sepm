@@ -6,7 +6,7 @@ import entities.Receipt;
 import org.junit.Test;
 import org.mockito.Mock;
 import service.ReceiptRepository;
-import service.criteria.DateOperator;
+import service.criteria.operator.DateOperator;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

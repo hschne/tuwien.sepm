@@ -15,7 +15,7 @@ public class CategoryCriteria implements Criteria<Article> {
     }
 
     @Override
-    public List<Article> apply(List<Article> list) {
+    public List<Article> apply(List<? extends Article> list) {
         return list.stream().filter(p -> p.getCategory().equals(name)).collect(Collectors.toList());
     }
 }

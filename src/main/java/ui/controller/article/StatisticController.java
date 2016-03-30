@@ -12,7 +12,7 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.DatePicker;
 import javafx.stage.Stage;
 import service.ServiceException;
-import service.criteria.DateOperator;
+import service.criteria.operator.DateOperator;
 import service.decorator.ArticleSale;
 import service.decorator.ArticleSaleFactory;
 import service.decorator.SaleFactory;

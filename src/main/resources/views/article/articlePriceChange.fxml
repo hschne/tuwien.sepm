@@ -31,7 +31,7 @@
             <HBox prefHeight="29.0" prefWidth="280.0" GridPane.rowIndex="1">
                <children>
                       <ChoiceBox fx:id="articleSelectionType" prefHeight="25.0" prefWidth="146.0" />
-                      <NumberTextField fx:id="articleSelectionThreshold" prefHeight="25.0" prefWidth="44.0" />
+                      <NumberTextField fx:id="articleSelectionAmount" prefHeight="25.0" prefWidth="44.0" />
                </children>
                <GridPane.margin>
                   <Insets bottom="10.0" top="10.0" />

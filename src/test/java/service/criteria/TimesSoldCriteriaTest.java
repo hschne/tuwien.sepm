@@ -6,6 +6,7 @@ import entities.ArticleDto;
 import org.junit.Test;
 import org.mockito.Mock;
 import service.criteria.article.TimesSoldCriteria;
+import service.criteria.operator.NumericOperator;
 import service.decorator.ArticleSale;
 import service.decorator.SaleFactory;
 
@@ -29,7 +30,7 @@ public class TimesSoldCriteriaTest extends BaseTest{
         List<Article> articleDtos = createDummyArticles(5);
         when(mockSaleFactory.create(any(ArticleDto.class))).thenReturn(mockArticleSale);
         when(mockArticleSale.getTimesSold()).thenReturn(10).thenReturn(1);
-        TimesSoldCriteria criteria = new TimesSoldCriteria(mockSaleFactory, 1, Operator.GREATER);
+        TimesSoldCriteria criteria = new TimesSoldCriteria(mockSaleFactory, 1, NumericOperator.GREATER);
 
         int expectedSize = 1;
         List<Article> result = criteria.apply(articleDtos);
@@ -42,7 +43,7 @@ public class TimesSoldCriteriaTest extends BaseTest{
         List<Article> articleDtos = createDummyArticles(5);
         when(mockSaleFactory.create(any(ArticleDto.class))).thenReturn(mockArticleSale);
         when(mockArticleSale.getTimesSold()).thenReturn(1).thenReturn(10);
-        TimesSoldCriteria criteria = new TimesSoldCriteria(mockSaleFactory, 10, Operator.LOWER);
+        TimesSoldCriteria criteria = new TimesSoldCriteria(mockSaleFactory, 10, NumericOperator.LOWER);
 
         int expectedSize = 1;
         List<Article> result = criteria.apply(articleDtos);
@@ -55,7 +56,7 @@ public class TimesSoldCriteriaTest extends BaseTest{
         List<Article> articleDtos = createDummyArticles(5);
         when(mockSaleFactory.create(any(ArticleDto.class))).thenReturn(mockArticleSale);
         when(mockArticleSale.getTimesSold()).thenReturn(1).thenReturn(10);
-        TimesSoldCriteria criteria = new TimesSoldCriteria(mockSaleFactory, 1, Operator.EQUALS);
+        TimesSoldCriteria criteria = new TimesSoldCriteria(mockSaleFactory, 1, NumericOperator.EQUALS);
 
         int expectedSize = 1;
         List<Article> result = criteria.apply(articleDtos);

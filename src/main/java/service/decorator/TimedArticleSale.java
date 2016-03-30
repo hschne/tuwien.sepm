@@ -4,7 +4,7 @@ import entities.Article;
 import entities.ReceiptEntry;
 import service.ReceiptRepository;
 import service.ServiceException;
-import service.criteria.DateOperator;
+import service.criteria.operator.DateOperator;
 
 import java.util.ArrayList;
 import java.util.Date;

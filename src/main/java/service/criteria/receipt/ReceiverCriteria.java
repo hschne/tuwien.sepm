@@ -1,5 +1,6 @@
 package service.criteria.receipt;
 
+import entities.Article;
 import entities.Receipt;
 import org.apache.commons.lang3.StringUtils;
 import service.ServiceException;
@@ -17,7 +18,7 @@ public class ReceiverCriteria implements Criteria<Receipt> {
     }
 
     @Override
-    public List<Receipt> apply(List<Receipt> list) throws ServiceException {
+    public List<Receipt> apply(List<? extends Receipt> list) throws ServiceException {
         return list.stream().filter(p -> StringUtils.containsIgnoreCase(p.getReceiver(),receiver)).collect(Collectors.toList());
     }
 }
