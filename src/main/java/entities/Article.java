@@ -1,5 +1,8 @@
 package entities;
 
+/**
+ * Implementors are article data transfer objects
+ */
 public interface Article extends Entity{
 
     String getImage();

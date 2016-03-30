@@ -3,6 +3,9 @@ package entities;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Implementors represent receipt DTOs
+ */
 public interface Receipt extends Entity{
 
     List<ReceiptEntry> getReceiptEntries();

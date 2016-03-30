@@ -1,12 +1,13 @@
 package ui.model;
 
 import entities.Article;
+import entities.Dto;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class ArticleModel implements Article {
+public class ArticleModel extends Dto implements Article {
 
     private final StringProperty name;
 

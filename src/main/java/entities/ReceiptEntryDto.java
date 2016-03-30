@@ -2,38 +2,44 @@ package entities;
 
 public class ReceiptEntryDto extends Dto implements ReceiptEntry {
 
-    private Receipt receiptDto;
-    private Article articleDto;
+    private Receipt receipt;
+    private Article article;
 
     private int amount;
 
-    public ReceiptEntryDto(Receipt receiptDto, Article articleDto, int quantity) {
-        this.receiptDto = receiptDto;
-        this.articleDto = articleDto;
+    public ReceiptEntryDto(Receipt receipt, Article article, int quantity) {
+        this.receipt = receipt;
+        this.article = article;
         this.amount = quantity;
     }
 
+    @Override
     public Article getArticle() {
-        return articleDto;
+        return article;
     }
 
-    public void setArticle(Article articleDto) {
-        this.articleDto = articleDto;
+    @Override
+    public void setArticle(Article article) {
+        this.article = article;
     }
 
+    @Override
     public int getAmount() {
         return amount;
     }
 
+    @Override
     public void setAmount(int amount) {
         this.amount = amount;
     }
 
+    @Override
     public Receipt getReceipt() {
-        return receiptDto;
+        return receipt;
     }
 
-    public void setReceipt(Receipt receiptDto) {
-        this.receiptDto = receiptDto;
+    @Override
+    public void setReceipt(Receipt receipt) {
+        this.receipt = receipt;
     }
 }

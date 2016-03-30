@@ -1,10 +1,11 @@
 package entities;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
+/**
+ * Interface for DTOs that are meant to be stored in a database
+ */
 public interface Entity {
 
-    int getId() throws NotImplementedException;
+    int getId();
 
     void setId(int id);
 }

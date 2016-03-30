@@ -1,5 +1,8 @@
 package entities;
 
+/**
+ * Interface for receipt entries - aka. articles listed in a receipt
+ */
 public interface ReceiptEntry {
 
     Article getArticle();

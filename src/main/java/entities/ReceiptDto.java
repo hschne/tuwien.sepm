@@ -13,6 +13,7 @@ public class ReceiptDto extends Dto implements Receipt {
     private List<ReceiptEntry> receiptEntries;
 
     public ReceiptDto() {
+        //Strictly used for unit tests
     }
 
     public ReceiptDto(int id, Date date, String receiver, String receiverAddress, List<ReceiptEntry> receiptEntries) {
@@ -29,6 +30,7 @@ public class ReceiptDto extends Dto implements Receipt {
     }
 
 
+    @Override
     public List<ReceiptEntry> getReceiptEntries() {
         return receiptEntries;
     }
@@ -38,34 +40,42 @@ public class ReceiptDto extends Dto implements Receipt {
         this.receiptEntries = receiptEntries;
     }
 
+    @Override
     public String getReceiverAddress() {
         return receiverAddress;
     }
 
+    @Override
     public void setReceiverAddress(String receiverAddress) {
         this.receiverAddress = receiverAddress;
     }
 
+    @Override
     public String getReceiver() {
         return receiver;
     }
 
+    @Override
     public void setReceiver(String receiver) {
         this.receiver = receiver;
     }
 
+    @Override
     public Date getDate() {
         return date;
     }
 
+    @Override
     public void setDate(Date date) {
         this.date = date;
     }
 
+    @Override
     public int getId() {
         return id;
     }
 
+    @Override
     public void setId(int id) {
         this.id = id;
     }
