@@ -32,15 +32,15 @@ public class H2ArticleDao extends AbstractH2Dao implements ArticleDao {
             return parseArticles(resultSet);
         } catch (SQLException e) {
             logger.error(e);
-            throw new DaoException(e);
+            throw new DaoException("Error reading articles",e);
         }
     }
 
     @Override
-    public void update(Article articleDto) throws DaoException {
-        logger.debug("Updating articleDto " + articleDto.toString());
+    public void update(Article article) throws DaoException {
+        logger.debug("Updating articleDto " + article.toString());
         try {
-            updateOrCreate(articleDto);
+            updateOrCreate(article);
         } catch (SQLException e) {
             handle(e);
         }
@@ -66,11 +66,11 @@ public class H2ArticleDao extends AbstractH2Dao implements ArticleDao {
     }
 
     @Override
-    public void delete(Article articleDto) throws DaoException {
-        logger.debug("Deleting articleDto " + articleDto.toString());
+    public void delete(Article article) throws DaoException {
+        logger.debug("Deleting articleDto " + article.toString());
         try {
-            deleteOrMakeInvisible(articleDto);
-            imageFile.delete(articleDto.getImage());
+            deleteOrMakeInvisible(article);
+            imageFile.delete(article.getImage());
         } catch (SQLException e) {
             handle(e);
         }
@@ -148,7 +148,7 @@ public class H2ArticleDao extends AbstractH2Dao implements ArticleDao {
 
     private void handle(SQLException e) throws DaoException {
         logger.error(e);
-        throw new DaoException(e);
+        throw new DaoException("Error in Article Dao", e);
     }
 
 }

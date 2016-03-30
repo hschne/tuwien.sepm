@@ -11,8 +11,6 @@ import java.sql.SQLException;
 
 public class H2Database implements Database {
 
-    private final Logger logger = LogManager.getLogger(H2Database.class);
-
     private Connection connection;
 
     public H2Database(String path) throws DaoException {
@@ -20,6 +18,7 @@ public class H2Database implements Database {
     }
 
     public H2Database(String path, String username, String password) throws DaoException {
+        Logger logger = LogManager.getLogger(H2Database.class);
         logger.debug("Connecting to H2Database on " + path);
         try {
             Class.forName("org.h2.Driver");
@@ -35,18 +34,9 @@ public class H2Database implements Database {
         }
     }
 
+    @Override
     public Connection getConnection() {
         return connection;
-    }
-
-    public void disconnect() throws DaoException {
-        logger.debug("Disconnecting from H2Database");
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            logger.error(e);
-            throw new DaoException("Error disconnecting from database", e);
-        }
     }
 
 }

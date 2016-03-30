@@ -1,42 +1,44 @@
 package dao;
 
 import entities.Article;
-import entities.ArticleDto;
 
-import java.sql.SQLException;
 import java.util.List;
 
 /**
- * ArticleDto interaction with a database
+ * Article interaction with a database
  */
 public interface ArticleDao {
     /**
      * Create a new article
-     * @param entity
-     * @throws SQLException
+     *
+     * @param article Article to save
+     * @throws DaoException
      */
-    void create(Article entity) throws DaoException;
+    void create(Article article) throws DaoException;
 
     /**
      * Retrieve all visible articles
+     *
      * @return A list of articles
-     * @throws SQLException
+     * @throws DaoException
      */
     List<Article> getVisible() throws DaoException;
 
     /**
      * Updates an existing article
-     * @param entity
-     * @throws SQLException
+     *
+     * @param article Article to update
+     * @throws DaoException
      */
-    void update(Article entity) throws DaoException;
+    void update(Article article) throws DaoException;
 
     /**
      * Deletes an existing article
-     * @param entity
-     * @throws SQLException
+     *
+     * @param article Article to delete
+     * @throws DaoException
      */
-    void delete(Article entity) throws DaoException;
+    void delete(Article article) throws DaoException;
 
 
 }

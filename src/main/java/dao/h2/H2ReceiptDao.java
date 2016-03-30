@@ -17,11 +17,11 @@ public class H2ReceiptDao extends AbstractH2Dao implements ReceiptDao {
     }
 
     @Override
-    public void create(Receipt receiptDto) throws DaoException {
-        logger.debug("Creating receiptDto " + receiptDto);
+    public void create(Receipt receipt) throws DaoException {
+        logger.debug("Creating receiptDto " + receipt);
         try {
-            insertReceiptData(receiptDto);
-            insertLinkedArticles(receiptDto);
+            insertReceiptData(receipt);
+            insertLinkedArticles(receipt);
         } catch (SQLException e) {
             handle(e);
         }
@@ -38,7 +38,7 @@ public class H2ReceiptDao extends AbstractH2Dao implements ReceiptDao {
             return parseReceipts(resultSet);
         } catch (SQLException e) {
             logger.error(e);
-            throw new DaoException(e);
+            throw new DaoException("Error reading receipts",e);
         }
     }
 
@@ -115,7 +115,7 @@ public class H2ReceiptDao extends AbstractH2Dao implements ReceiptDao {
 
     private void handle(SQLException e) throws DaoException {
         logger.error(e);
-        throw new DaoException(e);
+        throw new DaoException("Error in Receipt Dao",e);
     }
 
 

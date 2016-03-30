@@ -12,7 +12,7 @@ import java.sql.SQLException;
  */
 abstract class AbstractH2Dao {
 
-    protected final Logger logger = LogManager.getLogger(H2Database.class);
+    protected final Logger logger = LogManager.getLogger(AbstractH2Dao.class);
 
     protected ArticleDto parseArticle(ResultSet resultSet) throws SQLException {
         int id = resultSet.getInt(1);
