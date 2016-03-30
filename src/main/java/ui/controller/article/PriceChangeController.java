@@ -64,7 +64,7 @@ public class PriceChangeController extends AbstractController {
                 priceChange.changeByAbsolute(changeAmountDouble);
             }
         } catch (ServiceException e) {
-            mainApp.getOutput().showNotification(Alert.AlertType.ERROR, "Error","Could not change price","Please view logs for more information.");
+            mainApp.getOutput().showNotification(Alert.AlertType.ERROR, "Error","Could not change price", e.getMessage());
         }
     }
 

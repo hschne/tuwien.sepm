@@ -38,7 +38,7 @@ public class PriceChange {
 
 
     private void validateAbsolute(double value, Article article) throws ServiceException {
-        if (value > article.getPrice())
+        if (value < 0 && Math.abs(value) > article.getPrice())
             throw new ServiceException("Can not decrease by value greater than original price");
     }
 
