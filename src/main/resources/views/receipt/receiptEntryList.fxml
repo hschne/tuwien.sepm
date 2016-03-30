@@ -5,16 +5,16 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="240.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controller.receipt.EntryListController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="240.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controller.receipt.EntryListController">
    <children>
-      <TableView fx:id="receiptEntryTable" layoutX="51.0" layoutY="24.0" prefHeight="182.0" prefWidth="560.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="15.0">
+      <TableView fx:id="receiptEntryTable" layoutX="51.0" layoutY="24.0" prefHeight="180.0" prefWidth="560.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
         <columns>
           <TableColumn fx:id="nameColumn" prefWidth="385.0" text="Name" />
-          <TableColumn fx:id="quantityColumn" minWidth="0.0" prefWidth="101.0" text="Quantity" />
-            <TableColumn fx:id="priceColumn" minWidth="0.0" prefWidth="73.0" resizable="false" text="Price" />
+            <TableColumn fx:id="priceColumn" minWidth="0.0" prefWidth="104.0" resizable="false" text="Price" />
+          <TableColumn fx:id="quantityColumn" minWidth="0.0" prefWidth="90.0" text="Quantity" />
         </columns>
       </TableView>
-      <Label layoutX="453.0" layoutY="210.0" prefHeight="15.0" prefWidth="44.0" text="Total:" AnchorPane.bottomAnchor="15.0" />
-      <TextField fx:id="total" layoutX="495.0" layoutY="210.0" prefHeight="25.0" prefWidth="79.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="20.0" />
+      <Label layoutX="453.0" layoutY="210.0" prefHeight="15.0" prefWidth="44.0" text="Total:" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="100.0" />
+      <TextField fx:id="total" layoutX="495.0" layoutY="210.0" prefHeight="25.0" prefWidth="79.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
    </children>
 </AnchorPane>
