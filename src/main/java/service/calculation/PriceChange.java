@@ -19,7 +19,6 @@ public class PriceChange {
     public void changeByPercent(double percent) throws ServiceException {
         validatePercentage(percent);
         for (Article article : articleDtos) {
-
             double price = article.getPrice();
             article.setPrice(price + price * (percent / 100));
             repository.update(article);

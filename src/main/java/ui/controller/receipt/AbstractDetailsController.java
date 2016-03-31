@@ -29,10 +29,4 @@ public abstract class AbstractDetailsController extends AbstractController {
         this.rootLayout = rootLayout;
     }
 
-    @FXML
-    public abstract void handleSave();
-
-    @FXML
-    public abstract void handleBack();
-
 }

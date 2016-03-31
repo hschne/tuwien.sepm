@@ -14,12 +14,12 @@ import java.util.stream.Collectors;
 
 public class ArticleSale extends ArticleDto {
 
-    private final Article articleDto;
+    private final Article article;
     private ReceiptRepository repository;
 
-    ArticleSale(ReceiptRepository repository, Article articleDto) {
+    ArticleSale(ReceiptRepository repository, Article article) {
         this.repository = repository;
-        this.articleDto = articleDto;
+        this.article = article;
     }
 
     public int getTimesSold() throws ServiceException {
@@ -32,8 +32,7 @@ public class ArticleSale extends ArticleDto {
         for (Receipt receiptDto : receiptDtos) {
             receiptEntries.addAll(receiptDto.getReceiptEntries());
         }
-        return receiptEntries.stream().filter(entry -> Objects.equals(entry.getArticle().getName(), articleDto.getName())).collect(Collectors.toList());
+        return receiptEntries.stream().filter(entry -> Objects.equals(entry.getArticle().getName(), article.getName())).collect(Collectors.toList());
     }
-
 
 }
