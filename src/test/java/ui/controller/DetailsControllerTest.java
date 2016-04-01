@@ -1,7 +1,6 @@
 package ui.controller;
 
 import dao.h2.ImageFile;
-import entities.Article;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
@@ -20,10 +19,9 @@ import ui.model.ArticleModel;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.*;
 
 public class DetailsControllerTest extends FXTest {
 
@@ -91,14 +89,13 @@ public class DetailsControllerTest extends FXTest {
         controller.imagePath = "newImage.jpg";
         controller.handleSave();
 
-        assertEquals(1,observableList.size());
+        assertEquals(1, observableList.size());
     }
 
     @Test
     public void handleSave_SaveNewArticleWithInvalidData_ArticleListAddCalled() throws Exception {
         DetailsController controller = new DetailsController();
         InitializeControls(controller);
-        ObservableList<ArticleModel> observableList = FXCollections.observableArrayList();
         Output output = mock(Output.class);
         when(mockMainApp.getOutput()).thenReturn(output);
 
@@ -135,9 +132,8 @@ public class DetailsControllerTest extends FXTest {
         controller.initializeWith(new ArticleModel(), mockImageFile);
         controller.handleSave();
 
-        verify(mockOutput).showNotification(eq(Alert.AlertType.ERROR),eq("Error"),anyString(),anyString());
+        verify(mockOutput).showNotification(eq(Alert.AlertType.ERROR), eq("Error"), anyString(), anyString());
     }
-
 
 
     private void InitializeControls(DetailsController controller) {

@@ -1,19 +1,30 @@
 package ui;
 
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
+import javafx.stage.FileChooser;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Optional;
 
 public class Output {
 
+    private String defaultFileDirectory;
 
+    public Output(){
+        defaultFileDirectory = "/home";
+    }
 
     //Stolen from http://code.makery.ch/blog/javafx-dialogs-official/
     public void showExceptionNotification(String title, String header, String content, Exception e){
@@ -72,5 +83,20 @@ public class Output {
 
         alert.showAndWait();
     }
+
+    public File openFile(Stage primaryStage) {
+        File directory = new File(defaultFileDirectory);
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setInitialDirectory(directory);
+        FileChooser.ExtensionFilter images = new FileChooser.ExtensionFilter("Images", "*.png", "*.jpg");
+        fileChooser.getExtensionFilters().add(images);
+        fileChooser.setTitle("Open Image");
+        File pickedFile = fileChooser.showOpenDialog(primaryStage);
+        defaultFileDirectory = pickedFile.getParent();
+        return pickedFile;
+    }
+
+
+
 
 }

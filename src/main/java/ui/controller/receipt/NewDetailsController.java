@@ -11,7 +11,9 @@ import ui.model.ReceiptModel;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * Controller for creating new receipts. Initializes a subcontroller for selecting receipt entries.
@@ -95,9 +97,14 @@ public class NewDetailsController extends AbstractDetailsController {
     }
 
     private boolean invalidInput() {
-        if (receipt.getReceiptEntries().isEmpty()) {
+        List<ReceiptEntry> receiptEntries = receipt.getReceiptEntries();
+        if (receiptEntries.isEmpty()) {
             return true;
-        } else if ((Objects.equals(receiver.getText(), "")) || (Objects.equals(receiverAdress.getText(), ""))) {
+        }
+        List<ReceiptEntry> negativeEntries = receiptEntries.stream().filter(p -> p.getAmount() <= 0).collect(Collectors.toList());
+        if (negativeEntries.size() > 0) {
+            return true;
+        } else if (receiver.getText().isEmpty() || (receiverAdress.getText().isEmpty())) {
             return true;
         }
         return false;

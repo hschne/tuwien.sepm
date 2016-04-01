@@ -53,6 +53,8 @@ public class MainApp extends Application {
     private Stage primaryStage;
     private BorderPane rootLayout;
 
+    private String lastDirectory;
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -167,11 +169,7 @@ public class MainApp extends Application {
     }
 
     public File openFile() {
-        FileChooser fileChooser = new FileChooser();
-        FileChooser.ExtensionFilter images = new FileChooser.ExtensionFilter("Images", "*.png", "*.jpg");
-        fileChooser.getExtensionFilters().add(images);
-        fileChooser.setTitle("Open Image");
-        return fileChooser.showOpenDialog(primaryStage);
+        return output.openFile(primaryStage);
     }
 
     public void showArticleStatistics(List<ArticleModel> selected) {
