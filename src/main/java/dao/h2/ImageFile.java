@@ -40,6 +40,9 @@ public class ImageFile {
 
     public void delete(String name) throws DaoException {
         logger.debug("Delete image " + name);
+        if("dummyImage.png".equals(name)){
+            return;
+        }
         try {
             String deleteFilePath = absoluteImageFolderPath + name;
             File file = new File(deleteFilePath);

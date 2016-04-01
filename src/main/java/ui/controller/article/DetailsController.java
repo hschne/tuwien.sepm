@@ -58,20 +58,11 @@ public class DetailsController extends AbstractController {
     public void handleSave() {
         try {
             validateInput();
-            article.setName(name.getText());
-            article.setPrice(Double.parseDouble(price.getText()));
-            article.setDescription(description.getText());
-            article.setCategory(category.getText());
-            changeImage();
-            if (isNew) {
-                if (hasChanged) {
-                    mainApp.getArticleList().get().add(article);
-                }
-            } else {
-                mainApp.getArticleList().update(article);
-            }
+            setArticleData();
+            createNewOrUpdate();
             mainApp.showArticleOverview();
         } catch (GuiException e) {
+            logger.error(e);
             Output output = mainApp.getOutput();
             output.showNotification(Alert.AlertType.ERROR, "Error", "Could not save article", e.getMessage());
         } catch (ServiceException e) {
@@ -86,6 +77,24 @@ public class DetailsController extends AbstractController {
         if (file != null) {
             imagePath = file.getPath();
             image.setImage(new Image(file.toURI().toString()));
+        }
+    }
+
+    private void setArticleData() {
+        article.setName(name.getText());
+        article.setPrice(Double.parseDouble(price.getText()));
+        article.setDescription(description.getText());
+        article.setCategory(category.getText());
+        article.setImage(imagePath);
+    }
+
+    private void createNewOrUpdate() throws ServiceException {
+        if (isNew) {
+            if (hasChanged) {
+                mainApp.getArticleList().get().add(article);
+            }
+        } else {
+            mainApp.getArticleList().update(article);
         }
     }
 
@@ -105,9 +114,6 @@ public class DetailsController extends AbstractController {
         }
     }
 
-    private void changeImage() {
-        article.setImage(imagePath);
-    }
 
     private boolean discardChanges() {
         if (hasChanged) {
@@ -120,7 +126,13 @@ public class DetailsController extends AbstractController {
     private void validateInput() throws GuiException {
         validateArticlePrice();
         validateTextFields();
+        validateImage();
+    }
 
+    private void validateImage() throws GuiException {
+        if ("dummyImage.png".equals(imagePath)) {
+            throw new GuiException("Please select a new image for this product.");
+        }
     }
 
     private void validateTextFields() throws GuiException {
