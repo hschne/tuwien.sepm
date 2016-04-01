@@ -42,12 +42,6 @@ public class NewDetailsController extends AbstractDetailsController {
         }
     }
 
-    private void setReceiptOnReceiptEntries() {
-        for(ReceiptEntry receiptEntry : receipt.getReceiptEntries()){
-            receiptEntry.setReceipt(receipt);
-        }
-    }
-
     @Override
     public void handleBack() {
         Output output = mainApp.getOutput();
@@ -57,6 +51,12 @@ public class NewDetailsController extends AbstractDetailsController {
         }
         if (shouldGoBack) {
             mainApp.showReceiptOverview();
+        }
+    }
+
+    private void setReceiptOnReceiptEntries() {
+        for (ReceiptEntry receiptEntry : receipt.getReceiptEntries()) {
+            receiptEntry.setReceipt(receipt);
         }
     }
 
@@ -70,7 +70,7 @@ public class NewDetailsController extends AbstractDetailsController {
             controller.initialize(mainApp);
             controller.initializeWith(this.receipt);
         } catch (IOException e) {
-            logger.log(Level.DEBUG,e);
+            logger.log(Level.DEBUG, e);
             Output output = mainApp.getOutput();
             output.showNotification(Alert.AlertType.ERROR, "Error", "Could not load receipt entries", "Please view the logs for details.");
         }

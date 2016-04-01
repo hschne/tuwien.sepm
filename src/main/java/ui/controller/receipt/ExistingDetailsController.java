@@ -20,7 +20,7 @@ public class ExistingDetailsController extends AbstractDetailsController {
         receiverAdress.setEditable(false);
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         date.setText(dateFormat.format(this.receipt.getDate()));
-        SaveButton.disableProperty().set(true);
+        saveButton.disableProperty().set(true);
         viewExistingReceiptEntries(receipt);
     }
 

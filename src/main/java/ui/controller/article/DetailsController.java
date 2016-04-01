@@ -7,7 +7,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import org.apache.commons.lang3.math.NumberUtils;
 import service.ServiceException;
+import ui.GuiException;
 import ui.Output;
 import ui.controller.AbstractController;
 import ui.model.ArticleModel;
@@ -35,8 +37,6 @@ public class DetailsController extends AbstractController {
 
     private String imagePath;
 
-    private ImageFile imageFile;
-
     public void initializeWith(ArticleModel article, ImageFile imageFile) {
         initializeArticle(article);
         name.setText(this.article.getName());
@@ -45,23 +45,6 @@ public class DetailsController extends AbstractController {
         category.setText(this.article.getCategory());
         initializeImage(imageFile);
         initializeChangeListeners();
-    }
-
-    private void initializeImage(ImageFile imageFile) {
-        this.imageFile = imageFile;
-        image.setImage(this.imageFile.get(article.getImage()));
-        imagePath = this.article.getImage();
-    }
-
-    private void initializeArticle(ArticleModel article) {
-        if (article == null) {
-            this.article = new ArticleModel();
-            isNew = true;
-        } else {
-            this.article = article;
-            this.name.disableProperty().set(true);
-            isNew = false;
-        }
     }
 
     @FXML
@@ -74,6 +57,7 @@ public class DetailsController extends AbstractController {
     @FXML
     public void handleSave() {
         try {
+            validateInput();
             article.setName(name.getText());
             article.setPrice(Double.parseDouble(price.getText()));
             article.setDescription(description.getText());
@@ -87,9 +71,12 @@ public class DetailsController extends AbstractController {
                 mainApp.getArticleList().update(article);
             }
             mainApp.showArticleOverview();
+        } catch (GuiException e) {
+            Output output = mainApp.getOutput();
+            output.showNotification(Alert.AlertType.ERROR, "Error", "Could not save article", e.getMessage());
         } catch (ServiceException e) {
             Output output = mainApp.getOutput();
-            output.showNotification(Alert.AlertType.ERROR, "Error", "Could not update article.", e.getMessage());
+            output.showExceptionNotification("Error", "Could not save article.", "Please view the log for more details,", e);
         }
     }
 
@@ -99,6 +86,22 @@ public class DetailsController extends AbstractController {
         if (file != null) {
             imagePath = file.getPath();
             image.setImage(new Image(file.toURI().toString()));
+        }
+    }
+
+    private void initializeImage(ImageFile imageFile) {
+        image.setImage(imageFile.get(article.getImage()));
+        imagePath = this.article.getImage();
+    }
+
+    private void initializeArticle(ArticleModel article) {
+        if (article == null) {
+            this.article = new ArticleModel();
+            isNew = true;
+        } else {
+            this.article = article;
+            this.name.disableProperty().set(true);
+            isNew = false;
         }
     }
 
@@ -114,18 +117,43 @@ public class DetailsController extends AbstractController {
         return true;
     }
 
+    private void validateInput() throws GuiException {
+        validateArticlePrice();
+        validateTextFields();
+
+    }
+
+    private void validateTextFields() throws GuiException {
+        if (name.getText().isEmpty()) {
+            throw new GuiException("Article name must not be empty.");
+        }
+        if (category.getText().isEmpty()) {
+            throw new GuiException("Article category must not be empty.");
+        }
+        if (description.getText().isEmpty()) {
+            throw new GuiException("Article description must not be empty.");
+        }
+    }
+
+    private void validateArticlePrice() throws GuiException {
+        String priceText = price.getText();
+        boolean isNumber = NumberUtils.isNumber(priceText);
+        if (priceText.isEmpty() || !isNumber) {
+            throw new GuiException("Article price must be a valid number.");
+        }
+        if (Double.parseDouble(priceText) <= 0) {
+            throw new GuiException("Article price must be positive.");
+        }
+    }
+
     private void initializeChangeListeners() {
-        name.textProperty().addListener((observable, oldValue, newValue) -> {
-            hasChanged = true;
-        });
-        category.textProperty().addListener((observable, oldValue, newValue) -> {
-            hasChanged = true;
-        });
-        description.textProperty().addListener((observable, oldValue, newValue) -> {
-            hasChanged = true;
-        });
-        price.textProperty().addListener((observable, oldValue, newValue) -> {
-            hasChanged = true;
-        });
+        name.textProperty().addListener((observable, oldValue, newValue) ->
+                hasChanged = true);
+        category.textProperty().addListener((observable, oldValue, newValue) ->
+                hasChanged = true);
+        description.textProperty().addListener((observable, oldValue, newValue) ->
+                hasChanged = true);
+        price.textProperty().addListener((observable, oldValue, newValue) ->
+                hasChanged = true);
     }
 }
