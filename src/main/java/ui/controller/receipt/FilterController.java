@@ -19,6 +19,10 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 
+/**
+ * This controller manages the filter view for receipts.
+ * Updates show in real time thanks to change handlers.
+ */
 public class FilterController extends AbstractController {
 
     @FXML
@@ -50,6 +54,9 @@ public class FilterController extends AbstractController {
     }
 
 
+    /**
+     * Removes all filters
+     */
     @FXML
     public void handleClear() {
         resetReceiver();

@@ -4,20 +4,33 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
+import static java.lang.System.*;
 
+/**
+ * The root controller manages the menu bar on top of the window
+ */
 public class RootController extends AbstractController {
 
+    /**
+     * Displays the article overview.
+     */
     @FXML
     public void handleShowArticleOverview(){
         mainApp.showArticleOverview();
     }
 
+    /**
+     * Displays the receipt overview.
+     */
     @FXML
     public void handleShowReceiptOverview(){
         mainApp.showReceiptOverview();
     }
 
 
+    /**
+     * Displays the about dialog.
+     */
     @FXML
     public void handleAbout() {
         Alert alert = new Alert(AlertType.INFORMATION);
@@ -35,6 +48,6 @@ public class RootController extends AbstractController {
      */
     @FXML
     public void handleExit() {
-        System.exit(0);
+        exit(0);
     }
 }

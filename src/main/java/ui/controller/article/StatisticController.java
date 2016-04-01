@@ -26,6 +26,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Controller for the statistic dialog box.
+ */
 public class StatisticController extends AbstractController {
 
     @FXML
@@ -50,11 +53,17 @@ public class StatisticController extends AbstractController {
         setArticleSales();
     }
 
+    /**
+     * Closes the dialog window.
+     */
     @FXML
     public void handleClose() {
         dialogStage.close();
     }
 
+    /**
+     * Resets statistic configuration.
+     */
     @FXML
     public void handleReset() {
         datePicker.getEditor().clear();

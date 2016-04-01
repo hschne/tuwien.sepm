@@ -10,6 +10,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * UI implementation of receipt DTO.
+ * @see entities.Receipt
+ */
 public class ReceiptModel implements Receipt {
 
     private final SimpleStringProperty dateProperty;

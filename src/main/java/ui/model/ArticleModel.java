@@ -7,6 +7,10 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+/**
+ * UI implementation of Article DTO.
+ * @see entities.Article
+ */
 public class ArticleModel extends Dto implements Article {
 
     private final StringProperty name;

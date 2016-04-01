@@ -13,7 +13,7 @@ public interface ReceiptDao {
      * Create a new Receipt
      *
      * @param receipt Receipt to create
-     * @throws DaoException
+     * @throws DaoException Thrown if there is a problem with the database
      */
     void create(Receipt receipt) throws DaoException;
 
@@ -21,7 +21,7 @@ public interface ReceiptDao {
      * Retrieves all receipts with their corresponding receipt entries
      *
      * @return All available receipts
-     * @throws DaoException
+     * @throws DaoException Thrown if there is a problem with the database
      */
     List<Receipt> getAll() throws DaoException;
 }

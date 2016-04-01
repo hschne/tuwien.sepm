@@ -12,6 +12,10 @@ import service.criteria.Criteria;
 
 import java.util.List;
 
+
+/**
+ * Wrapper around the observable list containing all articles. Responsible for keeping in sync with service repository.
+ */
 public class ArticleList {
 
     private final Logger logger = LogManager.getLogger(ArticleList.class);

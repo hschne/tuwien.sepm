@@ -8,6 +8,9 @@ import ui.controller.AbstractController;
 import ui.model.ReceiptEntryModel;
 import ui.model.ReceiptModel;
 
+/**
+ * Controller for existing receipt entries.
+ */
 public class EntryListController extends AbstractController {
 
     @FXML
@@ -33,6 +36,7 @@ public class EntryListController extends AbstractController {
     public void initializeWith(ReceiptModel receipt) {
         receiptEntryTable.setItems(receipt.getReceiptEntryModels());
         total.setText(String.valueOf(receipt.getTotalCostProperty().getValue()));
+        total.setEditable(false);
     }
 
 }

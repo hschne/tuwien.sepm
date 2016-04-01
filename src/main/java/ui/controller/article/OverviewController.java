@@ -16,6 +16,10 @@ import ui.model.ArticleModel;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * The overview controller manages the overview of articles.
+ * Using it, other article related controllers can be instantiated.
+ */
 public class OverviewController extends AbstractController {
 
     @FXML
@@ -40,11 +44,17 @@ public class OverviewController extends AbstractController {
         super.initialize(mainControllerApp);
     }
 
+    /**
+     * Creates a new article
+     */
     @FXML
     public void handleCreate() {
         mainApp.showArticleDetails(null);
     }
 
+    /**
+     * Initializes the filter view
+     */
     @FXML
     public void handleFilter() {
         if (toggleFilter.isSelected()) {
@@ -62,6 +72,9 @@ public class OverviewController extends AbstractController {
         categoryColumn.setCellValueFactory(cellData -> cellData.getValue().getCategoryProperty());
     }
 
+    /**
+     * Initializes the statistics view
+     */
     @FXML
     public void handleStatistics() {
         List<ArticleModel> selected = articleTable.getSelectionModel().getSelectedItems();
@@ -72,6 +85,9 @@ public class OverviewController extends AbstractController {
         mainApp.showArticleStatistics(selected);
     }
 
+    /**
+     * Initializes the change price view
+     */
     @FXML
     public void handlePriceChange() {
         mainApp.showPriceChange();

@@ -22,6 +22,10 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * The FilterController manages the selection of articles based on certain criteria.
+ * Updates are made in real time using change listeners on available controls.
+ */
 public class FilterController extends AbstractController {
 
     @FXML
@@ -56,6 +60,9 @@ public class FilterController extends AbstractController {
         categoryFilter.getItems().addAll(getAllCategories());
     }
 
+    /**
+     * If the user presses the clear button all filters are reset
+     */
     @FXML
     public void handleClear() {
         resetName();

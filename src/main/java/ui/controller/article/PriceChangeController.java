@@ -30,6 +30,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Controller for the price change view which is shown in its own window.
+ */
 public class PriceChangeController extends AbstractController {
 
 
@@ -50,7 +53,6 @@ public class PriceChangeController extends AbstractController {
         this.dialogStage = dialogStage;
     }
 
-
     @FXML
     public void initialize() {
         articleSelectionType.setItems(FXCollections.observableArrayList(
@@ -59,6 +61,9 @@ public class PriceChangeController extends AbstractController {
         changeAmountType.setItems(FXCollections.observableArrayList("€", "%"));
     }
 
+    /**
+     * Apply price changes as configured
+     */
     @FXML
     public void handleApply() {
         try {
@@ -77,6 +82,9 @@ public class PriceChangeController extends AbstractController {
 
     }
 
+    /**
+     * Close the dialog window
+     */
     @FXML
     public void handleClose() {
         dialogStage.close();

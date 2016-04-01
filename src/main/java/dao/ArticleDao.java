@@ -12,7 +12,7 @@ public interface ArticleDao {
      * Create a new article
      *
      * @param article Article to save
-     * @throws DaoException
+     * @throws DaoException Thrown if there is a problem with the database
      */
     void create(Article article) throws DaoException;
 
@@ -20,7 +20,7 @@ public interface ArticleDao {
      * Retrieve all visible articles
      *
      * @return A list of articles
-     * @throws DaoException
+     * @throws DaoException Thrown if there is a problem with the database
      */
     List<Article> getVisible() throws DaoException;
 
@@ -28,7 +28,7 @@ public interface ArticleDao {
      * Updates an existing article
      *
      * @param article Article to update
-     * @throws DaoException
+     * @throws DaoException Thrown if there is a problem with the database
      */
     void update(Article article) throws DaoException;
 
@@ -36,7 +36,7 @@ public interface ArticleDao {
      * Deletes an existing article
      *
      * @param article Article to delete
-     * @throws DaoException
+     * @throws DaoException Thrown if there is a problem with the database
      */
     void delete(Article article) throws DaoException;
 

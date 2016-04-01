@@ -16,6 +16,9 @@ import ui.model.ArticleModel;
 
 import java.io.File;
 
+/**
+ * Manages the article details view
+ */
 public class DetailsController extends AbstractController {
 
     @FXML
@@ -35,7 +38,7 @@ public class DetailsController extends AbstractController {
 
     private boolean hasChanged;
 
-    private String imagePath;
+    public String imagePath;
 
     public void initializeWith(ArticleModel article, ImageFile imageFile) {
         initializeArticle(article);
@@ -47,6 +50,9 @@ public class DetailsController extends AbstractController {
         initializeChangeListeners();
     }
 
+    /**
+     * Called if the user presses the cancel button
+     */
     @FXML
     public void handleCancel() {
         if (discardChanges()) {
@@ -54,6 +60,9 @@ public class DetailsController extends AbstractController {
         }
     }
 
+    /**
+     * Called if the user presses the save button
+     */
     @FXML
     public void handleSave() {
         try {
@@ -71,6 +80,9 @@ public class DetailsController extends AbstractController {
         }
     }
 
+    /**
+     * In order to change the image the user clicks on the existing one
+     */
     @FXML
     public void handleImageClick() {
         File file = mainApp.openFile();

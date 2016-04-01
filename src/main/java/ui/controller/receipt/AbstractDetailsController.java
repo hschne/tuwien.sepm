@@ -9,7 +9,7 @@ import ui.controller.AbstractController;
 import ui.model.ReceiptModel;
 
 /**
- * This is just a convenience class. Both the controller for new receipts as well as existing receipts derive from this.
+ * A convencience class. Both the controller for new receipts as well as existing receipts derive from this.
  */
 public abstract class AbstractDetailsController extends AbstractController {
 

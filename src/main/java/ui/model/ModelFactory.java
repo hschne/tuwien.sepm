@@ -6,11 +6,12 @@ import entities.ReceiptEntry;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Convenience class for creating UI implementations of DTOs.
+ */
 public class ModelFactory {
 
     public ObservableList<ArticleModel> createArticleModels(List<Article> articles) {
@@ -38,7 +39,6 @@ public class ModelFactory {
 
     public ReceiptModel createReceiptModel(Receipt receipt) {
         double totalCost = calculateTotalCost(receipt);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         return new ReceiptModel(receipt.getDate(), receipt.getReceiver(), receipt.getReceiverAddress(), totalCost, receipt.getReceiptEntries());
     }
 
@@ -54,8 +54,8 @@ public class ModelFactory {
         return result;
     }
 
-    private ReceiptEntryModel createReceiptEntryModel(Article article){
-        return new ReceiptEntryModel(article,0);
+    private ReceiptEntryModel createReceiptEntryModel(Article article) {
+        return new ReceiptEntryModel(article, 0);
     }
 
     private double calculateTotalCost(Receipt receipt) {

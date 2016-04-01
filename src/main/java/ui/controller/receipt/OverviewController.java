@@ -14,6 +14,9 @@ import ui.model.ReceiptModel;
 
 import java.io.IOException;
 
+/**
+ * Controller for receipt overview. Has functionality for creating new ones and viewing details.
+ */
 public class OverviewController extends AbstractController {
 
     @FXML
@@ -36,19 +39,31 @@ public class OverviewController extends AbstractController {
         super.initialize(mainControllerApp);
     }
 
+    /**
+     * Creates a new receipt
+     */
     @FXML
     public void handleCreate() {
         mainApp.showReceiptDetails(null);
     }
 
+    /**
+     * Displays the filter view.
+     */
     @FXML
-    public void handleFilter(){
-        if(toggleFilter.isSelected()){
+    public void handleFilter() {
+        if (toggleFilter.isSelected()) {
             showFilter();
-        }
-        else{
+        } else {
             rootLayout.setLeft(null);
         }
+    }
+
+    @FXML
+    public void initialize() {
+        dateColumn.setCellValueFactory(cellData -> cellData.getValue().getDateProperty());
+        receiverColumn.setCellValueFactory(cellData -> cellData.getValue().getReceiverProperty());
+        totalCostColumn.setCellValueFactory(cellData -> cellData.getValue().getTotalCostProperty().asObject());
     }
 
     private void showFilter() {
@@ -61,15 +76,9 @@ public class OverviewController extends AbstractController {
             FilterController controller = loader.getController();
             controller.initialize(mainApp);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e);
+            mainApp.getOutput().showExceptionNotification("Error", "Could not load filter view", "Please view logs for more details", e);
         }
-    }
-
-    @FXML
-    public void initialize() {
-        dateColumn.setCellValueFactory(cellData -> cellData.getValue().getDateProperty());
-        receiverColumn.setCellValueFactory(cellData -> cellData.getValue().getReceiverProperty());
-        totalCostColumn.setCellValueFactory(cellData -> cellData.getValue().getTotalCostProperty().asObject());
     }
 
 }

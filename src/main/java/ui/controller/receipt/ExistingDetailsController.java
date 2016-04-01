@@ -8,6 +8,9 @@ import ui.model.ReceiptModel;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 
+/**
+ * Controller for viewing existing receipts.
+ */
 public class ExistingDetailsController extends AbstractDetailsController {
 
 

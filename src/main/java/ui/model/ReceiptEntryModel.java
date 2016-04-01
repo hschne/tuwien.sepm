@@ -5,6 +5,10 @@ import entities.Receipt;
 import entities.ReceiptEntry;
 import javafx.beans.property.*;
 
+/**
+ * UI Implementation of receipt entry DTO
+ * @see entities.ReceiptEntry
+ */
 public class ReceiptEntryModel implements ReceiptEntry {
 
     private final StringProperty name;

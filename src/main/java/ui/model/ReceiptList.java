@@ -10,6 +10,9 @@ import service.ReceiptRepository;
 import service.ServiceException;
 import service.criteria.Criteria;
 
+/**
+ * Wrapper around the observable list containing all receipts. Responsible for keeping in sync with service repository.
+ */
 public class ReceiptList {
 
     private final Logger logger = LogManager.getLogger(ArticleList.class);

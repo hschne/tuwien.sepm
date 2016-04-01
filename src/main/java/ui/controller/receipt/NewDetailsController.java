@@ -13,6 +13,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
 
+/**
+ * Controller for creating new receipts. Initializes a subcontroller for selecting receipt entries.
+ */
 public class NewDetailsController extends AbstractDetailsController {
 
 
@@ -25,6 +28,9 @@ public class NewDetailsController extends AbstractDetailsController {
         viewReceiptEntrySelection();
     }
 
+    /**
+     * Saves the receipt.
+     */
     @Override
     public void handleSave() {
         Output output = mainApp.getOutput();
@@ -42,6 +48,9 @@ public class NewDetailsController extends AbstractDetailsController {
         }
     }
 
+    /**
+     * Navigates back to the overview.
+     */
     @Override
     public void handleBack() {
         Output output = mainApp.getOutput();

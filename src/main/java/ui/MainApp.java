@@ -16,14 +16,16 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 import service.ArticleRepository;
 import service.ReceiptRepository;
 import service.ServiceException;
 import ui.controller.RootController;
 import ui.controller.article.DetailsController;
-import ui.controller.article.StatisticController;
 import ui.controller.article.PriceChangeController;
+import ui.controller.article.StatisticController;
 import ui.controller.receipt.AbstractDetailsController;
 import ui.controller.receipt.ExistingDetailsController;
 import ui.controller.receipt.NewDetailsController;
@@ -37,9 +39,13 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Application entry point. Creates services and all views.
+ */
 public class MainApp extends Application {
 
     private final Output output = new Output();
+    Logger logger = LogManager.getLogger(MainApp.class);
     private ArticleList articleList;
     private ReceiptList receiptList;
     private ReceiptRepository receiptRepository;
@@ -82,7 +88,7 @@ public class MainApp extends Application {
             controller.initialize(this);
             primaryStage.show();
         } catch (Exception e) {
-            output.showExceptionNotification("Error", "Unexpected error occured", "Please view logs for more information", e);
+            handleUnexpectedError(e);
         }
     }
 
@@ -95,10 +101,9 @@ public class MainApp extends Application {
             ui.controller.article.OverviewController controller = loader.getController();
             controller.initialize(this);
         } catch (IOException e) {
-            e.printStackTrace();
+            handleUnexpectedError(e);
         }
     }
-
 
     public void showArticleDetails(ArticleModel article) {
         try {
@@ -110,15 +115,13 @@ public class MainApp extends Application {
             controller.initialize(this);
             controller.initializeWith(article, new ImageFile());
         } catch (IOException e) {
-            e.printStackTrace();
+            handleUnexpectedError(e);
         }
     }
-
 
     public ArticleList getArticleList() {
         return articleList;
     }
-
 
     public void showReceiptDetails(ReceiptModel receipt) {
         try {
@@ -131,13 +134,13 @@ public class MainApp extends Application {
                 controller = new ExistingDetailsController();
             }
             loader.setController(controller);
-            BorderPane rootLayout = loader.load();
-            this.rootLayout.setCenter(rootLayout);
+            BorderPane receiptRootLayout = loader.load();
+            this.rootLayout.setCenter(receiptRootLayout);
             controller.initialize(this);
-            controller.setRootLayout(rootLayout);
+            controller.setRootLayout(receiptRootLayout);
             controller.initializeWith(receipt);
         } catch (IOException e) {
-            e.printStackTrace();
+            handleUnexpectedError(e);
         }
 
     }
@@ -151,7 +154,7 @@ public class MainApp extends Application {
             OverviewController controller = loader.getController();
             controller.initialize(this);
         } catch (IOException e) {
-            e.printStackTrace();
+            handleUnexpectedError(e);
         }
     }
 
@@ -182,7 +185,7 @@ public class MainApp extends Application {
             controller.initializeWith(dialogStage, selected);
             dialogStage.showAndWait();
         } catch (IOException e) {
-            output.showExceptionNotification("Error", "Could not open statistic window", "Please consult logs for more information", e);
+            handleUnexpectedError(e, "Could not open statistic window", "Please consult logs for more information");
         }
     }
 
@@ -198,8 +201,17 @@ public class MainApp extends Application {
             controller.initializeWith(dialogStage);
             dialogStage.showAndWait();
         } catch (IOException e) {
-            output.showExceptionNotification("Error", "Could not open statistic window", "Please consult logs for more information", e);
+            handleUnexpectedError(e, "Could not open statistic window", "Please consult logs for more information");
         }
+    }
+
+    private void handleUnexpectedError(Exception e, String header, String content) {
+        logger.error(e);
+        output.showExceptionNotification("Error", header, content, e);
+    }
+
+    private void handleUnexpectedError(Exception e) {
+        handleUnexpectedError(e, "Unexpected error occured", "Please view logs for more information");
     }
 
     @NotNull
@@ -223,11 +235,9 @@ public class MainApp extends Application {
             receiptRepository = new ReceiptRepository(receiptDao);
             receiptList = new ReceiptList(receiptRepository);
         } catch (DaoException e) {
-            output.showExceptionNotification("Error", "The database could not be reached.",
-                    "Please make sure that it is not currently in use.", e);
+            handleUnexpectedError(e, "The database could not be reached.", "Please make sure that it is not currently in use.");
         } catch (ServiceException e) {
-            output.showExceptionNotification("Error", "One or more services could not be initialized",
-                    "This might be caused by a database error.", e);
+            handleUnexpectedError(e, "One or more services could not be initialized", "This might be caused by a database error.");
         }
     }
 

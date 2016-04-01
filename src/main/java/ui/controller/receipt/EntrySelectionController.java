@@ -14,6 +14,9 @@ import ui.model.ReceiptModel;
 
 import java.util.List;
 
+/**
+ * Controller for selecting new receipt entries. Selection functionality is provided in a custom table.
+ */
 public class EntrySelectionController extends AbstractController {
 
     @FXML
@@ -44,12 +47,12 @@ public class EntrySelectionController extends AbstractController {
     }
 
     public void updateTotal() {
-        double total = 0;
+        double currentTotal = 0;
         for(ReceiptEntryModel entry : receiptEntryTable.getItems()){
-            total += entry.getAmount() * entry.getPrice();
+            currentTotal += entry.getAmount() * entry.getPrice();
         }
-        this.receipt.setTotalCost(total);
-        this.total.setText(String.valueOf(total));
+        this.receipt.setTotalCost(currentTotal);
+        this.total.setText(String.valueOf(currentTotal));
     }
 
     public void updateEntry(ReceiptEntryModel entry){

@@ -85,9 +85,29 @@ public class DetailsControllerTest extends FXTest {
 
         controller.initializeWith(null, mockImageFile);
         controller.description.setText("Make changes");
+        controller.name.setText("Name");
+        controller.price.setText("12.0");
+        controller.category.setText("Category");
+        controller.imagePath = "newImage.jpg";
         controller.handleSave();
 
         assertEquals(1,observableList.size());
+    }
+
+    @Test
+    public void handleSave_SaveNewArticleWithInvalidData_ArticleListAddCalled() throws Exception {
+        DetailsController controller = new DetailsController();
+        InitializeControls(controller);
+        ObservableList<ArticleModel> observableList = FXCollections.observableArrayList();
+        Output output = mock(Output.class);
+        when(mockMainApp.getOutput()).thenReturn(output);
+
+
+        controller.initializeWith(null, mockImageFile);
+        controller.name.setText("");
+        controller.handleSave();
+
+        verify(output).showNotification(eq(Alert.AlertType.ERROR), anyString(), anyString(), anyString());
     }
 
     @Test
